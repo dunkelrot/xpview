@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xpview
+Bundle-SymbolicName: com.basf.xpview; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.basf.xpview.Activator
+Bundle-Vendor: BASF
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.basf.xpview.plantviewer;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
