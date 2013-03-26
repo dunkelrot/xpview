@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="com.basf.xpview.plantviewer"
+            class="com.basf.xpview.plantviewer.views.PlantStructureView"
+            icon="icons/sample.gif"
+            id="com.basf.xpview.plantviewer.views.PlantStructureView"
+            name="Plant Structure">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.basf.xpview.plantviewer.editors.URIEditor"
+            default="false"
+            id="com.basf.xpview.plantviewer.editors.URIEditor"
+            name="URIEditor">
+      </editor>
+   </extension>
+
+</plugin>
