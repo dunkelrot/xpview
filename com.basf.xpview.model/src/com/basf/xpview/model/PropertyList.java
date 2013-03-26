@@ -47,4 +47,15 @@ public class PropertyList implements Iterable<Property> {
 		return name;
 	}
 	
+	public String getPropertyValue(String name) {
+		String result = "";
+		for (Property property : properties) {
+			if (property.getName().equals(name)) {
+				result = property.getValue();
+				break;
+			}
+		}
+		return result;
+	}
+	
 }

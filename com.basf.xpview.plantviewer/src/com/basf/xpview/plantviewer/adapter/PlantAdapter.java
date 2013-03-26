@@ -10,6 +10,12 @@ import com.basf.xpview.model.PlantSection;
 
 public class PlantAdapter implements IWorkbenchAdapter {
 
+	protected ImageDescriptor icon;
+	
+	public PlantAdapter() {
+		
+	}
+	
 	@Override
 	public Object[] getChildren(Object o) {
 		Plant plant = (Plant) o;
@@ -23,7 +29,7 @@ public class PlantAdapter implements IWorkbenchAdapter {
 
 	@Override
 	public ImageDescriptor getImageDescriptor(Object object) {
-		return null;
+		return icon;
 	}
 
 	@Override

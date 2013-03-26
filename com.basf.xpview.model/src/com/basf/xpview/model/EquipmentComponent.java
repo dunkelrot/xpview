@@ -3,7 +3,7 @@ package com.basf.xpview.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EquipmentComponent {
+public class EquipmentComponent implements PropertyItem {
 
 	String name;
 	protected ArrayList<EquipmentComponent> components;
@@ -19,5 +19,11 @@ public class EquipmentComponent {
 	
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public PropertyData getPropertyData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

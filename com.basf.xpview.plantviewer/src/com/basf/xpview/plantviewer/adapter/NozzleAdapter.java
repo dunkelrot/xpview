@@ -3,21 +3,20 @@ package com.basf.xpview.plantviewer.adapter;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.EquipmentList;
+import com.basf.xpview.model.Nozzle;
 import com.basf.xpview.plantviewer.Activator;
 
-public class EquipmentListAdapter implements IWorkbenchAdapter {
-
+public class NozzleAdapter implements IWorkbenchAdapter {
+	
 	protected ImageDescriptor icon;
-
-	public EquipmentListAdapter() {
-		this.icon = Activator.getImageDescriptor("icons/package.png"); //$NON-NLS-1$
+	
+	public NozzleAdapter() {
+		this.icon = Activator.getImageDescriptor("icons/connect.png"); //$NON-NLS-1$
 	}
 	
 	@Override
 	public Object[] getChildren(Object o) {
-		EquipmentList equipmentList = (EquipmentList) o;
-		return equipmentList.getEquipments().toArray();
+		return new Object[0];
 	}
 
 	@Override
@@ -27,13 +26,14 @@ public class EquipmentListAdapter implements IWorkbenchAdapter {
 
 	@Override
 	public String getLabel(Object o) {
-		return "Equipments";
+		Nozzle nozzle = (Nozzle) o;
+		return nozzle.getName();
 	}
 
 	@Override
 	public Object getParent(Object o) {
-		EquipmentList equipmentList = (EquipmentList) o;
-		return equipmentList.getPlant();
+		Nozzle nozzle = (Nozzle) o;
+		return nozzle.getParent();
 	}
-
+	
 }

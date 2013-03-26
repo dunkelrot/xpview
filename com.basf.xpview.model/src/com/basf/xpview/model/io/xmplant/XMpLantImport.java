@@ -42,16 +42,35 @@ public class XMpLantImport extends Import {
 	protected void handlePlantModel(PlantModel plantModel) {
 		for (Object object : plantModel.getPresentationOrShapeCatalogueOrDrawing()) {
 			if (object instanceof Equipment) {
-				handleEquipment((Equipment) object);
+				handleEquipment((Equipment) object, null);
 			}
 		}
 	}
 	
-	protected void handleEquipment(Equipment _equipment) {
-		EquipmentList eqList = plant.getEquipmentList();
-		com.basf.xpview.model.Equipment equipment = new com.basf.xpview.model.Equipment(_equipment.getTagName(), _equipment.getTagName(), eqList);
-		eqList.add(equipment);
+	protected void handleEquipment(Equipment _equipment, com.basf.xpview.model.Equipment parent) {
+		com.basf.xpview.model.Equipment equipment = null;
+		if (parent == null) {
+			EquipmentList eqList = plant.getEquipmentList();
+			equipment = new com.basf.xpview.model.Equipment(_equipment.getTagName(), _equipment.getTagName(), eqList);
+			eqList.add(equipment);
+		} else {
+			equipment = parent.addSubEquipment(_equipment.getTagName(), _equipment.getTagName());
+		}
+		
 		handlePlantItem(_equipment, equipment);
+		
+		// get all nozzles
+		for (Object object : _equipment.getDisciplineOrMinimumDesignPressureOrMaximumDesignPressure()) {
+			if (object instanceof Nozzle) {
+				Nozzle _nozzle = (Nozzle) object;
+				com.basf.xpview.model.Nozzle nozzle = equipment.addNozzle(_nozzle.getTagName(), _nozzle.getTagName());
+				handlePlantItem(_nozzle, nozzle);
+			}
+			if (object instanceof Equipment) { 
+				handleEquipment((Equipment) object, equipment);
+			}
+		}
+		
 		plant.getItems().add(equipment);
 	}
 	

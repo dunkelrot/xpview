@@ -21,4 +21,13 @@ public class PropertyData {
 		return properyLists;
 	}
 	
+	public PropertyList getProperyList(String name) {
+		PropertyList result = null;
+		for (PropertyList propList : properyLists) {
+			if (propList.getName().equals(name)) {
+				result = propList;
+			}
+		}
+		return result;
+	}
 }

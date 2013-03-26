@@ -38,29 +38,14 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               label="Sample Menu"
-               mnemonic="M"
-               id="com.basf.xpview.model.menus.sampleMenu">
-            <command
-                  commandId="com.basf.xpview.model.commands.sampleCommand"
-                  mnemonic="S"
-                  id="com.basf.xpview.model.menus.sampleCommand">
-            </command>
-         </menu>
       </menuContribution>
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
                id="com.basf.xpview.model.toolbars.sampleToolbar">
             <command
-                  commandId="com.basf.xpview.model.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  tooltip="Say hello world"
-                  id="com.basf.xpview.model.toolbars.sampleCommand">
-            </command>
-            <command
                   commandId="com.basf.xpview.model.handlers.ImportFileHandler"
+                  icon="icons/disk.png"
                   id="com.basf.xpview.model.toolbars.ImportFileHandler"
                   style="push">
             </command>

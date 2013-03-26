@@ -71,7 +71,7 @@ public class PropertyView extends ViewPart implements EventListener, ISelectionC
 		factory.registerAdapter(new PropertyDataAdapter(), PropertyData.class);
 		factory.registerAdapter(new PropertyListAdapter(), PropertyList.class);
 		
-		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		
 		viewer.setContentProvider(new WorkspaceContentProvider(factory));
 		viewer.setLabelProvider(new WorkspaceLabelProvider(factory));
@@ -117,6 +117,7 @@ public class PropertyView extends ViewPart implements EventListener, ISelectionC
 			}
 		}
 		viewer.setInput(input);
+		viewer.expandToLevel(2);
 	}
 
 	private void hookDoubleClickAction() {

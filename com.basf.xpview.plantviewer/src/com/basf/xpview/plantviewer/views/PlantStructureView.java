@@ -21,10 +21,12 @@ import com.basf.xpview.core.EventType;
 import com.basf.xpview.model.Equipment;
 import com.basf.xpview.model.EquipmentList;
 import com.basf.xpview.model.EventTypes;
+import com.basf.xpview.model.Nozzle;
 import com.basf.xpview.model.Plant;
 import com.basf.xpview.model.PlantSection;
 import com.basf.xpview.plantviewer.adapter.EquipmentAdapter;
 import com.basf.xpview.plantviewer.adapter.EquipmentListAdapter;
+import com.basf.xpview.plantviewer.adapter.NozzleAdapter;
 import com.basf.xpview.plantviewer.adapter.PlantAdapter;
 import com.basf.xpview.plantviewer.adapter.PlantSectionAdapter;
 import com.basf.xpview.utils.AdapterFactory;
@@ -59,6 +61,7 @@ public class PlantStructureView extends ViewPart implements EventListener {
 		factory.registerAdapter(new PlantSectionAdapter(), PlantSection.class);
 		factory.registerAdapter(new EquipmentListAdapter(), EquipmentList.class);
 		factory.registerAdapter(new EquipmentAdapter(), Equipment.class);
+		factory.registerAdapter(new NozzleAdapter(), Nozzle.class);
 		
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		// drillDownAdapter = new DrillDownAdapter(viewer);
