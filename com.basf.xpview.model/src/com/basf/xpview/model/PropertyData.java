@@ -5,9 +5,11 @@ import java.util.List;
 
 public class PropertyData {
 
+	protected PropertyItem propertyItem;
 	protected ArrayList<PropertyList> properyLists;
 	
 	public PropertyData(PropertyItem propertyItem) {
+		this.propertyItem = propertyItem;
 		this.properyLists = new ArrayList<PropertyList>();
 	}
 	
@@ -27,6 +29,36 @@ public class PropertyData {
 			if (propList.getName().equals(name)) {
 				result = propList;
 			}
+		}
+		return result;
+	}
+	
+	public PropertyItem getPropertyItem() {
+		return propertyItem;
+	}
+	
+	public Property getProperty(String name) {
+		Property result = null;
+		for (PropertyList propList : properyLists) {
+			result = propList.getProperty(name);
+			if (result != null) {
+				break;
+			}
+		}
+		return result;
+	}
+	
+	public String getPropertyValue(String name) {
+		Property property = null;
+		for (PropertyList propList : properyLists) {
+			property = propList.getProperty(name);
+			if (property != null) {
+				break;
+			}
+		}
+		String result = "<UNDEFINED>";
+		if (property != null) {
+			result = property.getValue();
 		}
 		return result;
 	}

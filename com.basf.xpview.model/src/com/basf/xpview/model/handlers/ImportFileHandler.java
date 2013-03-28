@@ -6,15 +6,13 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.basf.xpview.core.Event;
 import com.basf.xpview.core.EventManager;
-import com.basf.xpview.core.EventType;
-import com.basf.xpview.model.EventTypes;
 import com.basf.xpview.model.Plant;
+import com.basf.xpview.model.events.EventTypes;
+import com.basf.xpview.model.graphics.RepresentationManager;
 import com.basf.xpview.model.io.xmplant.XMpLantImport;
 import com.basf.xpview.utils.ExceptionDialog;
 
@@ -35,7 +33,7 @@ public class ImportFileHandler extends AbstractHandler {
 	 * from the application context.
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		// IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		XMpLantImport importer = new XMpLantImport();
 		try {
 			FileDialog fOpen = new FileDialog(PlatformUI.getWorkbench()
@@ -45,8 +43,8 @@ public class ImportFileHandler extends AbstractHandler {
 
 			String fileSelected = fOpen.open();
 			if (fileSelected != null) {
-				Plant plant = importer.read(new File(fileSelected));
-				EventManager.getInstance().sendEvent(new Event(this, new EventType(EventTypes.FileImported), plant));
+				Plant plant = importer.read(new File(fileSelected), RepresentationManager.getInstance());
+				EventManager.getInstance().sendEvent(new Event(this, EventTypes.FileImported, plant));
 			}
 		} catch (Exception ex) {
 			ExceptionDialog.openException(ex);

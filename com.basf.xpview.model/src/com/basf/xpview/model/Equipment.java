@@ -11,20 +11,19 @@ import java.util.List;
  * @author Arndt Teinert
  *
  */
-public class Equipment extends PlantItem implements TaggedItem {
+public class Equipment extends PlantItem implements TaggedItem, EquipmentContainer {
 
 	protected ArrayList<Equipment> subEquipments;
 	protected ArrayList<EquipmentComponent> components;
 	protected ArrayList<Nozzle> nozzles;
 	
-	protected EquipmentList equipmentList;
-	
+	protected EquipmentContainer container;
 	protected String tagId;
 	
-	public Equipment(String name, String tagId, EquipmentList equipmentList) {
+	public Equipment(String name, String tagId, EquipmentContainer container) {
 		super(name);
 		this.tagId = tagId;
-		this.equipmentList = equipmentList;
+		this.container = container;
 		this.components = new ArrayList<EquipmentComponent>();
 		this.subEquipments = new ArrayList<Equipment>();
 		this.nozzles = new ArrayList<Nozzle>();
@@ -33,7 +32,7 @@ public class Equipment extends PlantItem implements TaggedItem {
 	public Equipment(String name, String tagId, Equipment equipment) {
 		super(name, equipment);
 		this.tagId = tagId;
-		this.equipmentList = equipmentList;
+		this.container = equipment;
 		this.components = new ArrayList<EquipmentComponent>();
 		this.subEquipments = new ArrayList<Equipment>();
 		this.nozzles = new ArrayList<Nozzle>();
@@ -48,10 +47,10 @@ public class Equipment extends PlantItem implements TaggedItem {
 		return tagId;
 	}
 	
-	public EquipmentList getEquipmentList() {
-		return equipmentList;
-	}
-	
+	/**
+	 * The list of all nozzles which belong directly to this equipment.
+	 * @return list of nozzles
+	 */
 	public List<Nozzle> getNozzles() {
 		return nozzles;
 	}
@@ -70,6 +69,15 @@ public class Equipment extends PlantItem implements TaggedItem {
 		Equipment subEquipment = new Equipment(name, tagId, this);
 		subEquipments.add(subEquipment);
 		return subEquipment;
+	}
+
+	@Override
+	public void addEquipment(Equipment equipment) {
+		subEquipments.add(equipment);
+	}
+	
+	public EquipmentContainer getContainer() {
+		return container;
 	}
 	
 }

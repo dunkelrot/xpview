@@ -6,35 +6,23 @@ package com.basf.xpview.model;
  * @author Arndt Teinert
  *
  */
-public abstract class PlantItem implements PropertyItem {
+public abstract class PlantItem extends Thing implements PropertyItem {
 
 	protected PropertyData propertyData;
-	protected Representation represenation;
 	protected PlantItem parent;
 	
-	protected String name;
-
+	protected String tagName;
+	protected String className;
+	protected String type;
+	
 	public PlantItem(String name) {
 		this(name, null);
 	}
 	
 	public PlantItem(String name, PlantItem parent) {
-		this.name = name;
+		super(name);
 		this.parent = parent;
 		this.propertyData = new PropertyData(this);
-		this.represenation = new Representation();
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public Representation getRepresenation() {
-		return represenation;
 	}
 	
 	@Override
@@ -44,5 +32,39 @@ public abstract class PlantItem implements PropertyItem {
 	
 	public PlantItem getParent() {
 		return parent;
+	}
+	
+	@Override
+	public Property getProperty(String name) {
+		return propertyData.getProperty(name);
+	}
+	
+	@Override
+	public String getPropertyValue(String name) {
+		return propertyData.getPropertyValue(name);
+	}
+	
+	public String getClassName() {
+		return className;
+	}
+	
+	public String getTagName() {
+		return tagName;
+	}
+	
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+	
+	public void setClassName(String className) {
+		this.className = className;
+	}
+	
+	public String getType() {
+		return type;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
 	}
 }

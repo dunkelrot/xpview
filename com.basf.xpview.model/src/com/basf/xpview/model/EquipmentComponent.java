@@ -26,4 +26,16 @@ public class EquipmentComponent implements PropertyItem {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Property getProperty(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public String getPropertyValue(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

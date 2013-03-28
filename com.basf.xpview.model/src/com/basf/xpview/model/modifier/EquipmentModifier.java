@@ -1,0 +1,41 @@
+package com.basf.xpview.model.modifier;
+
+
+import org.eclipse.jface.util.PropertyChangeEvent;
+
+import com.basf.xpview.core.Event;
+import com.basf.xpview.core.EventManager;
+import com.basf.xpview.model.Activator;
+import com.basf.xpview.model.Equipment;
+import com.basf.xpview.model.Nozzle;
+import com.basf.xpview.model.Plant;
+import com.basf.xpview.model.Workspace;
+import com.basf.xpview.model.events.EventTypes;
+import com.basf.xpview.model.graphics.RepresentationManager;
+import com.basf.xpview.model.graphics.SoNode;
+
+public class EquipmentModifier implements org.eclipse.jface.util.IPropertyChangeListener {
+
+	public void setPositionStatus(Plant plant, boolean enabled) {
+		for (Equipment equipment : plant.getEquipmentList().getEquipments()) {
+			SoNode node = RepresentationManager.getInstance().getNode(equipment);
+			node.getPosition().setEnabled(enabled);
+			
+			for (Nozzle nozzle : equipment.getNozzles()) {
+				SoNode nozzleNode = RepresentationManager.getInstance().getNode(nozzle);
+				nozzleNode.getPosition().setEnabled(enabled);
+			}
+		}
+		EventManager.getInstance().sendEvent(new Event(this, EventTypes.SceneGraphModified, null));
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		if (event.getProperty().equals(Activator.AVEVA_APPLY_EQUIPMENT_POSITION)) {
+			boolean enabled = ((Boolean) event.getNewValue()).booleanValue();
+			setPositionStatus(Workspace.getInstance().getPlant(), enabled);
+		}
+	}
+	
+	
+}

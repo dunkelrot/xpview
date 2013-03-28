@@ -4,6 +4,15 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
+/**
+ * Content provider for Tree controls. 
+ * This provider uses the given AdapterFactory to access the {@link IWorkbenchAdapter} implementation.
+ * The AdapterFactory approach allows to use the same implementation with different {@link IWorkbenchAdapter} 
+ * implementations for the same object types.
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class WorkspaceContentProvider implements ITreeContentProvider {
 
 	protected AdapterFactory factory;

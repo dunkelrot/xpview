@@ -6,30 +6,46 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import com.basf.xpview.core.Event;
 import com.basf.xpview.core.EventListener;
 import com.basf.xpview.core.EventManager;
-import com.basf.xpview.core.EventType;
+import com.basf.xpview.model.CatalogList;
+import com.basf.xpview.model.Drawing;
+import com.basf.xpview.model.DrawingList;
 import com.basf.xpview.model.Equipment;
 import com.basf.xpview.model.EquipmentList;
-import com.basf.xpview.model.EventTypes;
 import com.basf.xpview.model.Nozzle;
 import com.basf.xpview.model.Plant;
 import com.basf.xpview.model.PlantSection;
+import com.basf.xpview.model.PlantUtils;
+import com.basf.xpview.model.events.EventTypes;
+import com.basf.xpview.model.graphics.RepresentationManager;
+import com.basf.xpview.model.graphics.SoNode;
+import com.basf.xpview.pidviewer.editors.PIDEditor;
+import com.basf.xpview.pidviewer.editors.PIDEditorInput;
+import com.basf.xpview.plantviewer.adapter.CatalogListAdapter;
+import com.basf.xpview.plantviewer.adapter.DrawingAdapter;
+import com.basf.xpview.plantviewer.adapter.DrawingListAdapter;
 import com.basf.xpview.plantviewer.adapter.EquipmentAdapter;
 import com.basf.xpview.plantviewer.adapter.EquipmentListAdapter;
 import com.basf.xpview.plantviewer.adapter.NozzleAdapter;
 import com.basf.xpview.plantviewer.adapter.PlantAdapter;
 import com.basf.xpview.plantviewer.adapter.PlantSectionAdapter;
 import com.basf.xpview.utils.AdapterFactory;
+import com.basf.xpview.utils.ExceptionDialog;
 import com.basf.xpview.utils.WorkspaceContentProvider;
 import com.basf.xpview.utils.WorkspaceLabelProvider;
 
@@ -62,6 +78,10 @@ public class PlantStructureView extends ViewPart implements EventListener {
 		factory.registerAdapter(new EquipmentListAdapter(), EquipmentList.class);
 		factory.registerAdapter(new EquipmentAdapter(), Equipment.class);
 		factory.registerAdapter(new NozzleAdapter(), Nozzle.class);
+		factory.registerAdapter(new DrawingAdapter(), Drawing.class);
+		factory.registerAdapter(new DrawingListAdapter(), DrawingList.class);
+		factory.registerAdapter(new CatalogListAdapter(), CatalogList.class);
+		
 		
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		// drillDownAdapter = new DrillDownAdapter(viewer);
@@ -80,7 +100,7 @@ public class PlantStructureView extends ViewPart implements EventListener {
 		getSite().setSelectionProvider(viewer);
 		// getSite().getPage().addSelectionListener(this);
 		
-		EventManager.getInstance().registerForEvent(new EventType(EventTypes.FileImported), this);
+		EventManager.getInstance().registerForEvent(EventTypes.FileImported, this);
 	}
 
 	private void hookContextMenu() {
@@ -118,7 +138,21 @@ public class PlantStructureView extends ViewPart implements EventListener {
 	private void hookDoubleClickAction() {
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
-				// doubleClickAction.run();
+				ISelection selection = viewer.getSelection();
+				if (selection != null && selection instanceof IStructuredSelection) {
+					Object obj = ((IStructuredSelection) selection).getFirstElement();
+					if (obj != null && obj instanceof Drawing) {
+						Plant plant = PlantUtils.getPlant((Drawing) obj);
+						SoNode node = RepresentationManager.getInstance().getNode(plant);
+						IEditorInput input = new PIDEditorInput(node);
+						try {
+							IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+							page.openEditor(input, PIDEditor.ID);
+						} catch (PartInitException ex) {
+							ExceptionDialog.openException(ex);
+						}
+					}
+				}
 			}
 		});
 	}

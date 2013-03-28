@@ -3,7 +3,7 @@ package com.basf.xpview.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EquipmentList {
+public class EquipmentList implements EquipmentContainer {
 
 	protected ArrayList<Equipment> equipments;
 	protected Plant plant;
@@ -20,8 +20,12 @@ public class EquipmentList {
 	public Plant getPlant() {
 		return plant;
 	}
+
+	public void addEquipment(Equipment equipment) {
+		equipments.add(equipment);	
+	}
 	
-	public void add(Equipment equipment) {
-		equipments.add(equipment);
+	public Plant getParent() {
+		return plant;
 	}
 }

@@ -24,12 +24,11 @@ import org.eclipse.ui.part.ViewPart;
 import com.basf.xpview.core.Event;
 import com.basf.xpview.core.EventListener;
 import com.basf.xpview.core.EventManager;
-import com.basf.xpview.core.EventType;
-import com.basf.xpview.model.EventTypes;
-import com.basf.xpview.model.PlantItem;
 import com.basf.xpview.model.Property;
 import com.basf.xpview.model.PropertyData;
+import com.basf.xpview.model.PropertyItem;
 import com.basf.xpview.model.PropertyList;
+import com.basf.xpview.model.events.EventTypes;
 import com.basf.xpview.plantviewer.adapter.PropertyAdapter;
 import com.basf.xpview.plantviewer.adapter.PropertyDataAdapter;
 import com.basf.xpview.plantviewer.adapter.PropertyListAdapter;
@@ -82,7 +81,7 @@ public class PropertyView extends ViewPart implements EventListener, ISelectionC
 		
 		TableLayout layout = new TableLayout();
 
-		createTreeColumn(tree, "Name", 50, layout);
+		createTreeColumn(tree, "Name", 100, layout);
 		createTreeColumn(tree, "Value", 50, layout);
 		createTreeColumn(tree, "Format", 30, layout);
 		createTreeColumn(tree, "URI", 80, layout);
@@ -91,7 +90,7 @@ public class PropertyView extends ViewPart implements EventListener, ISelectionC
 		
 		getSite().getPage().addSelectionListener(this);
 		
-		EventManager.getInstance().registerForEvent(new EventType(EventTypes.FileImported), this);
+		EventManager.getInstance().registerForEvent(EventTypes.FileImported, this);
 		
 		hookDoubleClickAction();
 	}
@@ -112,8 +111,8 @@ public class PropertyView extends ViewPart implements EventListener, ISelectionC
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structSel = (IStructuredSelection) selection;
 			Object obj = structSel.getFirstElement();
-			if (obj instanceof PlantItem) {
-				input = ((PlantItem) obj).getPropertyData();
+			if (obj instanceof PropertyItem) {
+				input = ((PropertyItem) obj).getPropertyData();
 			}
 		}
 		viewer.setInput(input);

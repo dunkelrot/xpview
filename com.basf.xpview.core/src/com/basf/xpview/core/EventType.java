@@ -12,6 +12,10 @@ public class EventType {
 		return this.name.equals(name);
 	}
 	
+	public boolean is(EventType eventType) {
+		return this.name.equals(eventType.name);
+	}
+	
 	public String getName() {
 		return name;
 	}

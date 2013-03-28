@@ -49,13 +49,21 @@ public class PropertyList implements Iterable<Property> {
 	
 	public String getPropertyValue(String name) {
 		String result = "";
+		Property property = getProperty(name);
+		if (property != null) {
+			result = property.getValue();
+		}
+		return result;
+	}
+	
+	public Property getProperty(String name) {
+		Property result = null;
 		for (Property property : properties) {
 			if (property.getName().equals(name)) {
-				result = property.getValue();
+				result = property;
 				break;
 			}
 		}
 		return result;
 	}
-	
 }

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Libs
+Bundle-SymbolicName: com.basf.xpview.libs
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: BASF
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: libs/vecmath-1.5.2.jar
+Export-Package: javax.vecmath

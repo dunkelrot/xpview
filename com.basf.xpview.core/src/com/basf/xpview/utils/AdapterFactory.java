@@ -6,6 +6,12 @@ import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
+/**
+ * Utility class for handling IWorkbenchAdapter implementations.
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class AdapterFactory implements IAdapterFactory {
 
 	HashMap<Class<?>, IWorkbenchAdapter> adapters;

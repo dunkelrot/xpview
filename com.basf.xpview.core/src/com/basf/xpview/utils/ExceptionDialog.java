@@ -10,10 +10,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * This dialog show the exception message and stacktrace.
+ * This dialog show the exception message and the stacktrace.
  * The user can export the provided information into a file.
  * 
- * @author Arndt
+ * @author Arndt Teinert
  *
  */
 public class ExceptionDialog extends Dialog {
@@ -67,7 +67,12 @@ public class ExceptionDialog extends Dialog {
 		super.configureShell(newShell);
 		newShell.setText("Error");
 	}
-	
+
+	/**
+	 * Call this method to open the dialog with the given exception.
+	 * 
+	 * @param exception the exception to show
+	 */
 	public static void openException(Exception exception) {
 		ExceptionDialog dlg = new ExceptionDialog(Display.getCurrent().getActiveShell(), exception);
 		dlg.setBlockOnOpen(true);

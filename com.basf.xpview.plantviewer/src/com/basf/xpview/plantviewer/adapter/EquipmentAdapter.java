@@ -52,7 +52,7 @@ public class EquipmentAdapter implements IWorkbenchAdapter {
 	@Override
 	public Object getParent(Object o) {
 		Equipment equipment = (Equipment) o;
-		return equipment.getEquipmentList();
+		return equipment.getContainer();
 	}
 
 }

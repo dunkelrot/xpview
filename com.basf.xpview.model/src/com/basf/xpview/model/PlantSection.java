@@ -13,18 +13,18 @@ import java.util.List;
  * @author Arndt Teinert
  *
  */
-public class PlantSection {
-
-	String name;
+public class PlantSection extends Thing {
 	
+	protected DrawingList drawings;
 	protected ArrayList<PlantSection> sections;
 	protected ArrayList<PlantItem> items;
 	protected PlantSection parent;
 	
 	public PlantSection(String name, PlantSection parent) {
+		super(name);
 		this.sections = new ArrayList<PlantSection>();
 		this.items = new ArrayList<PlantItem>();
-		this.name = name;
+		this.drawings = new DrawingList(this);
 		this.parent = parent;
 	}
 	
@@ -36,11 +36,20 @@ public class PlantSection {
 		return items;
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
 	public PlantSection getParent() {
 		return parent;
 	}
+	
+	public DrawingList getDrawings() {
+		return drawings;
+	}
+	
+	public PlantSection getRootSection() {
+		if (parent instanceof Plant) {
+			return parent;
+		} else {
+			return parent.getRootSection();
+		}
+	}
+
 }

@@ -9,6 +9,10 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
+	public static final String IMPORT_MODE = "IMPORT_MODE"; //$NON-NLS-1$
+	
+	public static final String AVEVA_APPLY_EQUIPMENT_POSITION = "AVEVA_APPLY_EQUIPMENT_POSITION"; //$NON-NLS-1$
+	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.basf.xpview.model"; //$NON-NLS-1$
 

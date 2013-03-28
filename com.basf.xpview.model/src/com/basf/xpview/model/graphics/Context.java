@@ -1,12 +1,16 @@
 package com.basf.xpview.model.graphics;
 
+import java.awt.Graphics2D;
+
 public abstract class Context {
 
+	public Graphics2D gc;
+	
 	public void pushMaterial(Material material) {
 		
 	}
 	
-	public void pushTransformation(Transformation transformation) {
+	public void pushTransformation(SoTransformation transformation) {
 		
 	}
 	
@@ -19,5 +23,6 @@ public abstract class Context {
 	}
 	
 	public abstract void renderLine(double x1, double y1, double x2, double y2);
+	
 	
 }

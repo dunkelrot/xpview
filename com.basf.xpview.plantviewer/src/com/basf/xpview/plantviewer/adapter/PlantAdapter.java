@@ -20,6 +20,8 @@ public class PlantAdapter implements IWorkbenchAdapter {
 	public Object[] getChildren(Object o) {
 		Plant plant = (Plant) o;
 		ArrayList<Object> children = new ArrayList<Object>();
+		children.add(plant.getCatalogList());
+		children.add(plant.getDrawings());
 		children.add(plant.getEquipmentList());
 		for (PlantSection plantSection : plant.getSections()) {
 			children.add(plantSection);
