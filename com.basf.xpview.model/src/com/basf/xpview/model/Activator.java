@@ -12,7 +12,13 @@ public class Activator extends AbstractUIPlugin {
 	public static final String IMPORT_MODE = "IMPORT_MODE"; //$NON-NLS-1$
 	
 	public static final String AVEVA_APPLY_EQUIPMENT_POSITION = "AVEVA_APPLY_EQUIPMENT_POSITION"; //$NON-NLS-1$
+	public static final String AVEVA_USE_CATALOG = "AVEVA_USE_CATALOG";
+	
 	public static final String AUTODESK_APPLY_EQUIPMENT_POSITION = "AUTODESK_APPLY_EQUIPMENT_POSITION"; //$NON-NLS-1$
+	public static final String AUTODESK_USE_CATALOG = "AUTODESK_USE_CATALOG";
+	
+	public static final String SIEMENS_APPLY_EQUIPMENT_POSITION = "SIEMENS_APPLY_EQUIPMENT_POSITION"; //$NON-NLS-1$
+	public static final String SIEMENS_USE_CATALOG = "SIEMENS_USE_CATALOG"; //$NON-NLS-1$
 	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.basf.xpview.model"; //$NON-NLS-1$

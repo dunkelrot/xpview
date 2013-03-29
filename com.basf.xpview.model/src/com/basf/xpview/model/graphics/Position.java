@@ -37,6 +37,11 @@ public class Position {
 	}
 	
 	public void normalize() {
+		if (direction.length() < 0.000001) {
+			direction.x = 1.0;
+			direction.y = 0.0;
+			direction.z = 0.0;
+		}
 		direction.normalize();
 		axis.normalize();
 	}

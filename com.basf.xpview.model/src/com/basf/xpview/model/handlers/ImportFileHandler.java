@@ -13,7 +13,7 @@ import com.basf.xpview.core.EventManager;
 import com.basf.xpview.model.Plant;
 import com.basf.xpview.model.events.EventTypes;
 import com.basf.xpview.model.graphics.RepresentationManager;
-import com.basf.xpview.model.io.xmplant.XMpLantImport;
+import com.basf.xpview.model.io.XMpLantImport;
 import com.basf.xpview.utils.ExceptionDialog;
 
 /**

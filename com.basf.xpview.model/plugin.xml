@@ -87,6 +87,39 @@
             id="PrefsPageImportAutoDesk"
             name="AutoDesk import">
       </page>
+      <page
+            category="PrefsPageImport"
+            class="com.basf.xpview.model.prefs.PrefsPageImportSiemens"
+            id="PrefsPageImportSiemens"
+            name="Siemens import">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="com.basf.xpview.perspective">
+         <view
+               closeable="false"
+               id="com.basf.xpview.model.issues.IssueTrackerView"
+               minimized="false"
+               moveable="true"
+               relationship="stack"
+               relative="com.basf.xpview.ui.MessageView"
+               showTitle="true"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="com.basf.xpview.model.issues.IssueTrackerView"
+            icon="icons/error.png"
+            id="com.basf.xpview.model.issues.IssueTrackerView"
+            name="IssueTracker"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>

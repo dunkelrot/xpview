@@ -16,6 +16,7 @@ public class PrefsPageImportAutoDesk extends FieldEditorPreferencePage implement
 	@Override
 	protected void createFieldEditors() {
 		addField(new BooleanFieldEditor(Activator.AUTODESK_APPLY_EQUIPMENT_POSITION, "Apply equipment position", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(Activator.AUTODESK_USE_CATALOG, "Reference catalog elements", getFieldEditorParent()));
 	}
 
 	@Override

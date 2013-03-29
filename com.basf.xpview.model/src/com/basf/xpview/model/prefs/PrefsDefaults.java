@@ -11,9 +11,17 @@ public class PrefsDefaults extends AbstractPreferenceInitializer {
 	@Override
 	public void initializeDefaultPreferences() {
 		IPreferenceStore prefs = Activator.getDefault().getPreferenceStore();
+		
 		prefs.setDefault(Activator.IMPORT_MODE, ImportMode.STRICT.toString());
+		
 		prefs.setDefault(Activator.AVEVA_APPLY_EQUIPMENT_POSITION, false);
+		prefs.setDefault(Activator.AVEVA_USE_CATALOG, false);
+		
 		prefs.setDefault(Activator.AUTODESK_APPLY_EQUIPMENT_POSITION, true);
+		prefs.setDefault(Activator.AUTODESK_USE_CATALOG, true);
+		
+		prefs.setDefault(Activator.SIEMENS_APPLY_EQUIPMENT_POSITION, false);
+		prefs.setDefault(Activator.SIEMENS_USE_CATALOG, false);
 	}
 
 }

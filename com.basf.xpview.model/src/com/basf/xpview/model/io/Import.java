@@ -9,6 +9,7 @@ public abstract class Import {
 
 	protected boolean equipmentPositionEnabled = false;
 	protected boolean flatSoEquipment = false;
+	protected boolean useCatalog = true;
 	
 	abstract public boolean canRead(File file);
 	
@@ -28,5 +29,13 @@ public abstract class Import {
 	
 	public boolean isFlatSoEquipment() {
 		return flatSoEquipment;
+	}
+	
+	public boolean isUseCatalog() {
+		return useCatalog;
+	}
+	
+	public void setUseCatalog(boolean useCatalog) {
+		this.useCatalog = useCatalog;
 	}
 }

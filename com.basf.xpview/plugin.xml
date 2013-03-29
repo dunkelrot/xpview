@@ -20,21 +20,6 @@
       </perspective>
    </extension>
    <extension
-         point="org.eclipse.ui.views">
-      <view
-            class="com.basf.xpview.plantviewer.views.PlantStructureView"
-            id="com.basf.xpview.plantviewer.views.PlantStructureView"
-            name="PlantStructureView"
-            restorable="true">
-      </view>
-      <view
-            class="com.basf.xpview.plantviewer.views.PropertyView"
-            id="com.basf.xpview.plantviewer.views.PropertyView"
-            name="PropertyView"
-            restorable="true">
-      </view>
-   </extension>
-   <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu">
@@ -64,33 +49,6 @@
       </menuContribution>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="com.basf.xpview.perspective">
-         <view
-               closeable="false"
-               id="com.basf.xpview.plantviewer.views.PlantStructureView"
-               minimized="false"
-               ratio="0.3"
-               relationship="left"
-               relative="org.eclipse.ui.editorss"
-               showTitle="true"
-               visible="true">
-         </view>
-         <view
-               closeable="true"
-               id="com.basf.xpview.plantviewer.views.PropertyView"
-               minimized="false"
-               moveable="true"
-               ratio="0.6"
-               relationship="bottom"
-               relative="com.basf.xpview.plantviewer.views.PlantStructureView"
-               showTitle="true"
-               visible="true">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
@@ -112,6 +70,33 @@
             file="toc.xml"
             primary="true">
       </toc>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="com.basf.xpview.ui.MessageView"
+            id="com.basf.xpview.ui.MessageView"
+            name="Messages"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="com.basf.xpview.perspective">
+         <view
+               closeable="false"
+               id="com.basf.xpview.ui.MessageView"
+               minimized="false"
+               moveable="true"
+               ratio="0.7"
+               relationship="bottom"
+               relative="org.eclipse.ui.editorss"
+               showTitle="true"
+               visible="true">
+         </view>
+      </perspectiveExtension>
    </extension>
 
 </plugin>
