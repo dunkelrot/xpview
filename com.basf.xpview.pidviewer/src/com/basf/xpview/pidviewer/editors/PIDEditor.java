@@ -64,5 +64,13 @@ public class PIDEditor extends EditorPart {
 	public void setFocus() {
 		viewer.setFocus();
 	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		if (viewer != null) {
+			viewer.dispose();
+		}
+	}
 
 }

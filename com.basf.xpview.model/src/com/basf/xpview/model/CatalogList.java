@@ -32,10 +32,10 @@ public class CatalogList extends Thing {
 		return catalog;
 	}
 	
-	public Equipment findEquipment(String name) {
-		Equipment result = null;
+	public PlantItem findPlantItem(String name) {
+		PlantItem result = null;
 		for (Catalog catalog : catalogs) {
-			result = catalog.findEquipment(name);
+			result = catalog.findPlantItem(name);
 			if (result == null) {
 				break;
 			}

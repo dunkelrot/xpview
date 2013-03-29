@@ -11,16 +11,16 @@ import java.util.List;
  * @author Arndt Teinert
  *
  */
-public class Equipment extends PlantItem implements TaggedItem, EquipmentContainer {
+public class Equipment extends PlantItem implements TaggedItem, PlantItemContainer {
 
 	protected ArrayList<Equipment> subEquipments;
 	protected ArrayList<EquipmentComponent> components;
 	protected ArrayList<Nozzle> nozzles;
 	
-	protected EquipmentContainer container;
+	protected PlantItemContainer container;
 	protected String tagId;
 	
-	public Equipment(String name, String tagId, EquipmentContainer container) {
+	public Equipment(String name, String tagId, PlantItemContainer container) {
 		super(name);
 		this.tagId = tagId;
 		this.container = container;
@@ -56,7 +56,7 @@ public class Equipment extends PlantItem implements TaggedItem, EquipmentContain
 	}
 	
 	public Nozzle addNozzle(String name, String tagId) {
-		Nozzle nozzle = new Nozzle(this, name, tagId);
+		Nozzle nozzle = new Nozzle(name, tagId, (PlantItem) this);
 		nozzles.add(nozzle);
 		return nozzle;
 	}
@@ -72,11 +72,15 @@ public class Equipment extends PlantItem implements TaggedItem, EquipmentContain
 	}
 
 	@Override
-	public void addEquipment(Equipment equipment) {
-		subEquipments.add(equipment);
+	public void addPlantItem(PlantItem plantItem) {
+		if (plantItem instanceof Equipment) {
+			subEquipments.add((Equipment) plantItem);
+		} else if (plantItem instanceof Nozzle) {
+			nozzles.add((Nozzle) plantItem);
+		}
 	}
 	
-	public EquipmentContainer getContainer() {
+	public PlantItemContainer getContainer() {
 		return container;
 	}
 	

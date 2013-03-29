@@ -2,31 +2,36 @@ package com.basf.xpview.model;
 
 import java.util.ArrayList;
 
-public class Catalog extends Thing implements EquipmentContainer {
+public class Catalog extends Thing implements PlantItemContainer {
 
-	protected ArrayList<Equipment> equipments;
+	protected ArrayList<PlantItem> plantItems;
+	
 	protected CatalogList catalogList;
 	
 	public Catalog(CatalogList catalogList, String name) {
 		super(name);
 		this.catalogList = catalogList;
-		this.equipments = new ArrayList<Equipment>();
+		this.plantItems = new ArrayList<PlantItem>();
 	}
 	
 	@Override
-	public void addEquipment(Equipment equipment) {
-		equipments.add(equipment);
+	public void addPlantItem(PlantItem plantItem) {
+		plantItems.add(plantItem);
 	}
 	
 	public CatalogList getParent() {
 		return catalogList;
 	}
 	
-	public Equipment findEquipment(String name) {
-		Equipment result = null;
-		for (Equipment equipment : equipments) {
-			if (equipment.getName().equals(name)) {
-				result = equipment;
+	public ArrayList<PlantItem> getPlantItems() {
+		return plantItems;
+	}
+	
+	public PlantItem findPlantItem(String name) {
+		PlantItem result = null;
+		for (PlantItem plantItem : plantItems) {
+			if (plantItem.getName().equals(name)) {
+				result = plantItem;
 				break;
 			}
 		}
@@ -34,3 +39,5 @@ public class Catalog extends Thing implements EquipmentContainer {
 	}
 	
 }
+
+

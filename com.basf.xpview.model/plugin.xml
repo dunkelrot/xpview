@@ -37,17 +37,17 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?before=additions">
-         <menu
-               id="File"
-               label="File">
-            <command
-                  commandId="com.basf.xpview.model.handlers.ImportFileHandler"
-                  icon="icons/disk.png"
-                  label="Open"
-                  style="push">
-            </command>
-         </menu>
+            locationURI="menu:com.basf.xpview.File?before=com.basf.xpview.Preferences">
+         <command
+               commandId="com.basf.xpview.model.handlers.ImportFileHandler"
+               icon="icons/disk.png"
+               label="Open"
+               style="push">
+         </command>
+         <separator
+               name="com.basf.xpview.model.separator1"
+               visible="true">
+         </separator>
       </menuContribution>
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?before=additions">
@@ -80,6 +80,12 @@
             class="com.basf.xpview.model.prefs.PrefsPageImportAVEVA"
             id="PrefsPageImportAVEVA"
             name="AVEVA import">
+      </page>
+      <page
+            category="PrefsPageImport"
+            class="com.basf.xpview.model.prefs.PrefsPageImportAutoDesk"
+            id="PrefsPageImportAutoDesk"
+            name="AutoDesk import">
       </page>
    </extension>
 

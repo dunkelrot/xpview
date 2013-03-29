@@ -28,6 +28,16 @@ public class EquipmentModifier implements org.eclipse.jface.util.IPropertyChange
 		}
 		EventManager.getInstance().sendEvent(new Event(this, EventTypes.SceneGraphModified, null));
 	}
+	
+	public void setPositionStatusForNozzles(Plant plant, boolean enabled) {
+		for (Equipment equipment : plant.getEquipmentList().getEquipments()) {
+			for (Nozzle nozzle : equipment.getNozzles()) {
+				SoNode node = RepresentationManager.getInstance().getNode(nozzle);
+				node.getPosition().setEnabled(enabled);
+			}
+		}
+		EventManager.getInstance().sendEvent(new Event(this, EventTypes.SceneGraphModified, null));
+	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -35,7 +45,10 @@ public class EquipmentModifier implements org.eclipse.jface.util.IPropertyChange
 			boolean enabled = ((Boolean) event.getNewValue()).booleanValue();
 			setPositionStatus(Workspace.getInstance().getPlant(), enabled);
 		}
+		if (event.getProperty().equals(Activator.AUTODESK_APPLY_EQUIPMENT_POSITION)) {
+			boolean enabled = ((Boolean) event.getNewValue()).booleanValue();
+			setPositionStatusForNozzles(Workspace.getInstance().getPlant(), enabled);
+		}
 	}
-	
 	
 }

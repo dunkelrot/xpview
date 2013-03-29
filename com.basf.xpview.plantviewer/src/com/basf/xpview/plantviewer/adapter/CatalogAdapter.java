@@ -1,23 +1,28 @@
 package com.basf.xpview.plantviewer.adapter;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.CatalogList;
+import com.basf.xpview.model.Catalog;
+import com.basf.xpview.model.Thing;
 import com.basf.xpview.plantviewer.Activator;
 
-public class CatalogListAdapter implements IWorkbenchAdapter {
+public class CatalogAdapter implements IWorkbenchAdapter {
 
 	protected ImageDescriptor icon;
 
-	public CatalogListAdapter() {
+	public CatalogAdapter() {
 		this.icon = Activator.getImageDescriptor("icons/package.png"); //$NON-NLS-1$
 	}
 	
 	@Override
 	public Object[] getChildren(Object o) {
-		CatalogList catalogList = (CatalogList) o;
-		return catalogList.getCatalogs().toArray();
+		Catalog catalog = (Catalog) o;
+		ArrayList<Thing> things = new ArrayList<Thing>();
+		things.addAll(catalog.getPlantItems());
+		return things.toArray();
 	}
 
 	@Override
@@ -27,13 +32,14 @@ public class CatalogListAdapter implements IWorkbenchAdapter {
 
 	@Override
 	public String getLabel(Object o) {
-		return "Catalogs";
+		Catalog catalog = (Catalog) o;
+		return catalog.getName(); 
 	}
 
 	@Override
 	public Object getParent(Object o) {
-		CatalogList catalogList = (CatalogList) o;
-		return catalogList.getParent();
+		Catalog catalog = (Catalog) o;
+		return catalog.getParent();
 	}
 
 }

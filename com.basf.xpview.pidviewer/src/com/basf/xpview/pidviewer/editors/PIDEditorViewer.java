@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Control;
 import com.basf.xpview.core.Event;
 import com.basf.xpview.core.EventListener;
 import com.basf.xpview.model.events.EventTypes;
-import com.basf.xpview.model.graphics.Renderer;
+import com.basf.xpview.model.graphics.SoGraphics;
 import com.basf.xpview.model.graphics.SoNode;
 import com.basf.xpview.pidviewer.utils.Graphics2DRenderer;
 
@@ -31,7 +31,7 @@ public class PIDEditorViewer implements EventListener {
 
 	protected Canvas canvas;
 	protected Composite parent;
-	protected Renderer renderer;
+	protected SoGraphics renderer;
 
 	protected double factor = 1.0;
 	
@@ -41,7 +41,7 @@ public class PIDEditorViewer implements EventListener {
 
 	public PIDEditorViewer(Composite parent) {
 		this.parent = parent;
-		this.renderer = new Renderer();
+		this.renderer = new SoGraphics();
 	}
 
 	public void init() {
@@ -104,4 +104,7 @@ public class PIDEditorViewer implements EventListener {
 		}
 	}
 
+	public void dispose() {
+		com.basf.xpview.core.EventManager.getInstance().unregisterForEvent(EventTypes.SceneGraphModified, this);
+	}
 }

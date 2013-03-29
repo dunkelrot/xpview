@@ -8,7 +8,7 @@
             allowMultiple="false"
             category="com.basf.xpview.plantviewer"
             class="com.basf.xpview.plantviewer.views.PlantStructureView"
-            icon="icons/sample.gif"
+            icon="icons/package.png"
             id="com.basf.xpview.plantviewer.views.PlantStructureView"
             name="Plant Structure">
       </view>

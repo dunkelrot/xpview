@@ -12,11 +12,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import com.basf.xpview.model.Activator;
 import com.basf.xpview.model.Catalog;
-import com.basf.xpview.model.Container;
 import com.basf.xpview.model.EquipmentContainer;
-import com.basf.xpview.model.EquipmentList;
 import com.basf.xpview.model.Plant;
+import com.basf.xpview.model.PlantItemContainer;
 import com.basf.xpview.model.PlantSection;
 import com.basf.xpview.model.PropertyData;
 import com.basf.xpview.model.PropertyList;
@@ -29,18 +29,28 @@ import com.basf.xpview.model.graphics.SoNode;
 import com.basf.xpview.model.graphics.SoPolyLine;
 import com.basf.xpview.model.graphics.SoShape;
 import com.basf.xpview.model.io.Import;
+import com.basf.xpview.model.io.ImportHints;
 
 public class XMpLantImport extends Import {
 
 	private Plant plant;
 	private SoGroup plantNode;
 	private RepresentationManager repManager;
-
+	
 	@Override
 	public boolean canRead(File file) {
 		return true;
 	}
 
+	protected void tweak(java.lang.String systemId) {
+		if (systemId.equals("AVEVAPID")) {
+			setEquipmentPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AVEVA_APPLY_EQUIPMENT_POSITION));
+		}
+		if (systemId.equals("Autodesk AutoCAD P&ID")) {
+			setEquipmentPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AUTODESK_APPLY_EQUIPMENT_POSITION));
+		}
+	}
+	
 	@Override
 	public Plant read(File file, RepresentationManager repManager)
 			throws Exception {
@@ -52,6 +62,8 @@ public class XMpLantImport extends Import {
 			
 			plant = new Plant(plantModel.getPlantInformation().getProjectName());
 			Workspace.getInstance().setPlant(plant);
+			
+			tweak(plantModel.getPlantInformation().getOriginatingSystem());
 			
 			plantNode = new SoGroup(null, repManager.getFreeId(), "Plant");
 			repManager.addNode(plantNode, plant);
@@ -67,7 +79,7 @@ public class XMpLantImport extends Import {
 		for (Object object : plantModel
 				.getPresentationOrShapeCatalogueOrDrawing()) {
 			if (object instanceof Equipment) {
-				handleEquipment((Equipment) object, plant.getEquipmentList(), false);
+				handleEquipment((Equipment) object, plant.getEquipmentList(), plantNode, false);
 			}
 			if (object instanceof Drawing) {
 				handleDrawing((Drawing) object, plant);
@@ -81,10 +93,17 @@ public class XMpLantImport extends Import {
 	protected void handleShapeCatalog(ShapeCatalogue _shapeCatalog, Plant plant) {
 		Catalog catalog = plant.getCatalogList().addCatalog(
 				_shapeCatalog.getName(), _shapeCatalog.getUnits());
+		
 		for (Object object : _shapeCatalog
 				.getEquipmentOrNozzleOrPipingComponent()) {
 			if (object instanceof Equipment) {
-				handleEquipment((Equipment) object, catalog, true);
+				handleEquipment((Equipment) object, catalog, null, true);
+			}
+			if (object instanceof Component) {
+				handleComponent((Component) object, catalog, null, true);
+			}
+			if (object instanceof Nozzle) {
+				handleNozzle((Nozzle) object, catalog, null, true);
 			}
 		}
 	}
@@ -141,55 +160,78 @@ public class XMpLantImport extends Import {
 			}
 		}
 	}
+	
+	protected SoGroup createSoGroup(com.basf.xpview.model.PlantItem plantItem, SoGroup parentNode, boolean fromCatalog) {
+		SoGroup plantItemNode = null;
+		if (fromCatalog == false) {
+			com.basf.xpview.model.PlantItem plantItemCatalog = plant.getCatalogList().findPlantItem(plantItem.getName());
+			if (plantItemCatalog != null) {
+				plantItemNode = (SoGroup) repManager.getNode(plantItemCatalog).clone(parentNode, repManager);
+			}
+			if (plantItemNode == null) {
+				plantItemNode = new SoGroup(parentNode, getNextId(), plantItem.getName());
+			}
+			parentNode.addNode(plantItemNode);
+		} else {
+			plantItemNode = new SoGroup(null, getNextId(), plantItem.getName());
+		}
+		repManager.addNode(plantItemNode, plantItem);
+		return plantItemNode;
+	}
+	
+	protected void handleNozzle(Nozzle _nozzle, PlantItemContainer parent, SoGroup parentNode, boolean fromCatalog) {
+		
+		com.basf.xpview.model.Nozzle nozzle = new com.basf.xpview.model.Nozzle(
+				_nozzle.getComponentName(), _nozzle.getTagName(), parent);
+		parent.addPlantItem(nozzle);
+		
+		SoGroup group = createSoGroup(nozzle, parentNode, fromCatalog);
+		if (equipmentPositionEnabled == false) {
+			group.getPosition().setEnabled(false);
+		}
+		
+		handlePlantItem(_nozzle, nozzle, group);
+	}
 
-	protected void handleEquipment(Equipment _equipment, EquipmentContainer parent, boolean fromCatalog) {
+	protected void handleComponent(Component _component, PlantItemContainer parent, SoGroup parentNode, boolean fromCatalog) {
+		
+		com.basf.xpview.model.Component component = new com.basf.xpview.model.Component(
+				_component.getComponentName(), _component.getTagName(), parent);
+		parent.addPlantItem(component);
+		
+		SoGroup group = createSoGroup(component, parentNode, fromCatalog);
+		if (equipmentPositionEnabled == false) {
+			group.getPosition().setEnabled(false);
+		}
+		
+		handlePlantItem(_component, component, group);
+	}
+	
+	protected void handleEquipment(Equipment _equipment, PlantItemContainer parent, SoGroup parentNode, boolean fromCatalog) {
 		
 		com.basf.xpview.model.Equipment equipment = new com.basf.xpview.model.Equipment(
 				_equipment.getComponentName(), _equipment.getTagName(), parent);
-		parent.addEquipment(equipment);
+		parent.addPlantItem(equipment);
 		
-		SoGroup equipmentNode = null;
-		SoGroup equipmentParentNode = null;
+		SoGroup equipmentNode = new SoGroup(plantNode, getNextId(), _equipment.getTagName());
+		plantNode.addNode(equipmentNode);
 		
-		if (fromCatalog == false) {
-			equipmentParentNode = (SoGroup) repManager.getNode(parent);
-			if (equipmentParentNode == null) {
-				equipmentParentNode = plantNode;
-			}
-			if (_equipment.getComponentName() != null) {
-				com.basf.xpview.model.Equipment catalogEquipment = plant.getCatalogList().findEquipment(_equipment.getComponentName());
-				if (catalogEquipment != null) {
-					equipmentNode = (SoGroup) repManager.getNode(catalogEquipment).clone(equipmentParentNode, repManager);
-				}
-			}
-			if (equipmentNode == null) {
-				equipmentNode = new SoGroup(equipmentParentNode, getNextId(), equipment.getName());
-			}
-			equipmentParentNode.addNode(equipmentNode);
-		} else {
-			equipmentNode = new SoGroup(null, getNextId(), equipment.getName());
-		}
-		repManager.addNode(equipmentNode, equipment);
-		
-		handlePlantItem(_equipment, equipment, equipmentNode);
+		SoGroup group = createSoGroup(equipment, equipmentNode, fromCatalog);
+		handlePlantItem(_equipment, equipment, group);
 
+		if (equipmentPositionEnabled == false) {
+			group.getPosition().setEnabled(false);
+		}
+		
 		// get all nozzles and subequipments
 		for (Object object : _equipment
 				.getDisciplineOrMinimumDesignPressureOrMaximumDesignPressure()) {
 			if (object instanceof Nozzle) {
-				
 				Nozzle _nozzle = (Nozzle) object;
-				com.basf.xpview.model.Nozzle nozzle = equipment.addNozzle(
-						_nozzle.getTagName(), _nozzle.getTagName());
-				
-				SoGroup nozzleNode = new SoGroup(equipmentNode, repManager.getFreeId(), nozzle.getName());
-				equipmentNode.addNode(nozzleNode);
-				repManager.addNode(nozzleNode, nozzle);
-				
-				handlePlantItem(_nozzle, nozzle, nozzleNode);
+				handleNozzle(_nozzle, equipment, equipmentNode, false);
 			}
 			if (object instanceof Equipment) {
-				handleEquipment((Equipment) object, equipment, false);
+				handleEquipment((Equipment) object, equipment, equipmentNode, false);
 			}
 		}
 

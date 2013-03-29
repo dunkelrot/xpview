@@ -39,10 +39,11 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu">
          <menu
-               id="File"
+               id="com.basf.xpview.File"
                label="File">
             <command
                   commandId="org.eclipse.ui.window.preferences"
+                  id="com.basf.xpview.Preferences"
                   label="Preferences"
                   style="push">
             </command>
@@ -51,10 +52,14 @@
                   id="org.eclipse.ui.file.exit.Exit"
                   label="Exit">
             </command>
-            <separator
-                  name="com.basf.xpview.separator1"
-                  visible="true">
-            </separator>
+         </menu>
+         <menu
+               label="Help">
+            <command
+                  commandId="org.eclipse.ui.help.displayHelp"
+                  label="Help"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -63,7 +68,7 @@
       <perspectiveExtension
             targetID="com.basf.xpview.perspective">
          <view
-               closeable="true"
+               closeable="false"
                id="com.basf.xpview.plantviewer.views.PlantStructureView"
                minimized="false"
                ratio="0.3"
@@ -95,7 +100,18 @@
                name="appName"
                value="XPView">
          </property>
+         <property
+               name="preferenceCustomization"
+               value="preferences.ini">
+         </property>
       </product>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
    </extension>
 
 </plugin>

@@ -5,11 +5,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 
 
-public class Renderer {
+public class SoGraphics {
 
 	protected Camera camera;
 	
-	public Renderer() {
+	public SoGraphics() {
 		this.camera = new Camera();
 	}
 	
@@ -53,8 +53,8 @@ public class Renderer {
 		if (camera.canSee(circle)) {
 			AffineTransform at = gc.getTransform();
 			if (circle.position.enabled) {
-				gc.rotate(circle.getPosition().rotationAngle);
 				gc.translate(circle.position.origin.x, circle.position.origin.y);
+				gc.rotate(circle.getPosition().rotationAngle);
 			}
 			gc.scale(circle.scale.x, circle.scale.y);
 			gc.setStroke(new TransformedStroke(circle.getStroke(), gc.getTransform()));

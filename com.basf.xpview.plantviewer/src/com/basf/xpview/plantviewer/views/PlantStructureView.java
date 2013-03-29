@@ -22,7 +22,9 @@ import org.eclipse.ui.part.ViewPart;
 import com.basf.xpview.core.Event;
 import com.basf.xpview.core.EventListener;
 import com.basf.xpview.core.EventManager;
+import com.basf.xpview.model.Catalog;
 import com.basf.xpview.model.CatalogList;
+import com.basf.xpview.model.Component;
 import com.basf.xpview.model.Drawing;
 import com.basf.xpview.model.DrawingList;
 import com.basf.xpview.model.Equipment;
@@ -36,7 +38,9 @@ import com.basf.xpview.model.graphics.RepresentationManager;
 import com.basf.xpview.model.graphics.SoNode;
 import com.basf.xpview.pidviewer.editors.PIDEditor;
 import com.basf.xpview.pidviewer.editors.PIDEditorInput;
+import com.basf.xpview.plantviewer.adapter.CatalogAdapter;
 import com.basf.xpview.plantviewer.adapter.CatalogListAdapter;
+import com.basf.xpview.plantviewer.adapter.ComponentAdapter;
 import com.basf.xpview.plantviewer.adapter.DrawingAdapter;
 import com.basf.xpview.plantviewer.adapter.DrawingListAdapter;
 import com.basf.xpview.plantviewer.adapter.EquipmentAdapter;
@@ -81,7 +85,8 @@ public class PlantStructureView extends ViewPart implements EventListener {
 		factory.registerAdapter(new DrawingAdapter(), Drawing.class);
 		factory.registerAdapter(new DrawingListAdapter(), DrawingList.class);
 		factory.registerAdapter(new CatalogListAdapter(), CatalogList.class);
-		
+		factory.registerAdapter(new CatalogAdapter(), Catalog.class);
+		factory.registerAdapter(new ComponentAdapter(), Component.class);
 		
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		// drillDownAdapter = new DrillDownAdapter(viewer);

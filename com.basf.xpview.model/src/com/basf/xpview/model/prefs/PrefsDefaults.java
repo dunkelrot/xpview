@@ -13,6 +13,7 @@ public class PrefsDefaults extends AbstractPreferenceInitializer {
 		IPreferenceStore prefs = Activator.getDefault().getPreferenceStore();
 		prefs.setDefault(Activator.IMPORT_MODE, ImportMode.STRICT.toString());
 		prefs.setDefault(Activator.AVEVA_APPLY_EQUIPMENT_POSITION, false);
+		prefs.setDefault(Activator.AUTODESK_APPLY_EQUIPMENT_POSITION, true);
 	}
 
 }
