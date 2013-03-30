@@ -57,7 +57,7 @@ public class SoGraphics {
 				gc.rotate(circle.getPosition().rotationAngle);
 			}
 			gc.scale(circle.scale.x, circle.scale.y);
-			// gc.setStroke(new TransformedStroke(circle.getStroke(), gc.getTransform()));
+			gc.setStroke(new TransformedStroke(circle.getStroke(), gc.getTransform()));
 			gc.draw(circle.getShape());
 			gc.setTransform(at);
 		}

@@ -34,16 +34,6 @@ public abstract class PlantItem extends Thing implements PropertyItem {
 		return parent;
 	}
 	
-	@Override
-	public Property getProperty(String name) {
-		return propertyData.getProperty(name);
-	}
-	
-	@Override
-	public String getPropertyValue(String name) {
-		return propertyData.getPropertyValue(name);
-	}
-	
 	public String getClassName() {
 		return className;
 	}

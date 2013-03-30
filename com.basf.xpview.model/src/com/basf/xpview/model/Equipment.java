@@ -20,19 +20,16 @@ public class Equipment extends PlantItem implements TaggedItem, PlantItemContain
 	protected PlantItemContainer container;
 	protected String tagId;
 	
+	/**
+	 * Constructor, nothing special about this.
+	 * @param name the name for this {@link Equipment}
+	 * @param tagId the TAGID for this {@link Equipment}
+	 * @param container the owning container, can be null
+	 */
 	public Equipment(String name, String tagId, PlantItemContainer container) {
 		super(name);
 		this.tagId = tagId;
 		this.container = container;
-		this.components = new ArrayList<EquipmentComponent>();
-		this.subEquipments = new ArrayList<Equipment>();
-		this.nozzles = new ArrayList<Nozzle>();
-	}
-	
-	public Equipment(String name, String tagId, Equipment equipment) {
-		super(name, equipment);
-		this.tagId = tagId;
-		this.container = equipment;
 		this.components = new ArrayList<EquipmentComponent>();
 		this.subEquipments = new ArrayList<Equipment>();
 		this.nozzles = new ArrayList<Nozzle>();
@@ -80,6 +77,10 @@ public class Equipment extends PlantItem implements TaggedItem, PlantItemContain
 		}
 	}
 	
+	/**
+	 * Returns the owning container.
+	 * @return the owning container, can be null
+	 */
 	public PlantItemContainer getContainer() {
 		return container;
 	}

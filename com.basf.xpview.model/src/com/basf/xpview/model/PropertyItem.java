@@ -1,24 +1,17 @@
 package com.basf.xpview.model;
 
+/**
+ * All objects which have properties (or lists of properties) should implement this interface.
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public interface PropertyItem {
 
+	/**
+	 * Returns the {@link PropertyData} objects which actually manages the {@link Property}s
+	 * @return the returned value is never null
+	 */
 	PropertyData getPropertyData();
 	
-	/**
-	 * Returns the first found property or null.
-	 *  
-	 * @param name
-	 * @return property instance of null
-	 */
-	Property getProperty(String name);
-	
-	/**
-	 * Returns the value from the given property.
-	 * The first found property is used to get the value.
-	 * In case no property is found "<UNDEFINED>" is returned.
-	 *  
-	 * @param name
-	 * @return value or <UNDEFINED>
-	 */
-	String getPropertyValue(String name);
 }

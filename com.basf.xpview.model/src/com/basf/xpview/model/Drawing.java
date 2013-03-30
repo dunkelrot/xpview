@@ -1,10 +1,21 @@
 package com.basf.xpview.model;
 
+/**
+ * A Drawing represents one piece of digital paper. 
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class Drawing extends Thing implements PropertyItem {
 	
 	protected PropertyData propertyData;
 	protected DrawingList drawingList;
 
+	/**
+	 * Constructor, nothing special about this.
+	 * @param drawingList
+	 * @param name
+	 */
 	public Drawing(DrawingList drawingList, String name) {
 		super(name);
 		this.drawingList = drawingList;
@@ -16,16 +27,10 @@ public class Drawing extends Thing implements PropertyItem {
 		return propertyData;
 	}
 	
-	@Override
-	public Property getProperty(String name) {
-		return propertyData.getProperty(name);
-	}
-	
-	@Override
-	public String getPropertyValue(String name) {
-		return propertyData.getPropertyValue(name);
-	}
-	
+	/**
+	 * Returns the owning {@link DrawingList} object
+	 * @return the owning {@link DrawingList}
+	 */
 	public DrawingList getDrawingList() {
 		return drawingList;
 	}

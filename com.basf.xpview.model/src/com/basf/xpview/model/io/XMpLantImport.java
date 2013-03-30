@@ -46,6 +46,7 @@ import com.basf.xpview.model.io.xmplant.GenericAttributes;
 import com.basf.xpview.model.io.xmplant.Label;
 import com.basf.xpview.model.io.xmplant.Line;
 import com.basf.xpview.model.io.xmplant.Nozzle;
+import com.basf.xpview.model.io.xmplant.PlantInformation;
 import com.basf.xpview.model.io.xmplant.PlantItem;
 import com.basf.xpview.model.io.xmplant.PlantModel;
 import com.basf.xpview.model.io.xmplant.PolyLine;
@@ -55,6 +56,7 @@ import com.basf.xpview.model.io.xmplant.ScopeBubble;
 import com.basf.xpview.model.io.xmplant.Shape;
 import com.basf.xpview.model.io.xmplant.ShapeCatalogue;
 import com.basf.xpview.model.io.xmplant.Text;
+import com.basf.xpview.model.io.xmplant.UnitsOfMeasure;
 import com.basf.xpview.model.issues.IssueList;
 import com.basf.xpview.model.issues.IssueTracker;
 import com.basf.xpview.model.issues.IssueType;
@@ -118,10 +120,10 @@ public class XMpLantImport extends Import {
 	}
 
 	protected void tweak(java.lang.String systemId) {
-		log.info("Adjusting import confiuration for " + systemId);
+		log.info("Adjusting import configuration for " + systemId);
 		if (systemId.equals("AVEVAPID")) {
 			setEquipmentPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AVEVA_APPLY_EQUIPMENT_POSITION));
-			setUseCatalog(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AUTODESK_USE_CATALOG));
+			setUseCatalog(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AVEVA_USE_CATALOG));
 		}
 		if (systemId.equals("Autodesk AutoCAD P&ID")) {
 			setEquipmentPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AUTODESK_APPLY_EQUIPMENT_POSITION));
@@ -139,10 +141,56 @@ public class XMpLantImport extends Import {
 	
 	protected java.lang.String getStringValue(Object source, java.lang.String description, java.lang.String value) {
 		if (value == null) {
-			reportIssue("Value for " + description + " is not defined!", IssueType.WARNING);
+			reportIssue("Value for " + description + " is not defined! " + getObjectName(source), IssueType.WARNING);
 			return "<UNDEFINED>";
 		} else {
 			return value;
+		}
+	}
+	
+	protected void setScaleFactor(PlantInformation plantInfo) {
+		UnitsOfMeasure uom = plantInfo.getUnitsOfMeasure();
+		if (uom != null) {
+			switch (uom.getDistance()) {
+			case CENTIMETRE:
+			case CM:
+				scaleFactor = 10.0;
+				break;
+			case DECIMETRE:
+				scaleFactor = 10.0;
+				break;
+			case FOOT:
+			case FT:
+				scaleFactor = 304.8;
+				break;
+			case IN:
+			case INCH:
+				scaleFactor = 25.4;
+				break;
+			case KILOMETRE:
+			case KM:
+				scaleFactor = 1000000.0;
+				break;
+			case M:
+			case METRE:
+				scaleFactor = 1000.0;
+				break;
+			case MICRON:
+				scaleFactor = 0.001;
+				break;
+			case MILE:
+				scaleFactor = 1609344.0;
+				break;
+			case YARD:
+			case YD:
+				scaleFactor = 914.4;
+				break;
+			case MILLIMETRE:
+			case MM:
+				scaleFactor = 1.0;
+				break;
+			}
+			log.info("Scaling is: " + uom.getDistance().toString() + " -> " + scaleFactor );
 		}
 	}
 	
@@ -159,12 +207,18 @@ public class XMpLantImport extends Import {
 			Unmarshaller um = context.createUnmarshaller();
 			PlantModel plantModel = (PlantModel) um.unmarshal(file);
 
-			plant = new Plant("");
+			plant = new Plant("<UNDEFINED>");
 			issueList = IssueTracker.getInstance().addIssueList(plant);
 			issueContext.addFirst(plantModel);
 			
-			java.lang.String projectName = getStringValue(plant, "ProjectName", plantModel.getPlantInformation().getProjectName());
-			plant.setName(projectName);
+			PlantInformation plantInfo = plantModel.getPlantInformation();
+			if (plantInfo != null) {
+				java.lang.String projectName = getStringValue(plantInfo, "ProjectName", plantInfo.getProjectName());
+				plant.setName(projectName);
+				setScaleFactor(plantInfo);
+			} else {
+				reportIssue("Missing PlantInformation, assuming mm as units", IssueType.WARNING);
+			}
 			
 			Workspace.getInstance().setPlant(plant);
 			tweak(plantModel.getPlantInformation().getOriginatingSystem());
@@ -200,8 +254,12 @@ public class XMpLantImport extends Import {
 	}
 
 	protected void handleShapeCatalog(ShapeCatalogue _shapeCatalog, Plant plant) {
+		String catalogName = getStringValue(_shapeCatalog, "Name", _shapeCatalog.getName());
+		if (plant.getCatalogList().hasCatalog(catalogName)) {
+			reportIssue("Catalog with name " + catalogName + " already exists.", IssueType.WARNING);
+		}
 		Catalog catalog = plant.getCatalogList().addCatalog(
-				_shapeCatalog.getName(), _shapeCatalog.getUnits());
+				catalogName, _shapeCatalog.getUnits());
 		
 		for (Object object : _shapeCatalog
 				.getEquipmentOrNozzleOrPipingComponent()) {

@@ -5,12 +5,14 @@ import java.util.List;
 
 public class EquipmentComponent implements PropertyItem {
 
-	String name;
+	protected PropertyData propertyData;
+	protected String name;
 	protected ArrayList<EquipmentComponent> components;
 	
 	public EquipmentComponent(String name) {
 		this.name = name;
 		this.components = new ArrayList<EquipmentComponent>();
+		this.propertyData = new PropertyData(this);
 	}
 	
 	public List<EquipmentComponent> getComponents() {
@@ -23,19 +25,7 @@ public class EquipmentComponent implements PropertyItem {
 
 	@Override
 	public PropertyData getPropertyData() {
-		// TODO Auto-generated method stub
-		return null;
+		return propertyData;
 	}
 	
-	@Override
-	public Property getProperty(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public String getPropertyValue(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
