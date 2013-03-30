@@ -45,7 +45,7 @@ public class PIDEditorViewer implements EventListener {
 	}
 
 	public void init() {
-		canvas = new Canvas(parent, SWT.NONE);
+		canvas = new Canvas(parent, SWT.NO_BACKGROUND );
 
 		canvas.addMouseWheelListener(new MouseWheelListener() {
 			

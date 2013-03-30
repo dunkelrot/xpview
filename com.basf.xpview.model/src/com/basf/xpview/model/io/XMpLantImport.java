@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import com.basf.xpview.model.Activator;
 import com.basf.xpview.model.Catalog;
+import com.basf.xpview.model.DrawingSizeType;
 import com.basf.xpview.model.Plant;
 import com.basf.xpview.model.PlantItemContainer;
 import com.basf.xpview.model.PlantSection;
@@ -141,11 +142,29 @@ public class XMpLantImport extends Import {
 	
 	protected java.lang.String getStringValue(Object source, java.lang.String description, java.lang.String value) {
 		if (value == null) {
-			reportIssue("Value for " + description + " is not defined! " + getObjectName(source), IssueType.WARNING);
+			reportIssue("Value for " + description + " is not defined! ", IssueType.WARNING);
 			return "<UNDEFINED>";
 		} else {
 			return value;
 		}
+	}
+	
+	protected DrawingSizeType getSizeType(String sizeTypeDesc) {
+		DrawingSizeType result = null;
+		sizeTypeDesc = sizeTypeDesc.toUpperCase();
+		for (DrawingSizeType type : DrawingSizeType.values()) {
+			if (type.name().equals(sizeTypeDesc)) {
+				result = type;
+				log.warn("Drawing size: " + result.name());
+			}
+		}
+		
+		if (result == null) {
+			log.warn("No Drawing size defined, assuming A1!");
+			result = DrawingSizeType.A1;
+		}
+		
+		return result;
 	}
 	
 	protected void setScaleFactor(PlantInformation plantInfo) {
@@ -254,6 +273,8 @@ public class XMpLantImport extends Import {
 	}
 
 	protected void handleShapeCatalog(ShapeCatalogue _shapeCatalog, Plant plant) {
+		issueContext.addFirst(_shapeCatalog);
+		
 		String catalogName = getStringValue(_shapeCatalog, "Name", _shapeCatalog.getName());
 		if (plant.getCatalogList().hasCatalog(catalogName)) {
 			reportIssue("Catalog with name " + catalogName + " already exists.", IssueType.WARNING);
@@ -273,9 +294,14 @@ public class XMpLantImport extends Import {
 				handleNozzle((Nozzle) object, catalog, null, true, true);
 			}
 		}
+		
+		issueContext.removeFirst();
 	}
 
 	protected void handleCurves(Object curve, SoGroup group) {
+		
+		issueContext.addFirst(curve);
+		
 		if (curve instanceof PolyLine) {
 			handleCurve((Curve) curve, group);
 		}
@@ -288,6 +314,8 @@ public class XMpLantImport extends Import {
 		if (curve instanceof Circle) {
 			handleCircle((Circle) curve, group);
 		}
+		
+		issueContext.removeFirst();
 	}
 
 	protected void handleDrawing(Drawing _drawing, PlantSection plantSection) {
@@ -296,6 +324,10 @@ public class XMpLantImport extends Import {
 		
 		com.basf.xpview.model.Drawing drawing = plantSection.getDrawings()
 				.addDrawing(_drawing.getName());
+		
+		String size = getStringValue(_drawing, "Drawing size", _drawing.getSize());
+		drawing.setSize(getSizeType(size));
+		
 		PropertyData propData = drawing.getPropertyData();
 		handleAttributes(_drawing, propData.addPropertyList("Default"));
 		handleGenericAttributes(_drawing, propData);
@@ -316,7 +348,7 @@ public class XMpLantImport extends Import {
 				// TODO
 			}
 			if (object instanceof DrawingBorder) {
-				// TODO
+				handleDrawingBorder((DrawingBorder) object, drawing.getBorder(), drawingNode);
 			}
 			if (object instanceof Label) {
 				// TODO
@@ -330,6 +362,27 @@ public class XMpLantImport extends Import {
 		}
 		
 		issueContext.removeFirst();
+	}
+	
+	protected void handleDrawingBorder(DrawingBorder _border, com.basf.xpview.model.DrawingBorder border, SoGroup parentNode) {
+		SoGroup group = new SoGroup(parentNode, getNextId(), "Border");
+		group.getPosition().setEnabled(equipmentPositionEnabled);
+		parentNode.addNode(group);
+		
+		PropertyData propData = border.getPropertyData();
+		handleAttributes(_border, propData.addPropertyList("Default"));
+		
+		for (Object object : _border.getCurveOrTextOrGenericAttributes()) {
+			if (object instanceof JAXBElement) {
+				JAXBElement<?> jaxbElement = (JAXBElement<?>) object;
+				Object obj = jaxbElement.getValue();
+				handleCurves(obj, group);
+			}
+			if (object instanceof GenericAttributes) {
+				handleGenericAttributes((GenericAttributes) object,
+						propData);
+			}
+		}
 	}
 	
 	protected SoGroup createSoGroup(com.basf.xpview.model.PlantItem plantItem, SoGroup parentNode, boolean createCatalogElement) {

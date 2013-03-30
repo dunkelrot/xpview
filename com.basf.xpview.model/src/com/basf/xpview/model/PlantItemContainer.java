@@ -10,6 +10,8 @@ public interface PlantItemContainer {
 
 	/**
 	 * Adds the given {@link PlantItem} to this container.
+	 * It depends on the implementation how the {@link PlantItem} is stored.
+	 *  
 	 * @param plantItem the item to add
 	 */
 	void addPlantItem(PlantItem plantItem);

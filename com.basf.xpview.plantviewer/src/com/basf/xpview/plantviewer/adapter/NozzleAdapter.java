@@ -4,6 +4,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 import com.basf.xpview.model.Nozzle;
+import com.basf.xpview.model.PropertyList;
 import com.basf.xpview.plantviewer.Activator;
 
 public class NozzleAdapter implements IWorkbenchAdapter {
@@ -27,7 +28,16 @@ public class NozzleAdapter implements IWorkbenchAdapter {
 	@Override
 	public String getLabel(Object o) {
 		Nozzle nozzle = (Nozzle) o;
-		return nozzle.getName();
+		String label = nozzle.getName(); 
+		PropertyList defaultProps = nozzle.getPropertyData().getProperyList("Default");
+		if (defaultProps != null) {
+			StringBuffer buffer = new StringBuffer();
+			buffer.append(defaultProps.getPropertyValue("TagName") + " ");
+			buffer.append(defaultProps.getPropertyValue("ComponentClass") + " ");
+			buffer.append(defaultProps.getPropertyValue("ComponentName"));
+			label = buffer.toString().trim();
+		}
+		return label;
 	}
 
 	@Override

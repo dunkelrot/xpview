@@ -2,6 +2,12 @@ package com.basf.xpview.model.events;
 
 import com.basf.xpview.core.EventType;
 
+/**
+ * Events which this plug-in can send.
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class EventTypes {
 
 	static public final EventType FileImported 		  = new EventType("com.basf.xpview.model.FileImported");

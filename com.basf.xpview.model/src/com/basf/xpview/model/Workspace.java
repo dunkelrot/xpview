@@ -1,8 +1,5 @@
 package com.basf.xpview.model;
 
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
-
 import com.basf.xpview.model.modifier.EquipmentModifier;
 
 public class Workspace {
@@ -15,11 +12,6 @@ public class Workspace {
 	
 	private Workspace() {
 		this.modifier = new EquipmentModifier();
-		/*
-		IEclipsePreferences preferences = ConfigurationScope.INSTANCE
-				  .getNode("com.basf.xpview.model.preferences");
-		preferences.addPreferenceChangeListener(modifier);
-		*/
 		Activator.getDefault().getPreferenceStore().addPropertyChangeListener(modifier);
 	}
 	

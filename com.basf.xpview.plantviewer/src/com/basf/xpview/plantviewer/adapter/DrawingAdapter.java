@@ -28,7 +28,7 @@ public class DrawingAdapter implements IWorkbenchAdapter {
 	@Override
 	public String getLabel(Object o) {
 		Drawing drawing = (Drawing) o;
-		return drawing.getPropertyValue("Name");
+		return drawing.getPropertyData().getPropertyValue("Name");
 	}
 
 	@Override

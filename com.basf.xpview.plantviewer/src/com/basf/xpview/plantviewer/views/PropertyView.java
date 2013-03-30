@@ -93,6 +93,8 @@ public class PropertyView extends ViewPart implements EventListener, ISelectionC
 		EventManager.getInstance().registerForEvent(EventTypes.FileImported, this);
 		
 		hookDoubleClickAction();
+		
+		selectionChanged(this, getSite().getPage().getSelection());
 	}
 
 	@Override
