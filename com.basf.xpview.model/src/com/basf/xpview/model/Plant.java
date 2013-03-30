@@ -1,5 +1,8 @@
 package com.basf.xpview.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Root element of the data model.
  * 
@@ -20,6 +23,17 @@ public class Plant extends PlantSection {
 	
 	public EquipmentList getEquipmentList() {
 		return equipmentList;
+	}
+	
+	public List<PlantItem> getAllPlantItems() {
+		ArrayList<PlantItem> plantItems = new ArrayList<PlantItem>();
+		for (Equipment equipment : equipmentList) {
+			plantItems.add(equipment);
+			for (Nozzle nozzle : equipment.getNozzles()) {
+				plantItems.add(nozzle);
+			}
+		}
+		return plantItems;
 	}
 	
 	@Override

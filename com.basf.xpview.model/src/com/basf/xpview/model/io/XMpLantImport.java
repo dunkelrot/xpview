@@ -503,6 +503,10 @@ public class XMpLantImport extends Import {
 			com.basf.xpview.model.PlantItem plantItem) {
 
 		PropertyData propData = plantItem.getPropertyData();
+		
+		plantItem.setClassName(getStringValue(_plantItem, "ComponentClass", _plantItem.getComponentClass()));
+		plantItem.setTagName(getStringValue(_plantItem, "TagName", _plantItem.getTagName()));
+		
 		handleAttributes(_plantItem, propData.addPropertyList("Default"));
 		handleGenericAttributes(_plantItem, propData);
 	}

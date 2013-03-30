@@ -20,6 +20,10 @@
             class="com.basf.xpview.model.handlers.ImportFileHandler"
             commandId="com.basf.xpview.model.handlers.ImportFileHandler">
       </handler>
+      <handler
+            class="com.basf.xpview.model.handlers.ExcelReport"
+            commandId="com.basf.xpview.model.handlers.ExcelReport">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -53,6 +57,14 @@
                   commandId="com.basf.xpview.model.handlers.ImportFileHandler"
                   icon="icons/disk.png"
                   id="com.basf.xpview.model.toolbars.ImportFileHandler"
+                  label="Import file"
+                  style="push">
+            </command>
+            <command
+                  commandId="com.basf.xpview.model.handlers.ExcelReport"
+                  icon="icons/table-export.png"
+                  id="com.basf.xpview.model.handlers.ExcelReport"
+                  label="Excel Export"
                   style="push">
             </command>
          </toolbar>
