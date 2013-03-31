@@ -1,12 +1,13 @@
 package com.basf.xpview.model.report.adapter;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ICheckStateProvider;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
 import com.basf.xpview.model.Activator;
 import com.basf.xpview.model.report.ReportProperty;
 
-public class ReportPropertyAdapter implements IWorkbenchAdapter {
+public class ReportPropertyAdapter implements IWorkbenchAdapter, ICheckStateProvider {
 
 	protected ImageDescriptor iconDuplicate;
 	protected ImageDescriptor iconSingle;
@@ -41,6 +42,17 @@ public class ReportPropertyAdapter implements IWorkbenchAdapter {
 	public Object getParent(Object o) {
 		ReportProperty reportProperty = (ReportProperty) o;
 		return reportProperty.getParent();
+	}
+
+	@Override
+	public boolean isChecked(Object element) {
+		ReportProperty reportProperty = (ReportProperty) element;
+		return reportProperty.isChecked();
+	}
+
+	@Override
+	public boolean isGrayed(Object element) {
+		return false;
 	}
 	
 }

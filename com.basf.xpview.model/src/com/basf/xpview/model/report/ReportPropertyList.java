@@ -1,11 +1,12 @@
 package com.basf.xpview.model.report;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.basf.xpview.model.Property;
 
-public class ReportPropertyList {
+public class ReportPropertyList implements Iterable<ReportProperty> {
 	
 	protected ArrayList<ReportProperty> propertyList;
 	protected ReportPropertyData parent;
@@ -51,4 +52,32 @@ public class ReportPropertyList {
 		return reportProperty;
 	}
 	
+	@Override
+	public Iterator<ReportProperty> iterator() {
+		return propertyList.iterator();
+	}
+	
+	public void setChecked(boolean checked) {
+		for (ReportProperty reportProp : propertyList) {
+			reportProp.setChecked(checked);
+		}
+	}
+
+	public boolean isOnePropertyChecked() {
+		for (ReportProperty reportProp : propertyList) {
+			if (reportProp.isChecked() == true) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isOnePropertyUnchecked() {
+		for (ReportProperty reportProp : propertyList) {
+			if (reportProp.isChecked() == false) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

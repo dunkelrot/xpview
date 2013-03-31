@@ -22,6 +22,6 @@ public class ReportWizardPageProperties extends WizardPage {
 	}
 	
 	public void updateControl() {
-		control.updateView();
+		control.update();
 	}
 }

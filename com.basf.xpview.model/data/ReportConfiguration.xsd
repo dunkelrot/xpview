@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/ReportConfiguration" xmlns:tns="http://www.example.org/ReportConfiguration" elementFormDefault="qualified">
+
+    <complexType name="ConfigEntry">
+    	<attribute name="listName" type="string"></attribute>
+    	<attribute name="propertyName" type="string"></attribute>
+    </complexType>
+
+    <complexType name="Configuration">
+    	<sequence>
+    		<element name="ConfigEntry" type="tns:ConfigEntry" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="name" type="string"></attribute>
+    </complexType>
+
+    <element name="ConfigurationList">
+    	<complexType>
+    		<sequence>
+    			<element name="Configuration" type="tns:Configuration" maxOccurs="unbounded" minOccurs="0"></element>
+    		</sequence>
+    		<attribute name="name" type="string"></attribute>
+    	</complexType>
+    </element>
+</schema>

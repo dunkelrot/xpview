@@ -18,6 +18,7 @@ public class ReportWizardPageTypes extends WizardPage implements ContentVerifica
 		control.setVerifyListener(this);
 		setControl(control);
 		setPageComplete(false);
+		setErrorMessage("Select output file");
 	}
 
 	@Override
@@ -32,6 +33,18 @@ public class ReportWizardPageTypes extends WizardPage implements ContentVerifica
 	
 	public String getClassName() {
 		return control.getClassName();
+	}
+
+	public String getConfigurationName() {
+		return control.getConfigurationName();
+	}
+	
+	public String getOutputFilePath() {
+		return control.getOutputFilePath();
+	}
+	
+	public void updateControl() {
+		control.update();
 	}
 	
 }

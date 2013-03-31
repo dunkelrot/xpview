@@ -10,11 +10,10 @@ import com.basf.xpview.model.Workspace;
 
 public class ReportWizard extends Wizard {
 
-	protected ReportConfiguration configuration;
 	protected ReportPropertyData reportPropertyData;
 	protected ReportWizardPageProperties propertiesPage;
 	protected ReportWizardPageTypes typesPage;
-
+	
 	public ReportWizard() {
 		this.reportPropertyData = new ReportPropertyData();
 	}
@@ -37,8 +36,12 @@ public class ReportWizard extends Wizard {
 												.getInstance().getPlant(),
 										typesPage.getType(), typesPage
 												.getClassName());
+								ReportConfigurations.getInstance().load(typesPage.getConfigurationName(), reportPropertyData);
 								propertiesPage.updateControl();
 							}
+							if (event.getSelectedPage() == typesPage) {
+								typesPage.updateControl();
+							}							
 						}
 					});
 		}
@@ -53,11 +56,12 @@ public class ReportWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		return false;
+		reportPropertyData.setOutputFilePath(typesPage.getOutputFilePath());
+		return true;
 	}
 
-	public ReportConfiguration getConfiguration() {
-		return configuration;
+	public ReportPropertyData getReportPropertyData() {
+		return reportPropertyData;
 	}
-
+	
 }

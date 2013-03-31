@@ -21,8 +21,8 @@
             commandId="com.basf.xpview.model.handlers.ImportFileHandler">
       </handler>
       <handler
-            class="com.basf.xpview.model.handlers.ExcelReport"
-            commandId="com.basf.xpview.model.handlers.ExcelReport">
+            class="com.basf.xpview.model.handlers.ExcelReportHandler"
+            commandId="com.basf.xpview.model.handlers.ExcelReportHandler">
       </handler>
    </extension>
    <extension
@@ -40,7 +40,7 @@
             locationURI="menu:com.basf.xpview.File?before=com.basf.xpview.Preferences">
          <command
                commandId="com.basf.xpview.model.handlers.ImportFileHandler"
-               icon="icons/disk.png"
+               icon="icons/folder-horizontal-open.png"
                label="Open"
                style="push">
          </command>
@@ -55,15 +55,15 @@
                id="com.basf.xpview.model.toolbar1">
             <command
                   commandId="com.basf.xpview.model.handlers.ImportFileHandler"
-                  icon="icons/disk.png"
+                  icon="icons/folder-horizontal-open.png"
                   id="com.basf.xpview.model.toolbars.ImportFileHandler"
                   label="Import file"
                   style="push">
             </command>
             <command
-                  commandId="com.basf.xpview.model.handlers.ExcelReport"
+                  commandId="com.basf.xpview.model.handlers.ExcelReportHandler"
                   icon="icons/table-export.png"
-                  id="com.basf.xpview.model.handlers.ExcelReport"
+                  id="com.basf.xpview.model.handlers.ExcelReportHandler"
                   label="Excel Export"
                   style="push">
             </command>

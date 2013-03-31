@@ -10,6 +10,8 @@ import com.basf.xpview.model.PropertyList;
 
 public class ReportService {
 
+	static final public String ClassNameALL = "All";
+	
 	static public ReportPropertyData createReportPropertyData(Plant plant, Class<?> plantItemType, String className) {
 		ReportPropertyData propData = new ReportPropertyData();
 		updateReportPropertyData(propData, plant, plantItemType, className);
@@ -23,8 +25,8 @@ public class ReportService {
 		propData.setPlantItemType(plantItemType);
 		
 		for (PlantItem plantItem : plant.getAllPlantItems()) {
-			if (plantItem.getClass() == plantItemType) {
-				if (plantItem.getClassName().equals(className)) {
+			if (plantItemType.isAssignableFrom(plantItem.getClass())) {
+				if (plantItem.getClassName().equals(className) || className.equals(ClassNameALL)) {
 					for (PropertyList propList : plantItem.getPropertyData().getProperyLists()) {
 						ReportPropertyList repPropList = propData.add(propList.getName());
 						for (Property property : propList.getProperties()) {
@@ -39,7 +41,7 @@ public class ReportService {
 	static public Set<String> getAllComponentClasses(Plant plant, Class<?> plantItemType) {
 		Set<String> classNames = new LinkedHashSet<String>();
 		for (PlantItem plantItem : plant.getAllPlantItems()) {
-			if (plantItem.getClass() == plantItemType) {
+			if (plantItemType.isAssignableFrom(plantItem.getClass())) {
 				classNames.add(plantItem.getClassName());
 			}
 		}
