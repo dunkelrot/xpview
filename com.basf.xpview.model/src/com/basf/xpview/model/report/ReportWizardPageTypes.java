@@ -2,21 +2,23 @@ package com.basf.xpview.model.report;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 public class ReportWizardPageTypes extends WizardPage implements ContentVerificationListener {
 
-	protected TypesControl control;
+	protected TypesControl typesControl;
 	protected ReportPropertyData reportPropertyData;
 	
 	public ReportWizardPageTypes(String pageName, ReportPropertyData reportPropertyData) {
 		super(pageName, "Select type of elements to report", null);
+		this.reportPropertyData = reportPropertyData;
 	}
 	
 	@Override
 	public void createControl(Composite parent) {
-		control = new TypesControl(parent);
-		control.setVerifyListener(this);
-		setControl(control);
+		typesControl = new TypesControl(parent, reportPropertyData);
+		typesControl.setVerifyListener(this);
+		setControl(typesControl);
 		setPageComplete(false);
 		setErrorMessage("Select output file");
 	}
@@ -27,24 +29,17 @@ public class ReportWizardPageTypes extends WizardPage implements ContentVerifica
 		setErrorMessage(message);
 	}
 	
-	public Class<?> getType() {
-		return control.getType();
-	}
-	
-	public String getClassName() {
-		return control.getClassName();
+	public void updateControl() {
+		typesControl.update();
 	}
 
-	public String getConfigurationName() {
-		return control.getConfigurationName();
+	public TypesControl getTypesControl() {
+		return typesControl;
 	}
 	
-	public String getOutputFilePath() {
-		return control.getOutputFilePath();
+	@Override
+	public void dispose() {
+		super.dispose();
+		typesControl.dispose();
 	}
-	
-	public void updateControl() {
-		control.update();
-	}
-	
 }

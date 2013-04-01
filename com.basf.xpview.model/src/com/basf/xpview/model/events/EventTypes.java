@@ -16,4 +16,5 @@ public class EventTypes {
 	static public final EventType IssueListCreated 	  = new EventType("com.basf.xpview.model.IssueListCreated");
 	static public final EventType IssueListRemoved 	  = new EventType("com.basf.xpview.model.IssueListRemoved");
 	static public final EventType IssueListRemovedAll = new EventType("com.basf.xpview.model.IssueListRemovedAll");
+	static public final EventType TypeOrClassChanged  = new EventType("com.basf.xpview.model.TypeOrClassChanged");
 }

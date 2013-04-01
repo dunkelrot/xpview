@@ -24,4 +24,10 @@ public class ReportWizardPageProperties extends WizardPage {
 	public void updateControl() {
 		control.update();
 	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		control.dispose();
+	}
 }

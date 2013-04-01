@@ -43,8 +43,10 @@
             </separator>
             <command
                   commandId="com.basf.xpview.pidviewer.handler.ShowAllHandler"
+                  icon="icons/arrow-in-out.png"
                   label="ShowAll"
-                  style="push">
+                  style="push"
+                  tooltip="Shows the full P&amp;ID">
             </command>
          </toolbar>
       </menuContribution>

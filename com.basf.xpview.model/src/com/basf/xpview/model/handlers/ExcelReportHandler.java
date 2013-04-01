@@ -1,5 +1,6 @@
 package com.basf.xpview.model.handlers;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,6 +36,9 @@ public class ExcelReportHandler extends AbstractHandler {
 			ExcelReport report = new ExcelReport(reportPropertyData);
 			try {
 				report.report(new File(reportPropertyData.getOutputFilePath()));
+				Desktop dt = Desktop.getDesktop();
+			    dt.open(new File(reportPropertyData.getOutputFilePath()));
+
 			} catch (FileNotFoundException ex) {
 				MessageDialog.openError(PlatformUI.getWorkbench()
 						.getDisplay().getActiveShell(), "Error", "Cannot access file " + reportPropertyData.getOutputFilePath());

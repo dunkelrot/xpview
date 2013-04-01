@@ -11,19 +11,28 @@ import com.basf.xpview.model.PropertyList;
 public class ReportService {
 
 	static final public String ClassNameALL = "All";
-	
+
+	static public ReportPropertyData updateReportPropertyData(ReportPropertyData propData, Plant plant) {
+
+		propData.clear();
+		updateReportPropertyData(propData, plant, propData.getPlantItemType(), propData.getClassName());
+		propData.setCheckedAll(true);
+		return propData;
+	}
+
 	static public ReportPropertyData createReportPropertyData(Plant plant, Class<?> plantItemType, String className) {
 		ReportPropertyData propData = new ReportPropertyData();
 		updateReportPropertyData(propData, plant, plantItemType, className);
 		return propData;
 	}
-	
-	static public void updateReportPropertyData(ReportPropertyData propData, Plant plant, Class<?> plantItemType, String className) {
+
+	static public void updateReportPropertyData(ReportPropertyData propData, Plant plant, Class<?> plantItemType,
+			String className) {
 
 		propData.clear();
 		propData.setClassName(className);
 		propData.setPlantItemType(plantItemType);
-		
+
 		for (PlantItem plantItem : plant.getAllPlantItems()) {
 			if (plantItemType.isAssignableFrom(plantItem.getClass())) {
 				if (plantItem.getClassName().equals(className) || className.equals(ClassNameALL)) {
@@ -36,8 +45,10 @@ public class ReportService {
 				}
 			}
 		}
+		
+		propData.setCheckedAll(true);
 	}
-	
+
 	static public Set<String> getAllComponentClasses(Plant plant, Class<?> plantItemType) {
 		Set<String> classNames = new LinkedHashSet<String>();
 		for (PlantItem plantItem : plant.getAllPlantItems()) {
@@ -47,5 +58,5 @@ public class ReportService {
 		}
 		return classNames;
 	}
-	
+
 }

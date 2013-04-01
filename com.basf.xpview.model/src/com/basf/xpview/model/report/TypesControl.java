@@ -17,11 +17,13 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
+import com.basf.xpview.core.Event;
+import com.basf.xpview.core.EventManager;
 import com.basf.xpview.model.Equipment;
 import com.basf.xpview.model.Nozzle;
 import com.basf.xpview.model.PlantItem;
 import com.basf.xpview.model.Workspace;
-import com.basf.xpview.model.report.config.Configuration;
+import com.basf.xpview.model.events.EventTypes;
 
 public class TypesControl extends Composite {
 
@@ -29,13 +31,16 @@ public class TypesControl extends Composite {
 	
 	protected Combo comboTypes;
 	protected Combo comboClassNames;
-	protected Combo comboConfig;
 	
 	protected Text outputFile;
 	protected Button selectOutputFile;
+	protected Button openDocument;
 	
-	public TypesControl(Composite parent) {
+	protected ReportPropertyData reportPropertyData;
+	
+	public TypesControl(Composite parent, ReportPropertyData reportPropertyData) {
 		super(parent, SWT.NONE);
+		this.reportPropertyData = reportPropertyData;
 		init(parent);
 	}
 
@@ -62,6 +67,7 @@ public class TypesControl extends Composite {
 				if (outputFile.getText().trim().isEmpty()) {
 					verifyListener.setStatus("Select output file", false);
 				} else {
+					reportPropertyData.setOutputFilePath(outputFile.getText().trim());
 					verifyListener.setStatus(null, true);
 				}
 			}
@@ -84,6 +90,7 @@ public class TypesControl extends Composite {
 				String fileSelected = fOpen.open();
 				if (fileSelected != null) {
 					outputFile.setText(fileSelected);
+					reportPropertyData.setOutputFilePath(outputFile.getText().trim());
 					verifyListener.setStatus(null, true);
 				}
 			}
@@ -109,10 +116,11 @@ public class TypesControl extends Composite {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				reportPropertyData.setPlantItemType(getType());
 				updateClassNames();
-				if (verifyListener != null) {
-					// verifyListener.setStatus(null, false);
-				}
+				ReportService.updateReportPropertyData(reportPropertyData, Workspace.getInstance().getPlant());
+				ReportConfigurations.getInstance().load(reportPropertyData.getConfigurationName(),
+						reportPropertyData);
 			}
 			
 			@Override
@@ -135,9 +143,11 @@ public class TypesControl extends Composite {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (verifyListener != null) {
-					// verifyListener.setStatus(null, true);
-				}
+				reportPropertyData.setClassName(getClassName());
+				EventManager.getInstance().sendEvent(new Event(TypesControl.this, EventTypes.TypeOrClassChanged, null));
+				ReportService.updateReportPropertyData(reportPropertyData, Workspace.getInstance().getPlant());
+				ReportConfigurations.getInstance().load(reportPropertyData.getConfigurationName(),
+						reportPropertyData);
 			}
 			
 			@Override
@@ -145,32 +155,32 @@ public class TypesControl extends Composite {
 			}
 		});
 		
-		Label label04 = new Label(this, SWT.NONE);
-		label04.setText("Configuration:");
-
-		comboConfig = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
-
-		GridData gd05 = new GridData(SWT.FILL, SWT.FILL, true, false);
-		gd05.horizontalSpan = 2;
-		comboConfig.setLayoutData(gd04);
-		comboConfig.addSelectionListener(new SelectionListener() {
+		GridData gd06 = new GridData(SWT.FILL, SWT.FILL, true, false);
+		gd06.horizontalSpan = 2;
+		openDocument = new Button(this,  SWT.CHECK);
+		openDocument.setText("Open result file upon finish");
+		openDocument.setLayoutData(gd06);
+		openDocument.setSelection(reportPropertyData.isOpenDocument());
+		openDocument.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				reportPropertyData.setOpenDocument(openDocument.getSelection());
 			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
+			
 			}
 		});
-		for (Configuration config : ReportConfigurations.getInstance().getConfigurationList().getConfiguration()) {
-			comboConfig.add(config.getName());
-		}
-
+		
+		reportPropertyData.setPlantItemType(getType());
 		updateClassNames();
+		ReportService.updateReportPropertyData(reportPropertyData, Workspace.getInstance().getPlant());
 	}
-
+	
 	protected void updateClassNames() {
+		
 		String typeName = comboTypes.getText();
 		Set<String> classNames = null;
 		if (typeName.equals(Equipment.class.getSimpleName())) {
@@ -187,18 +197,11 @@ public class TypesControl extends Composite {
 				comboClassNames.add(className);
 			}
 			comboClassNames.select(0);
+			reportPropertyData.setClassName(getClassName());
 		}
 	}
 
-	public String getConfigurationName() {
-		return comboConfig.getText();
-	}
-	
-	protected void checkPage() {
-		
-	}
-	
-	public String getClassName() {
+	protected String getClassName() {
 		return comboClassNames.getText();
 	}
 	
@@ -206,7 +209,7 @@ public class TypesControl extends Composite {
 		return outputFile.getText();
 	}
 	
-	public Class<?> getType() {
+	protected Class<?> getType() {
 		String typeName = comboTypes.getText();
 		if (typeName.equals(Equipment.class.getSimpleName())) {
 			return Equipment.class;
@@ -217,12 +220,8 @@ public class TypesControl extends Composite {
 	}
 	
 	public void update() {
-		String selected = comboConfig.getText();
-		comboConfig.removeAll();
-		for (Configuration config : ReportConfigurations.getInstance().getConfigurationList().getConfiguration()) {
-			comboConfig.add(config.getName());
-		}
-		comboConfig.setText(selected);
+
 	}
+	
 }
 

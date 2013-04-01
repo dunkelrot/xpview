@@ -40,7 +40,7 @@
             locationURI="menu:com.basf.xpview.File?before=com.basf.xpview.Preferences">
          <command
                commandId="com.basf.xpview.model.handlers.ImportFileHandler"
-               icon="icons/folder-horizontal-open.png"
+               icon="icons/document.png"
                label="Open"
                style="push">
          </command>
@@ -55,18 +55,23 @@
                id="com.basf.xpview.model.MainToolbar">
             <command
                   commandId="com.basf.xpview.model.handlers.ImportFileHandler"
-                  icon="icons/folder-horizontal-open.png"
+                  icon="icons/document.png"
                   id="com.basf.xpview.model.toolbars.ImportFileHandler"
                   label="Import file"
-                  style="push">
+                  style="push"
+                  tooltip="Read a XMpLant file">
             </command>
             <command
                   commandId="com.basf.xpview.model.handlers.ExcelReportHandler"
                   icon="icons/table-export.png"
                   id="com.basf.xpview.model.handlers.ExcelReportHandler"
                   label="Excel Export"
-                  style="push">
+                  style="push"
+                  tooltip="Export attribute to Excel">
             </command>
+            <separator
+                  name="com.basf.xpview.model.separator2">
+            </separator>
          </toolbar>
       </menuContribution>
    </extension>

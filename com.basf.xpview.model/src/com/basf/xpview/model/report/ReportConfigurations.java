@@ -8,9 +8,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.poi.xslf.model.PropertyFetcher;
-
-import com.basf.xpview.model.io.xmplant.PlantModel;
 import com.basf.xpview.model.report.config.ConfigEntry;
 import com.basf.xpview.model.report.config.Configuration;
 import com.basf.xpview.model.report.config.ConfigurationList;

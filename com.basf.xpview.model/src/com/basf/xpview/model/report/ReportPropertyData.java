@@ -10,9 +10,20 @@ public class ReportPropertyData implements Iterable<ReportPropertyList> {
 	protected String className;
 	protected ArrayList<ReportPropertyList> reportPropertyLists;
 	protected String outputFile;
+	protected boolean openDocument;
+	protected String configurationName;
 	
 	public ReportPropertyData() {
 		this.reportPropertyLists = new ArrayList<ReportPropertyList>();
+		this.openDocument = true;
+	}
+	
+	public String getConfigurationName() {
+		return configurationName;
+	}
+	
+	public void setConfigurationName(String configurationName) {
+		this.configurationName = configurationName;
 	}
 	
 	public void setClassName(String className) {
@@ -71,5 +82,19 @@ public class ReportPropertyData implements Iterable<ReportPropertyList> {
 	
 	public String getOutputFilePath() {
 		return outputFile;
+	}
+	
+	public boolean isOpenDocument() {
+		return openDocument;
+	}
+	
+	public void setOpenDocument(boolean openDocument) {
+		this.openDocument = openDocument;
+	}
+	
+	public void setCheckedAll(boolean flag) {
+		for (ReportPropertyList repPropList : reportPropertyLists) {
+			repPropList.setCheckedAll(flag);
+		}
 	}
 }

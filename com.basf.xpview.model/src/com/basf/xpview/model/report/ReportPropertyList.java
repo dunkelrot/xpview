@@ -80,4 +80,10 @@ public class ReportPropertyList implements Iterable<ReportProperty> {
 		}
 		return false;
 	}
+	
+	public void setCheckedAll(boolean flag) {
+		for (ReportProperty reportProp : propertyList) {
+			reportProp.setChecked(flag);
+		}
+	}
 }

@@ -49,6 +49,7 @@ public class ImportFileHandler extends AbstractHandler {
 				Plant plant = importer.read(new File(fileSelected), RepresentationManager.getInstance());
 				EventManager.getInstance().sendEvent(new Event(this, EventTypes.FileImported, plant));
 			}
+			
 		} catch (Exception ex) {
 			ExceptionDialog.openException(ex);
 		}
