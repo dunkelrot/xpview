@@ -73,4 +73,7 @@ public class PIDEditor extends EditorPart {
 		}
 	}
 
+	public PIDEditorViewer getViewer() {
+		return viewer;
+	}
 }

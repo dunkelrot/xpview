@@ -31,5 +31,41 @@
             name="PIDEditor">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="com.basf.xpview.pidviewer.toolbar1">
+            <separator
+                  name="com.basf.xpview.pidviewer.separator1">
+            </separator>
+            <command
+                  commandId="com.basf.xpview.pidviewer.handler.ShowAllHandler"
+                  label="ShowAll"
+                  style="push">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="com.basf.xpview.pidviewer.handler.ShowAllHandler"
+            commandId="com.basf.xpview.pidviewer.handler.ShowAllHandler">
+         <activeWhen>
+            <with
+                  variable="activeEditor">
+               <instanceof
+                     value="com.basf.xpview.pidviewer.editors.PIDEditor">
+               </instanceof>
+            </with>
+         </activeWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+   </extension>
 
 </plugin>
