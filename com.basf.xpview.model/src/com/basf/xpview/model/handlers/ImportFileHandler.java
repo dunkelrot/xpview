@@ -7,6 +7,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.basf.xpview.core.Event;
 import com.basf.xpview.core.EventManager;
@@ -33,7 +34,9 @@ public class ImportFileHandler extends AbstractHandler {
 	 * from the application context.
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		// IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		
+		HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().closeAllEditors(false);
+		
 		XMpLantImport importer = new XMpLantImport();
 		try {
 			FileDialog fOpen = new FileDialog(PlatformUI.getWorkbench()

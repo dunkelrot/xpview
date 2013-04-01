@@ -20,6 +20,7 @@ public class SoGraphics {
 	public void render(SoNode node, Graphics2D gc) {
 		AffineTransform saveTA = gc.getTransform();
 		gc.scale(camera.getZoom(), camera.getZoom());
+		gc.translate(- camera.getEye().x, - camera.getEye().y);
 		try {
 			renderNode(node, gc);
 		} catch (NoninvertibleTransformException ex) {
@@ -33,7 +34,10 @@ public class SoGraphics {
 		case PolyLine:
 		case Shape:
 		case Line:
-			renderShape((SoShape)node, gc);
+			renderGeometry((SoGeometry)node, gc);
+			break;
+		case TrimmedCircle:
+			renderTrimmedCurve((SoTrimmedCircle)node, gc);
 			break;			
 		case Group:
 			renderGroup((SoGroup)node, gc);
@@ -63,7 +67,23 @@ public class SoGraphics {
 		}
 	}
 	
-	public void renderShape(SoShape shape, Graphics2D gc) throws NoninvertibleTransformException {
+	public void renderTrimmedCurve(SoTrimmedCircle circle, Graphics2D gc) throws NoninvertibleTransformException {
+		if (camera.canSee(circle)) {
+			AffineTransform at = gc.getTransform();
+			if (circle.position.enabled) {
+				gc.translate(circle.position.origin.x, circle.position.origin.y);
+				gc.rotate(circle.getPosition().rotationAngle);
+			}
+			gc.scale(circle.scale.x, circle.scale.y);
+			// due to the nature of the ARC rendering we have to flip the coord system again
+			gc.scale(1.0, -1.0);
+			gc.setStroke(new TransformedStroke(circle.getStroke(), gc.getTransform()));
+			gc.draw(circle.getShape());
+			gc.setTransform(at);
+		}
+	}
+	
+	public void renderGeometry(SoGeometry shape, Graphics2D gc) throws NoninvertibleTransformException {
 		if (camera.canSee(shape)) {
 			AffineTransform at = gc.getTransform();
 			if (shape.position.enabled) {

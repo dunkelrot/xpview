@@ -8,5 +8,6 @@ public enum NodeType {
 	PolyLine,
 	Line,
 	Shape,
-	Node
+	Node,
+	TrimmedCircle
 }

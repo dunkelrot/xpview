@@ -35,6 +35,7 @@ import com.basf.xpview.model.graphics.SoGroup;
 import com.basf.xpview.model.graphics.SoNode;
 import com.basf.xpview.model.graphics.SoPolyLine;
 import com.basf.xpview.model.graphics.SoShape;
+import com.basf.xpview.model.graphics.SoTrimmedCircle;
 import com.basf.xpview.model.io.xmplant.Circle;
 import com.basf.xpview.model.io.xmplant.Component;
 import com.basf.xpview.model.io.xmplant.Coordinate;
@@ -57,6 +58,7 @@ import com.basf.xpview.model.io.xmplant.ScopeBubble;
 import com.basf.xpview.model.io.xmplant.Shape;
 import com.basf.xpview.model.io.xmplant.ShapeCatalogue;
 import com.basf.xpview.model.io.xmplant.Text;
+import com.basf.xpview.model.io.xmplant.TrimmedCurve;
 import com.basf.xpview.model.io.xmplant.UnitsOfMeasure;
 import com.basf.xpview.model.issues.IssueList;
 import com.basf.xpview.model.issues.IssueTracker;
@@ -314,6 +316,9 @@ public class XMpLantImport extends Import {
 		if (curve instanceof Circle) {
 			handleCircle((Circle) curve, group);
 		}
+		if (curve instanceof TrimmedCurve) {
+			handleTrimmedCurve((TrimmedCurve) curve, group);
+		}
 		
 		issueContext.removeFirst();
 	}
@@ -412,7 +417,7 @@ public class XMpLantImport extends Import {
 		// engineering data
 		com.basf.xpview.model.Nozzle nozzle = new com.basf.xpview.model.Nozzle(
 				_nozzle.getComponentName(), _nozzle.getTagName(), parent);
-		handlePlantItem(_nozzle, nozzle);
+		handlePlantItem(_nozzle, nozzle, fromCatalog);
 		parent.addPlantItem(nozzle);
 		
 		// graphics
@@ -434,7 +439,7 @@ public class XMpLantImport extends Import {
 		// engineering data
 		com.basf.xpview.model.Component component = new com.basf.xpview.model.Component(
 				_component.getComponentName(), _component.getTagName(), parent);
-		handlePlantItem(_component, component);
+		handlePlantItem(_component, component, fromCatalog);
 		parent.addPlantItem(component);
 		
 		// graphics
@@ -455,7 +460,7 @@ public class XMpLantImport extends Import {
 		// engineering data
 		com.basf.xpview.model.Equipment equipment = new com.basf.xpview.model.Equipment(
 				_equipment.getComponentName(), _equipment.getTagName(), parent);
-		handlePlantItem(_equipment, equipment);
+		handlePlantItem(_equipment, equipment, fromCatalog);
 		parent.addPlantItem(equipment);
 
 		// graphics
@@ -500,12 +505,14 @@ public class XMpLantImport extends Import {
 	}
 	
 	protected void handlePlantItem(PlantItem _plantItem,
-			com.basf.xpview.model.PlantItem plantItem) {
+			com.basf.xpview.model.PlantItem plantItem, boolean fromCatalog) {
 
 		PropertyData propData = plantItem.getPropertyData();
 		
-		plantItem.setClassName(getStringValue(_plantItem, "ComponentClass", _plantItem.getComponentClass()));
-		plantItem.setTagName(getStringValue(_plantItem, "TagName", _plantItem.getTagName()));
+		if (fromCatalog == false) {
+			plantItem.setClassName(getStringValue(_plantItem, "ComponentClass", _plantItem.getComponentClass()));
+			plantItem.setTagName(getStringValue(_plantItem, "TagName", _plantItem.getTagName()));
+		}
 		
 		handleAttributes(_plantItem, propData.addPropertyList("Default"));
 		handleGenericAttributes(_plantItem, propData);
@@ -710,6 +717,19 @@ public class XMpLantImport extends Import {
 		circle.init(_circle.getRadius() * scaleFactor, false); // TODO
 		handlePosition(_circle.getPosition(), circle);
 		group.addNode(circle);
+	}
+	
+	protected void handleTrimmedCurve(TrimmedCurve _trimmedCurve, SoGroup group) {
+
+		if (_trimmedCurve.getCircle() != null) {
+			SoTrimmedCircle circle = new SoTrimmedCircle(group, repManager.getFreeId(), "TrimmedCircle");
+			circle.init(_trimmedCurve.getCircle().getRadius() * scaleFactor, _trimmedCurve.getStartAngle(), _trimmedCurve.getEndAngle());
+			handlePosition(_trimmedCurve.getCircle().getPosition(), circle);
+			group.addNode(circle);
+		}
+		if (_trimmedCurve.getEllipse() != null) {
+			log.info("Trimmed Ellipse is not implemented!");
+		}
 	}
 
 	private int getNextId() {

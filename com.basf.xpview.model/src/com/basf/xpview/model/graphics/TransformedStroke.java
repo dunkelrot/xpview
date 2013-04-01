@@ -18,7 +18,8 @@ public class TransformedStroke
     /**
      * To make this serializable without problems.
      */
-    private static final long serialVersionUID = 1;
+    @SuppressWarnings("unused")
+	private static final long serialVersionUID = 1;
 
     /**
      * the AffineTransform used to transform the shape before stroking.

@@ -7,13 +7,19 @@ import java.awt.Stroke;
 public abstract class SoGeometry extends SoNode {
 
 	protected Layer layer;
-	protected Stroke stroke;
+	protected BasicStroke stroke;
 	
 	public SoGeometry(SoNode parent, int id, String name) {
 		super(parent, id, name);
 		this.stroke = new BasicStroke();
 	}
 
+	public SoGeometry(SoGeometry other, SoNode parent, IDProvider idProvider) {
+		super(other, parent, idProvider);
+		this.stroke = new BasicStroke(other.stroke.getLineWidth());
+		this.layer = new Layer(other.layer);
+	}
+	
 	public void setLayer(Layer layer) {
 		this.layer = layer;
 	}
@@ -22,7 +28,7 @@ public abstract class SoGeometry extends SoNode {
 		return layer;
 	}
 
-	public void setStroke(Stroke stroke) {
+	public void setStroke(BasicStroke stroke) {
 		this.stroke = stroke;
 	}
 	

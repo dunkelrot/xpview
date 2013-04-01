@@ -1,5 +1,7 @@
 package com.basf.xpview.model.graphics;
 
+import javax.vecmath.Point3d;
+
 public class BoundingBox {
 
 	protected double minX;
@@ -12,6 +14,13 @@ public class BoundingBox {
 	
 	public BoundingBox() {
 		
+	}
+	
+	public void setNull() {
+		maxX = 0;
+		maxY = 0;
+		minX = 0;
+		minY = 0;
 	}
 	
 	public BoundingBox(BoundingBox other) {
@@ -56,4 +65,51 @@ public class BoundingBox {
 		return minZ;
 	}
 
+	public void add(double x, double y) {
+		if (maxX < x) {
+			maxX = x;
+		}
+		if (maxY < y) {
+			maxY = y;
+		}
+		if (minX > x) {
+			minX = x;
+		}
+		if (minY > y) {
+			minY = y;
+		}		
+	}
+	
+	public void add(BoundingBox other) {
+		add(other.maxX, other.maxY);
+		add(other.minX, other.minY);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("[");
+		buffer.append(maxX);
+		buffer.append(":");
+		buffer.append(maxY);
+		buffer.append("] [");
+		buffer.append(minX);
+		buffer.append(":");
+		buffer.append(minY);
+		buffer.append("]");
+		return buffer.toString();
+	}
+	
+	public Point3d getCenter() {
+		Point3d pt = new Point3d((maxX - minX) * 0.5, (maxY - minY) * 0.5, 0.0);
+		return pt;
+	}
+	
+	public double getWidth() {
+		return Math.abs(maxX - minX);
+	}
+	
+	public double getHeight() {
+		return Math.abs(maxY - minY);
+	}
 }

@@ -12,6 +12,7 @@ public class Camera {
 
 	public Camera() {
 		this.zoom = 1.0;
+		this.eye = new Point3d();
 	}
 	
 	public boolean canSee(SoNode node) {
@@ -38,4 +39,17 @@ public class Camera {
 		this.zoom = zoom;
 	}
 	
+	public void moveBy(int x, int y) {
+		eye.x = eye.x + x;
+		eye.y = eye.y + y;
+	}
+	
+	public void moveByZoomed(int x, int y) {
+		eye.x = eye.x + (x / zoom);
+		eye.y = eye.y + (y / zoom);
+	}
+	
+	public void lookAt(Point3d point) {
+		eye = point;
+	}
 }

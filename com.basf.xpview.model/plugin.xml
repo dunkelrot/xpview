@@ -52,7 +52,7 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="com.basf.xpview.model.toolbar1">
+               id="com.basf.xpview.model.MainToolbar">
             <command
                   commandId="com.basf.xpview.model.handlers.ImportFileHandler"
                   icon="icons/folder-horizontal-open.png"

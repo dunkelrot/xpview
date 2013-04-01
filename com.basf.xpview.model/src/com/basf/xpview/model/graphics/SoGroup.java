@@ -34,5 +34,14 @@ public class SoGroup extends SoNode {
 	public SoNode clone(SoNode parent, IDProvider idProvider) {
 		return new SoGroup(this, parent, idProvider);
 	}
-	
+
+	@Override
+	public BoundingBox getBoundingBox() {
+		boundingBox.setNull();
+		for (SoNode child : children) {
+			boundingBox.add(child.getBoundingBox());
+		}
+		return boundingBox;
+	}
+
 }
