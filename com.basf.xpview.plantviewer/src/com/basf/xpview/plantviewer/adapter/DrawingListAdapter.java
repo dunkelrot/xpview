@@ -11,7 +11,7 @@ public class DrawingListAdapter implements IWorkbenchAdapter {
 	protected ImageDescriptor icon;
 	
 	public DrawingListAdapter() {
-		this.icon = Activator.getImageDescriptor("icons/package.png"); //$NON-NLS-1$
+		this.icon = Activator.getImageDescriptor("icons/documents-stack.png"); //$NON-NLS-1$
 	}
 	
 	@Override

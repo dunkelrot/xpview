@@ -1,5 +1,7 @@
 package com.basf.xpview.model;
 
+import java.util.List;
+
 /**
  * Classes which contain a list of {@link PlantItem}s should implement this interface. 
  * 
@@ -15,5 +17,8 @@ public interface PlantItemContainer {
 	 * @param plantItem the item to add
 	 */
 	void addPlantItem(PlantItem plantItem);
+	
+	List<? extends PlantItem> getPlantItems();
+	
 }
 

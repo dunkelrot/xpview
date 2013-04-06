@@ -44,6 +44,7 @@ public class Catalog extends Thing implements PlantItemContainer {
 	 * 
 	 * @return returns all stored {@link PlantItem}s 
 	 */
+	@Override
 	public List<PlantItem> getPlantItems() {
 		return plantItems;
 	}
@@ -66,6 +67,8 @@ public class Catalog extends Thing implements PlantItemContainer {
 		}
 		return result;
 	}
+	
+	
 	
 }
 

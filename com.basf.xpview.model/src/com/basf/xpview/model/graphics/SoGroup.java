@@ -43,5 +43,12 @@ public class SoGroup extends SoNode {
 		}
 		return boundingBox;
 	}
+	
+	@Override
+	public void scale(double x, double y) {
+		for (SoNode child : children) {
+			child.scale(x, y);
+		}
+	}
 
 }

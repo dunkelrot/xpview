@@ -60,4 +60,9 @@ public class EquipmentList implements PlantItemContainer, Iterable<Equipment> {
 		return equipments.iterator();
 	}
 	
+	@Override
+	public List<Equipment> getPlantItems() {
+		return equipments;
+	}
+	
 }

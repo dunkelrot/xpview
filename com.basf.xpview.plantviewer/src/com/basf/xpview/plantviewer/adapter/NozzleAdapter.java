@@ -43,7 +43,7 @@ public class NozzleAdapter implements IWorkbenchAdapter {
 	@Override
 	public Object getParent(Object o) {
 		Nozzle nozzle = (Nozzle) o;
-		return nozzle.getParent();
+		return nozzle.getContainer();
 	}
 	
 }

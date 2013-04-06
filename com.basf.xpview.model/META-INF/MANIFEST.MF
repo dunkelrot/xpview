@@ -14,4 +14,5 @@ Bundle-ActivationPolicy: lazy
 Export-Package: com.basf.xpview.model,
  com.basf.xpview.model.events,
  com.basf.xpview.model.graphics,
+ com.basf.xpview.model.graphics.j2d,
  com.basf.xpview.model.handlers

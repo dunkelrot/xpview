@@ -5,6 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -17,13 +21,18 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchPart;
 
 import com.basf.xpview.core.Event;
 import com.basf.xpview.core.EventListener;
+import com.basf.xpview.model.Thing;
 import com.basf.xpview.model.events.EventTypes;
 import com.basf.xpview.model.graphics.BoundingBox;
-import com.basf.xpview.model.graphics.SoGraphics;
+import com.basf.xpview.model.graphics.RepresentationManager;
 import com.basf.xpview.model.graphics.SoNode;
+import com.basf.xpview.model.graphics.SoSelectionManager;
+import com.basf.xpview.model.graphics.j2d.Graphics;
 import com.basf.xpview.pidviewer.utils.Graphics2DRenderer;
 
 /**
@@ -32,13 +41,15 @@ import com.basf.xpview.pidviewer.utils.Graphics2DRenderer;
  * @author Arndt Teinert
  * 
  */
-public class PIDEditorViewer implements EventListener {
+public class PIDEditorViewer implements EventListener, ISelectionChangedListener, ISelectionListener {
 
 	private static Logger log = Logger.getLogger(PIDEditorViewer.class);
 	
 	protected Canvas canvas;
 	protected Composite parent;
-	protected SoGraphics renderer;
+	protected Graphics renderer;
+	protected SoSelectionManager selectionManager;
+	
 	protected double factor = 1.0;
 	protected boolean firstResizeEvent = true;
 	
@@ -51,8 +62,9 @@ public class PIDEditorViewer implements EventListener {
 
 	public PIDEditorViewer(Composite parent) {
 		this.parent = parent;
-		this.renderer = new SoGraphics();
+		this.renderer = new Graphics();
 		this.initialMovePositon = new Point(0,0);
+		this.selectionManager = new SoSelectionManager();
 	}
 
 	public void init() {
@@ -145,6 +157,8 @@ public class PIDEditorViewer implements EventListener {
 	    });
 		
 		com.basf.xpview.core.EventManager.getInstance().registerForEvent(EventTypes.SceneGraphModified, this);
+		
+		
 	}
 
 	public void setFocus() {
@@ -186,6 +200,31 @@ public class PIDEditorViewer implements EventListener {
 		factor = 1.0 / renderer.getCamera().getZoom();
 		canvas.redraw();
 	}
-	
+
+	@Override
+	public void selectionChanged(SelectionChangedEvent event) {
+		
+	}
+
+	@Override
+	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+
+		selectionManager.clear();
+		
+		if (selection instanceof IStructuredSelection) {
+			IStructuredSelection structSel = (IStructuredSelection) selection;
+			Object obj = structSel.getFirstElement();
+			if (obj instanceof Thing) {
+				Thing input = ((Thing) obj);
+				SoNode node = RepresentationManager.getInstance().getNode(input);
+				if (node != null) {
+					selectionManager.addNode(node);	
+				}
+			}
+		}
+
+		canvas.redraw();
+	}
+
 	
 }

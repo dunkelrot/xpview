@@ -1,22 +1,33 @@
 package com.basf.xpview.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A Component is a light-weight equipment.
  * 
  * @author Arndt Teinert
  *
  */
-public class Component extends PlantItem {
+public class Component extends PlantItem implements PlantItemContainer {
 
-	protected PlantItemContainer container;
+	protected ArrayList<Component> components;
 	
-	public Component(String name, String tagId, PlantItemContainer container) {
-		super(name);
-		this.container = container;
+	public Component(String name, PlantItemContainer container) {
+		super(name, container);
+		this.components = new ArrayList<Component>();
 	}
-	
-	public PlantItemContainer getContainer() {
-		return container;
+
+	@Override
+	public void addPlantItem(PlantItem plantItem) {
+		if (plantItem instanceof Component) {
+			components.add((Component) plantItem);
+		}
+	}
+
+	@Override
+	public List<? extends PlantItem> getPlantItems() {
+		return components;
 	}
 	
 }

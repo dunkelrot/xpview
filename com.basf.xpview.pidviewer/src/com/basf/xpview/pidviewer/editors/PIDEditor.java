@@ -58,6 +58,8 @@ public class PIDEditor extends EditorPart {
 		viewer = new PIDEditorViewer(parent);
 		viewer.init();
 		viewer.setInput(((PIDEditorInput) input).getNode());
+		
+		getSite().getPage().addSelectionListener(viewer);
 	}
 
 	@Override

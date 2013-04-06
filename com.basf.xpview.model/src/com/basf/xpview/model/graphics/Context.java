@@ -6,7 +6,7 @@ public abstract class Context {
 
 	public Graphics2D gc;
 	
-	public void pushMaterial(Material material) {
+	public void pushMaterial(SoMaterial material) {
 		
 	}
 	

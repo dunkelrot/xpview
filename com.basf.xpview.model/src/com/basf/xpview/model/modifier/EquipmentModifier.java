@@ -13,17 +13,24 @@ import com.basf.xpview.model.Workspace;
 import com.basf.xpview.model.events.EventTypes;
 import com.basf.xpview.model.graphics.RepresentationManager;
 import com.basf.xpview.model.graphics.SoNode;
+import com.basf.xpview.model.graphics.SoTransformation;
 
 public class EquipmentModifier implements org.eclipse.jface.util.IPropertyChangeListener {
 
 	public void setPositionStatus(Plant plant, boolean enabled) {
 		for (Equipment equipment : plant.getEquipmentList().getEquipments()) {
 			SoNode node = RepresentationManager.getInstance().getNode(equipment);
-			node.getPosition().setEnabled(enabled);
+			if (node instanceof SoTransformation) {
+				SoTransformation transform = (SoTransformation) node;
+				transform.getPosition().setEnabled(enabled);
+			}
 			
 			for (Nozzle nozzle : equipment.getNozzles()) {
 				SoNode nozzleNode = RepresentationManager.getInstance().getNode(nozzle);
-				nozzleNode.getPosition().setEnabled(enabled);
+				if (nozzleNode instanceof SoTransformation) {
+					SoTransformation transform = (SoTransformation) node;
+					transform.getPosition().setEnabled(enabled);
+				}
 			}
 		}
 		EventManager.getInstance().sendEvent(new Event(this, EventTypes.SceneGraphModified, null));
@@ -33,7 +40,10 @@ public class EquipmentModifier implements org.eclipse.jface.util.IPropertyChange
 		for (Equipment equipment : plant.getEquipmentList().getEquipments()) {
 			for (Nozzle nozzle : equipment.getNozzles()) {
 				SoNode node = RepresentationManager.getInstance().getNode(nozzle);
-				node.getPosition().setEnabled(enabled);
+				if (node instanceof SoTransformation) {
+					SoTransformation transform = (SoTransformation) node;
+					transform.getPosition().setEnabled(enabled);
+				}
 			}
 		}
 		EventManager.getInstance().sendEvent(new Event(this, EventTypes.SceneGraphModified, null));

@@ -20,22 +20,30 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.apache.log4j.Logger;
 
 import com.basf.xpview.model.Activator;
+import com.basf.xpview.model.AnnotationContainer;
 import com.basf.xpview.model.Catalog;
 import com.basf.xpview.model.DrawingSizeType;
+import com.basf.xpview.model.PipeConnector;
+import com.basf.xpview.model.PipingNetwork;
+import com.basf.xpview.model.PipingSegment;
 import com.basf.xpview.model.Plant;
 import com.basf.xpview.model.PlantItemContainer;
 import com.basf.xpview.model.PlantSection;
 import com.basf.xpview.model.PropertyData;
 import com.basf.xpview.model.PropertyList;
 import com.basf.xpview.model.PropertyType;
+import com.basf.xpview.model.Thing;
 import com.basf.xpview.model.Workspace;
 import com.basf.xpview.model.graphics.RepresentationManager;
 import com.basf.xpview.model.graphics.SoCircle;
 import com.basf.xpview.model.graphics.SoGroup;
-import com.basf.xpview.model.graphics.SoNode;
 import com.basf.xpview.model.graphics.SoPolyLine;
+import com.basf.xpview.model.graphics.SoPositionNode;
 import com.basf.xpview.model.graphics.SoShape;
+import com.basf.xpview.model.graphics.SoTransformation;
 import com.basf.xpview.model.graphics.SoTrimmedCircle;
+import com.basf.xpview.model.io.xmplant.AnnotationItem;
+import com.basf.xpview.model.io.xmplant.CenterLine;
 import com.basf.xpview.model.io.xmplant.Circle;
 import com.basf.xpview.model.io.xmplant.Component;
 import com.basf.xpview.model.io.xmplant.Coordinate;
@@ -48,11 +56,16 @@ import com.basf.xpview.model.io.xmplant.GenericAttributes;
 import com.basf.xpview.model.io.xmplant.Label;
 import com.basf.xpview.model.io.xmplant.Line;
 import com.basf.xpview.model.io.xmplant.Nozzle;
+import com.basf.xpview.model.io.xmplant.PipeConnectorSymbol;
+import com.basf.xpview.model.io.xmplant.PipingComponent;
+import com.basf.xpview.model.io.xmplant.PipingNetworkSegment;
+import com.basf.xpview.model.io.xmplant.PipingNetworkSystem;
 import com.basf.xpview.model.io.xmplant.PlantInformation;
 import com.basf.xpview.model.io.xmplant.PlantItem;
 import com.basf.xpview.model.io.xmplant.PlantModel;
 import com.basf.xpview.model.io.xmplant.PolyLine;
 import com.basf.xpview.model.io.xmplant.Position;
+import com.basf.xpview.model.io.xmplant.ProcessInstrument;
 import com.basf.xpview.model.io.xmplant.Scale;
 import com.basf.xpview.model.io.xmplant.ScopeBubble;
 import com.basf.xpview.model.io.xmplant.Shape;
@@ -96,10 +109,12 @@ public class XMpLantImport extends Import {
 	protected java.lang.String getObjectName(Object obj) {
 		StringBuffer buffer = new StringBuffer();
 		
+		// call methods and stop as soon as one returns a value
 		if (callMethod("getID", "ID:", obj, buffer)) {
 		} else if (callMethod("getComponentName", "CNAME:", obj, buffer)) {
 		} else if (callMethod("getName", "NAME:", obj, buffer)) {
 		}
+		
 		buffer.append("[");
 		buffer.append(obj.getClass().getSimpleName());
 		buffer.append("]");
@@ -271,9 +286,193 @@ public class XMpLantImport extends Import {
 			if (object instanceof ShapeCatalogue) {
 				handleShapeCatalog((ShapeCatalogue) object, plant);
 			}
+			if (object instanceof PipingNetworkSystem) {
+				handlePipingNetworkSystem((PipingNetworkSystem) object, plant);
+			}
 		}
 	}
 
+	protected void handlePipingNetworkSystem(PipingNetworkSystem _pipingNetworkSystem, Plant plant) {
+		issueContext.addFirst(_pipingNetworkSystem);
+		
+		PipingNetwork pipingNetwork = new PipingNetwork(_pipingNetworkSystem.getTagName(), plant.getPipingNetworkList());
+		
+		SoGroup pipingNetworkNode = new SoGroup(plantNode, getNextId(), "PipingNetwork");
+		plantNode.addNode(pipingNetworkNode);
+		RepresentationManager.getInstance().addNode(pipingNetworkNode, pipingNetwork);
+		
+		handleAttributes(_pipingNetworkSystem, pipingNetwork.getPropertyData().addPropertyList("Default"));
+		handleGenericAttributes(_pipingNetworkSystem, pipingNetwork.getPropertyData());
+		
+		plant.getPipingNetworkList().addPipingNetwork(pipingNetwork);
+		
+		for (Object object : _pipingNetworkSystem.getNominalDiameterOrInsideDiameterOrOutsideDiameter()) {
+			if (object instanceof PipingNetworkSegment) {
+				handlePipingNetworkSegment((PipingNetworkSegment) object, pipingNetwork, pipingNetworkNode);
+			}
+		}
+		issueContext.removeFirst();
+	}
+	
+	protected void handlePipingNetworkSegment(PipingNetworkSegment _pipingNetworkSegment, PipingNetwork pipingNetwork, SoGroup pipingNetworkNode) {
+		issueContext.addFirst(_pipingNetworkSegment);
+		
+		PipingSegment pipingSegment = new PipingSegment("Segment", pipingNetwork);
+		pipingNetwork.getSegments().add(pipingSegment);
+
+		SoGroup pipingSegmentNode = new SoGroup(pipingNetworkNode, getNextId(), "PipingNetwork");
+		pipingNetworkNode.addNode(pipingSegmentNode);
+
+		RepresentationManager.getInstance().addNode(pipingSegmentNode, pipingSegment);
+		
+		handleAttributes(_pipingNetworkSegment, pipingSegment.getPropertyData().addPropertyList("Default"));
+		handleGenericAttributes(_pipingNetworkSegment, pipingSegment.getPropertyData());
+		
+		for (Object object : _pipingNetworkSegment.getNominalDiameterOrInsideDiameterOrOutsideDiameter()) {
+			if (object instanceof JAXBElement) {
+				JAXBElement<?> jaxbElement = (JAXBElement<?>) object;
+				Object obj = jaxbElement.getValue();
+				if (obj instanceof CenterLine) {
+					handleCenterLine((CenterLine) obj, pipingSegmentNode);
+				}
+				if (obj instanceof PipingComponent) {
+					handlePipingComponent((PipingComponent) obj, pipingSegment, pipingSegmentNode);
+				}
+			}
+			if (object instanceof ProcessInstrument) {
+				handleProcessInstrument((ProcessInstrument) object, pipingSegment, pipingSegmentNode);
+			}
+			if (object instanceof PipeConnectorSymbol) {
+				handlePipeConnectorSymbol((PipeConnectorSymbol) object, pipingSegment, pipingSegmentNode);
+			}	
+		}
+		
+		issueContext.removeFirst();
+	}
+	
+	protected void handlePipeConnectorSymbol(PipeConnectorSymbol _symbol, AnnotationContainer container, SoGroup parentNode) {
+		issueContext.addFirst(_symbol);
+		
+		PipeConnector pipeConnector = new PipeConnector(_symbol.getComponentName(), container);
+		container.addAnnotation(pipeConnector);
+		
+		SoTransformation group = createSoGroup(pipeConnector, parentNode, false);
+		handleAnnotationItemGraphics(_symbol, group);
+		
+		handleAttributes(_symbol, pipeConnector.getPropertyData().addPropertyList("Default"));
+		handleGenericAttributes(_symbol, pipeConnector.getPropertyData());
+		
+		issueContext.removeFirst();
+	}
+	
+	protected void handleProcessInstrument(ProcessInstrument _processInstrument, PlantItemContainer processInstrumentContainer, SoGroup parentNode) {
+		issueContext.addFirst(_processInstrument);
+		
+		com.basf.xpview.model.ProcessInstrument processInstrument = new com.basf.xpview.model.ProcessInstrument(_processInstrument.getTagName(), processInstrumentContainer);
+		processInstrumentContainer.addPlantItem(processInstrument);
+
+		SoGroup processInstrumentNode = new SoGroup(parentNode, getNextId(), "ProcessInstrument");
+		parentNode.addNode(processInstrumentNode);
+		RepresentationManager.getInstance().addNode(processInstrumentNode, processInstrument);
+		
+		handleAttributes(_processInstrument, processInstrument.getPropertyData().addPropertyList("Default"));
+		handleGenericAttributes(_processInstrument, processInstrument.getPropertyData());
+		
+		// graphics
+		SoTransformation group = createSoGroup(processInstrument, parentNode, false);
+		handlePlantItemGraphics(_processInstrument, processInstrument, group);
+		
+		for (Object object : _processInstrument.getProcessInstrumentOrComponentOrNominalDiameter()) {
+			if (object instanceof JAXBElement) {
+				JAXBElement<?> jaxbElement = (JAXBElement<?>) object;
+				Object obj = jaxbElement.getValue();
+				if (obj instanceof PipingComponent) {
+					handleProcessInstrument((ProcessInstrument) obj, processInstrument, processInstrumentNode);
+				}
+			}
+			if (object instanceof Component) {
+				handleComponent((Component) object, processInstrument, processInstrumentNode);
+			}
+		}
+		
+		issueContext.removeFirst();
+	}
+	
+	protected void handlePipingComponent(PipingComponent _pipingComponent, PlantItemContainer pipingComponentContainer, SoGroup parentNode) {
+		issueContext.addFirst(_pipingComponent);
+		
+		com.basf.xpview.model.PipingComponent pipingComponent = new com.basf.xpview.model.PipingComponent(_pipingComponent.getTagName(), pipingComponentContainer);
+		pipingComponentContainer.addPlantItem(pipingComponent);
+
+		SoGroup pipingComponentNode = new SoGroup(parentNode, getNextId(), "PipingComponent");
+		parentNode.addNode(pipingComponentNode);
+
+		RepresentationManager.getInstance().addNode(pipingComponentNode, pipingComponent);
+		
+		handleAttributes(_pipingComponent, pipingComponent.getPropertyData().addPropertyList("Default"));
+		handleGenericAttributes(_pipingComponent, pipingComponent.getPropertyData());
+		
+		// graphics
+		SoTransformation group = createSoGroup(pipingComponent, parentNode, false);
+		handlePlantItemGraphics(_pipingComponent, pipingComponent, group);
+		// handlePlantItemPosition(_pipingComponent, group);
+		
+		for (Object object : _pipingComponent.getPipingComponentOrComponentOrConnectionType()) {
+			if (object instanceof JAXBElement) {
+				JAXBElement<?> jaxbElement = (JAXBElement<?>) object;
+				Object obj = jaxbElement.getValue();
+				if (obj instanceof PipingComponent) {
+					handlePipingComponent((PipingComponent) obj, pipingComponent, pipingComponentNode);
+				}
+			}
+		}
+		
+		issueContext.removeFirst();
+	}
+	
+	protected void handleComponent(Component _component, PlantItemContainer container, SoGroup parentNode) {
+		issueContext.addFirst(_component);
+		
+		com.basf.xpview.model.Component component = new com.basf.xpview.model.Component(_component.getTagName(), container);
+		container.addPlantItem(component);
+
+		SoGroup componentNode = new SoGroup(parentNode, getNextId(), "Component");
+		parentNode.addNode(componentNode);
+
+		RepresentationManager.getInstance().addNode(componentNode, component);
+		
+		handleAttributes(_component, component.getPropertyData().addPropertyList("Default"));
+		handleGenericAttributes(_component, component.getPropertyData());
+		
+		// graphics
+		SoTransformation group = createSoGroup(component, parentNode, false);
+		handlePlantItemGraphics(_component, component, group);
+		// handlePlantItemPosition(_pipingComponent, group);
+		
+		for (Component _componentChild: _component.getComponent()) {
+			handleComponent(_componentChild, component, componentNode);
+		}
+		
+		issueContext.removeFirst();
+	}
+	
+	protected void handleCenterLine(CenterLine _centerLine, SoGroup parent) {
+
+			List<Coordinate> coords = null;
+			coords = _centerLine.getCoordinate();
+
+			SoPolyLine polyLine = new SoPolyLine(parent, getNextId(), "");
+			ArrayList<Point3d> points = new ArrayList<Point3d>();
+			for (Coordinate coord : coords) {
+				Point3d point = new Point3d(coord.getX() * scaleFactor, coord.getY() * scaleFactor, 0);
+				points.add(point);
+			}
+			polyLine.init(points.toArray(new Point3d[points.size()]));
+
+			parent.addNode(polyLine);
+		
+	}
+	
 	protected void handleShapeCatalog(ShapeCatalogue _shapeCatalog, Plant plant) {
 		issueContext.addFirst(_shapeCatalog);
 		
@@ -300,7 +499,7 @@ public class XMpLantImport extends Import {
 		issueContext.removeFirst();
 	}
 
-	protected void handleCurves(Object curve, SoGroup group) {
+	protected void handleCurves(Object curve, SoTransformation group) {
 		
 		issueContext.addFirst(curve);
 		
@@ -314,10 +513,14 @@ public class XMpLantImport extends Import {
 			handleShape((Shape) curve, group);
 		}
 		if (curve instanceof Circle) {
-			handleCircle((Circle) curve, group);
+			SoTransformation transform = new SoTransformation(group, getNextId(), "Circle");
+			group.addNode(transform);
+			handleCircle((Circle) curve, transform);
 		}
 		if (curve instanceof TrimmedCurve) {
-			handleTrimmedCurve((TrimmedCurve) curve, group);
+			SoTransformation transform = new SoTransformation(group, getNextId(), "TrimmedCurve");
+			group.addNode(transform);
+			handleTrimmedCurve((TrimmedCurve) curve, transform);
 		}
 		
 		issueContext.removeFirst();
@@ -337,8 +540,7 @@ public class XMpLantImport extends Import {
 		handleAttributes(_drawing, propData.addPropertyList("Default"));
 		handleGenericAttributes(_drawing, propData);
 
-		com.basf.xpview.model.graphics.SoGroup drawingNode = new com.basf.xpview.model.graphics.SoGroup(
-				null, getNextId(), _drawing.getName());
+		SoTransformation drawingNode = new SoTransformation(plantNode, getNextId(), _drawing.getName());
 
 		plantNode.addNode(drawingNode);
 
@@ -370,7 +572,7 @@ public class XMpLantImport extends Import {
 	}
 	
 	protected void handleDrawingBorder(DrawingBorder _border, com.basf.xpview.model.DrawingBorder border, SoGroup parentNode) {
-		SoGroup group = new SoGroup(parentNode, getNextId(), "Border");
+		SoTransformation group = new SoTransformation(parentNode, getNextId(), "Border");
 		group.getPosition().setEnabled(equipmentPositionEnabled);
 		parentNode.addNode(group);
 		
@@ -390,23 +592,23 @@ public class XMpLantImport extends Import {
 		}
 	}
 	
-	protected SoGroup createSoGroup(com.basf.xpview.model.PlantItem plantItem, SoGroup parentNode, boolean createCatalogElement) {
-		SoGroup plantItemNode = null;
+	protected SoTransformation createSoGroup(Thing thing, SoGroup parentNode, boolean createCatalogElement) {
+		SoTransformation plantItemNode = null;
 		if (createCatalogElement == false) {
 			if (useCatalog) {
-				com.basf.xpview.model.PlantItem plantItemCatalog = plant.getCatalogList().findPlantItem(plantItem.getName());
+				com.basf.xpview.model.PlantItem plantItemCatalog = plant.getCatalogList().findPlantItem(thing.getName());
 				if (plantItemCatalog != null) {
-					plantItemNode = (SoGroup) repManager.getNode(plantItemCatalog).clone(parentNode, repManager);
+					plantItemNode = (SoTransformation) repManager.getNode(plantItemCatalog).clone(parentNode, repManager);
 				}
 			}
 			if (plantItemNode == null) {
-				plantItemNode = new SoGroup(parentNode, getNextId(), plantItem.getName());
+				plantItemNode = new SoTransformation(parentNode, getNextId(), thing.getName());
 			}
 			parentNode.addNode(plantItemNode);
 		} else {
-			plantItemNode = new SoGroup(null, getNextId(), plantItem.getName());
+			plantItemNode = new SoTransformation(null, getNextId(), thing.getName());
 		}
-		repManager.addNode(plantItemNode, plantItem);
+		repManager.addNode(plantItemNode, thing);
 		return plantItemNode;
 	}
 	
@@ -421,7 +623,7 @@ public class XMpLantImport extends Import {
 		parent.addPlantItem(nozzle);
 		
 		// graphics
-		SoGroup group = createSoGroup(nozzle, parentNode, fromCatalog);
+		SoTransformation group = createSoGroup(nozzle, parentNode, fromCatalog);
 		if (readGraphics) {
 			handlePlantItemGraphics(_nozzle, nozzle, group);
 		}
@@ -432,18 +634,18 @@ public class XMpLantImport extends Import {
 		issueContext.removeFirst();
 	}
 
-	protected void handleComponent(Component _component, PlantItemContainer parent, SoGroup parentNode, boolean readGraphics, boolean fromCatalog) {
+	protected void handleComponent(Component _component, PlantItemContainer parent, SoTransformation parentNode, boolean readGraphics, boolean fromCatalog) {
 		
 		issueContext.addFirst(_component);
 		
 		// engineering data
 		com.basf.xpview.model.Component component = new com.basf.xpview.model.Component(
-				_component.getComponentName(), _component.getTagName(), parent);
+				_component.getComponentName(), parent);
 		handlePlantItem(_component, component, fromCatalog);
 		parent.addPlantItem(component);
 		
 		// graphics
-		SoGroup group = createSoGroup(component, parentNode, fromCatalog);
+		SoTransformation group = createSoGroup(component, parentNode, fromCatalog);
 		if (readGraphics) {
 			handlePlantItemGraphics(_component, component, group);
 		}
@@ -464,10 +666,10 @@ public class XMpLantImport extends Import {
 		parent.addPlantItem(equipment);
 
 		// graphics
-		SoGroup equipmentNode = new SoGroup(plantNode, getNextId(), _equipment.getTagName());
+		SoTransformation equipmentNode = new SoTransformation(plantNode, getNextId(), _equipment.getTagName());
 		plantNode.addNode(equipmentNode);
 		
-		SoGroup group = createSoGroup(equipment, equipmentNode, fromCatalog);
+		SoTransformation group = createSoGroup(equipment, equipmentNode, fromCatalog);
 		if (readGraphics) {
 			handlePlantItemGraphics(_equipment, equipment, group);
 		}
@@ -491,7 +693,7 @@ public class XMpLantImport extends Import {
 		issueContext.removeFirst();
 	}
 
-	protected void handlePlantItemPosition(PlantItem _plantItem, SoGroup group) {
+	protected void handlePlantItemPosition(PlantItem _plantItem, SoTransformation group) {
 		for (Object object : _plantItem.getPresentationOrExtentOrPersistentID()) {
 			if (object instanceof Position) {
 				handlePosition((Position) object, group);
@@ -518,15 +720,23 @@ public class XMpLantImport extends Import {
 		handleGenericAttributes(_plantItem, propData);
 	}
 	
-	protected void handlePlantItemGraphics(PlantItem _plantItem,
-			com.basf.xpview.model.PlantItem plantItem, SoGroup group) {
-		for (Object object : _plantItem.getPresentationOrExtentOrPersistentID()) {
+	protected void handleCurves(List<Object> curves, SoTransformation group) {
+		for (Object object : curves) {
 			if (object instanceof JAXBElement) {
 				JAXBElement<?> jaxbElement = (JAXBElement<?>) object;
 				Object obj = jaxbElement.getValue();
 				handleCurves(obj, group);
 			}
 		}
+	}
+	
+	protected void handlePlantItemGraphics(PlantItem _plantItem,
+			com.basf.xpview.model.PlantItem plantItem, SoTransformation group) {
+		handleCurves(_plantItem.getPresentationOrExtentOrPersistentID(), group);
+	}
+	
+	protected void handleAnnotationItemGraphics(AnnotationItem _annotationItem, SoTransformation group) {
+		handleCurves(_annotationItem.getPresentationOrExtentOrPersistentID(), group);
 	}
 
 	protected void handleGenericAttributes(GenericAttributes genAttrs,
@@ -570,6 +780,16 @@ public class XMpLantImport extends Import {
 		}
 	}
 
+	protected void handleGenericAttributes(AnnotationItem _annotationItem,
+			PropertyData propertyData) {
+		for (Object object : _annotationItem.getPresentationOrExtentOrPersistentID()) {
+			if (object instanceof GenericAttributes) {
+				handleGenericAttributes((GenericAttributes) object,
+						propertyData);
+			}
+		}
+	}
+	
 	protected void handleGenericAttributes(Drawing _drawing,
 			PropertyData propertyData) {
 		for (Object object : _drawing.getComponentOrCurveOrText()) {
@@ -634,7 +854,7 @@ public class XMpLantImport extends Import {
 		}
 	}
 
-	protected void handlePosition(Position _position, SoNode node) {
+	protected void handlePosition(Position _position, SoPositionNode node) {
 
 		node.getPosition().origin.x = _position.getLocation().getX() * scaleFactor;
 		node.getPosition().origin.y = _position.getLocation().getY() * scaleFactor;
@@ -662,10 +882,11 @@ public class XMpLantImport extends Import {
 		node.getPosition().calculateRotationAngle();
 	}
 	
-	protected void handleScale(Scale _scale, SoNode node) {
+	protected void handleScale(Scale _scale, SoTransformation node) {
 
 		node.getScale().x = _scale.getX();
 		node.getScale().y = _scale.getY();
+		node.scale(_scale.getX(), _scale.getY());
 	}
 
 	protected void handleCurve(Curve curve, SoGroup group) {
@@ -711,15 +932,15 @@ public class XMpLantImport extends Import {
 		group.addNode(shape);
 	}
 
-	protected void handleCircle(Circle _circle, SoGroup group) {
+	protected void handleCircle(Circle _circle, SoTransformation group) {
 
 		SoCircle circle = new SoCircle(group, repManager.getFreeId(), "Circle");
 		circle.init(_circle.getRadius() * scaleFactor, false); // TODO
-		handlePosition(_circle.getPosition(), circle);
+		handlePosition(_circle.getPosition(), group);
 		group.addNode(circle);
 	}
 	
-	protected void handleTrimmedCurve(TrimmedCurve _trimmedCurve, SoGroup group) {
+	protected void handleTrimmedCurve(TrimmedCurve _trimmedCurve, SoTransformation group) {
 
 		if (_trimmedCurve.getCircle() != null) {
 			SoTrimmedCircle circle = new SoTrimmedCircle(group, repManager.getFreeId(), "TrimmedCircle");

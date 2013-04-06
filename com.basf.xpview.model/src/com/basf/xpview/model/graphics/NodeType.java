@@ -9,5 +9,7 @@ public enum NodeType {
 	Line,
 	Shape,
 	Node,
+	NodeT,
+	Text,
 	TrimmedCircle
 }

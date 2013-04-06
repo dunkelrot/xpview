@@ -14,11 +14,13 @@ public class Plant extends PlantSection {
 	protected String name;
 	protected EquipmentList equipmentList;
 	protected CatalogList catalogList;
+	protected PipingNetworkList pipingNetworkList;
 	
 	public Plant(String name) {
 		super(name, null);
 		this.equipmentList = new EquipmentList(this);
 		this.catalogList = new CatalogList(this);
+		this.pipingNetworkList = new PipingNetworkList(this);
 	}
 	
 	public EquipmentList getEquipmentList() {
@@ -33,6 +35,9 @@ public class Plant extends PlantSection {
 				plantItems.add(nozzle);
 			}
 		}
+		for (PipingNetwork pipingNetwork : pipingNetworkList) {
+			plantItems.addAll(pipingNetwork.getSegments());
+		}
 		return plantItems;
 	}
 	
@@ -43,6 +48,10 @@ public class Plant extends PlantSection {
 	
 	public CatalogList getCatalogList() {
 		return catalogList;
+	}
+	
+	public PipingNetworkList getPipingNetworkList() {
+		return pipingNetworkList;
 	}
 	
 }

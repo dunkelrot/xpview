@@ -3,6 +3,9 @@ package com.basf.xpview.model.graphics;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
+import javax.vecmath.Matrix4d;
+import javax.vecmath.Point3d;
+
 
 public class SoCircle extends SoGeometry {
 	
@@ -26,9 +29,27 @@ public class SoCircle extends SoGeometry {
 	public void init(double radius, boolean filled) {
 		this.radius = radius;
 		this.filled = filled;
-		this.circle = new Ellipse2D.Double(-radius,-radius,radius * 2.0, radius * 2.0);
-		boundingBox.add(-radius, -radius);
-		boundingBox.add(radius, radius);
+		scale(1,1);
+	}
+	
+	public void scale(double x, double y) {
+		
+		Matrix4d transform = new Matrix4d();
+		transform.setIdentity();
+		transform.setM00(x);
+		transform.setM11(y);
+		
+		Point3d pt1 = new Point3d(-radius, -radius, 0);
+		Point3d pt2 = new Point3d(radius * 2.0, radius * 2.0, 0);
+		
+		transform.transform(pt1);
+		transform.transform(pt2);
+		
+		this.circle = new Ellipse2D.Double(pt1.x, pt1.y, pt2.x, pt2.y);
+		
+		boundingBox.clear();
+		boundingBox.add(pt1.x, pt1.y);
+		boundingBox.add(pt2.x, pt2.y);
 	}
 	
 	@Override

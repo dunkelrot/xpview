@@ -7,8 +7,7 @@ public abstract class SoNode {
 	protected SoNode parent;
 	protected BoundingBox boundingBox;
 	protected NodeType type;
-	protected Position position;
-	protected Scale scale;
+	protected SoMaterial selectionColor;
 	
 	public SoNode(SoNode parent, int id, String name) {
 		this.name = name;
@@ -16,8 +15,6 @@ public abstract class SoNode {
 		this.parent = parent;
 		this.boundingBox = new BoundingBox();
 		this.type = NodeType.Node;
-		this.position = new Position();
-		this.scale = new Scale();
 	}
 	
 	public SoNode(SoNode other, SoNode parent, IDProvider idProvider) {
@@ -26,8 +23,6 @@ public abstract class SoNode {
 		this.parent = parent;
 		this.boundingBox = new BoundingBox(other.boundingBox);
 		this.type = other.type;
-		this.position = new Position(other.position);
-		this.scale = new Scale(other.scale);
 	}
 	
 	public void setId(int id) {
@@ -54,13 +49,15 @@ public abstract class SoNode {
 		return type;
 	}
 	
-	public Position getPosition() {
-		return position;
+	public void setSelectionColor(SoMaterial selectionColor) {
+		this.selectionColor = selectionColor;
 	}
 	
-	public Scale getScale() {
-		return scale;
+	public SoMaterial getSelectionColor() {
+		return selectionColor;
 	}
+	
+	abstract public void scale(double x, double y);
 	
 	abstract public SoNode clone(SoNode parent, IDProvider idProvider);
 	

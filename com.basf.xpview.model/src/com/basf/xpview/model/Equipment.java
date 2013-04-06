@@ -15,8 +15,6 @@ public class Equipment extends PlantItem implements TaggedItem, PlantItemContain
 
 	protected ArrayList<Equipment> subEquipments;
 	protected ArrayList<Nozzle> nozzles;
-	
-	protected PlantItemContainer container;
 	protected String tagId;
 	
 	/**
@@ -26,9 +24,8 @@ public class Equipment extends PlantItem implements TaggedItem, PlantItemContain
 	 * @param container the owning container, can be null
 	 */
 	public Equipment(String name, String tagId, PlantItemContainer container) {
-		super(name);
+		super(name, container);
 		this.tagId = tagId;
-		this.container = container;
 		this.subEquipments = new ArrayList<Equipment>();
 		this.nozzles = new ArrayList<Nozzle>();
 	}
@@ -53,7 +50,7 @@ public class Equipment extends PlantItem implements TaggedItem, PlantItemContain
 	 * @return the newly created {@link Nozzle}
 	 */
 	public Nozzle addNozzle(String name, String tagId) {
-		Nozzle nozzle = new Nozzle(name, tagId, (PlantItem) this);
+		Nozzle nozzle = new Nozzle(name, tagId, this);
 		nozzles.add(nozzle);
 		return nozzle;
 	}
@@ -92,13 +89,10 @@ public class Equipment extends PlantItem implements TaggedItem, PlantItemContain
 			nozzles.add((Nozzle) plantItem);
 		}
 	}
-	
-	/**
-	 * Returns the owning container.
-	 * @return the owning container, can be null
-	 */
-	public PlantItemContainer getContainer() {
-		return container;
+
+	@Override
+	public List<Nozzle> getPlantItems() {
+		return nozzles;
 	}
 	
 }

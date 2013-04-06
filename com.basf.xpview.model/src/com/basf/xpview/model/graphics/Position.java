@@ -10,7 +10,7 @@ public class Position {
 	public Vector3d direction;
 	public double rotationAngle;
 	
-	boolean enabled;
+	public boolean enabled;
 	
 	public Position() {
 		this.enabled = true;
@@ -52,7 +52,7 @@ public class Position {
 		if (direction.y < 0) {
 			rotationAngle *= -1.0;
 		}
-		System.out.println(rotationAngle);
+		// System.out.println(rotationAngle);
 	}
 
 }

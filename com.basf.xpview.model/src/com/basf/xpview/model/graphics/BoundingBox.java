@@ -12,8 +12,18 @@ public class BoundingBox {
 	protected double maxY;
 	protected double maxZ;
 	
+	protected boolean empty;
+	
 	public BoundingBox() {
-		
+		this.empty = true;
+	}
+	
+	public void clear() {
+		maxX = 0;
+		maxY = 0;
+		minX = 0;
+		minY = 0;
+		this.empty = true;
 	}
 	
 	public void setNull() {
@@ -30,6 +40,7 @@ public class BoundingBox {
 		this.minX = other.minX;
 		this.minY = other.minY;
 		this.minZ = other.minZ;
+		this.empty = other.empty;
 	}
 
 	public BoundingBox(double minX, double minY, double maxX, double maxY) {
@@ -39,6 +50,7 @@ public class BoundingBox {
 		this.minX = minX;
 		this.minY = minY;
 		this.minZ = 0;
+		this.empty = false;
 	}
 	
 	public double getMaxX() {
@@ -66,23 +78,33 @@ public class BoundingBox {
 	}
 
 	public void add(double x, double y) {
-		if (maxX < x) {
+		if (empty == true) {
 			maxX = x;
-		}
-		if (maxY < y) {
-			maxY = y;
-		}
-		if (minX > x) {
 			minX = x;
-		}
-		if (minY > y) {
+			maxY = y;
 			minY = y;
-		}		
+			empty = false;
+		} else {
+			if (maxX < x) {
+				maxX = x;
+			}
+			if (maxY < y) {
+				maxY = y;
+			}
+			if (minX > x) {
+				minX = x;
+			}
+			if (minY > y) {
+				minY = y;
+			}
+		}
 	}
 	
 	public void add(BoundingBox other) {
-		add(other.maxX, other.maxY);
-		add(other.minX, other.minY);
+		if (other.isEmpty() == false) {
+			add(other.maxX, other.maxY);
+			add(other.minX, other.minY);
+		}
 	}
 	
 	@Override
@@ -111,5 +133,9 @@ public class BoundingBox {
 	
 	public double getHeight() {
 		return Math.abs(maxY - minY);
+	}
+	
+	public boolean isEmpty() {
+		return empty;
 	}
 }

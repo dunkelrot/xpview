@@ -9,29 +9,21 @@ package com.basf.xpview.model;
 public abstract class PlantItem extends Thing implements PropertyItem {
 
 	protected PropertyData propertyData;
-	protected PlantItem parent;
 	
 	protected String tagName;
 	protected String className;
 	protected String type;
+	protected PlantItemContainer container;
 	
-	public PlantItem(String name) {
-		this(name, null);
-	}
-	
-	public PlantItem(String name, PlantItem parent) {
+	public PlantItem(String name, PlantItemContainer container) {
 		super(name);
-		this.parent = parent;
+		this.container = container;
 		this.propertyData = new PropertyData(this);
 	}
 	
 	@Override
 	public PropertyData getPropertyData() {
 		return propertyData;
-	}
-	
-	public PlantItem getParent() {
-		return parent;
 	}
 	
 	public String getClassName() {
@@ -56,5 +48,9 @@ public abstract class PlantItem extends Thing implements PropertyItem {
 	
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public PlantItemContainer getContainer() {
+		return container;
 	}
 }
