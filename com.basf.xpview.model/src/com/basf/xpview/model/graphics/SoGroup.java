@@ -1,5 +1,6 @@
 package com.basf.xpview.model.graphics;
 
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +38,18 @@ public class SoGroup extends SoNode {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		boundingBox.setNull();
+		boundingBox.clear();
 		for (SoNode child : children) {
 			boundingBox.add(child.getBoundingBox());
+		}
+		return boundingBox;
+	}
+	
+	@Override
+	public BoundingBox getBoundingBox(AffineTransform transform) {
+		boundingBox.clear();
+		for (SoNode child : children) {
+			boundingBox.add(child.getBoundingBox().transformed(transform));
 		}
 		return boundingBox;
 	}

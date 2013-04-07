@@ -35,7 +35,12 @@ public class ReportService {
 
 		for (PlantItem plantItem : plant.getAllPlantItems()) {
 			if (plantItemType.isAssignableFrom(plantItem.getClass())) {
-				if (plantItem.getClassName().equals(className) || className.equals(ClassNameALL)) {
+				String itemClassName = plantItem.getClassName();
+				boolean sameClass = false;
+				if (itemClassName != null) {
+					sameClass = itemClassName.equals(className);
+				}
+				if (sameClass || className.equals(ClassNameALL)) {
 					for (PropertyList propList : plantItem.getPropertyData().getProperyLists()) {
 						ReportPropertyList repPropList = propData.add(propList.getName());
 						for (Property property : propList.getProperties()) {
@@ -45,7 +50,7 @@ public class ReportService {
 				}
 			}
 		}
-		
+
 		propData.setCheckedAll(true);
 	}
 
@@ -53,7 +58,10 @@ public class ReportService {
 		Set<String> classNames = new LinkedHashSet<String>();
 		for (PlantItem plantItem : plant.getAllPlantItems()) {
 			if (plantItemType.isAssignableFrom(plantItem.getClass())) {
-				classNames.add(plantItem.getClassName());
+				String className = plantItem.getClassName();
+				if (className != null) {
+					classNames.add(className);
+				}
 			}
 		}
 		return classNames;

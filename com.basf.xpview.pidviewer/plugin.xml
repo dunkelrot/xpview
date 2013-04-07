@@ -43,12 +43,26 @@
             </separator>
             <command
                   commandId="com.basf.xpview.pidviewer.handler.ShowAllHandler"
-                  icon="icons/arrow-in-out.png"
-                  label="ShowAll"
+                  icon="icons/zone-resize.png"
+                  label="Show All"
                   style="push"
                   tooltip="Shows the full P&amp;ID">
             </command>
+            <command
+                  commandId="com.basf.xpview.pidviewer.ShowNormalHandler"
+                  icon="icons/zone-resize-actual.png"
+                  label="Show Normal"
+                  style="push">
+            </command>
          </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any">
+         <command
+               commandId="com.basf.xpview.pidviewer.ZoomTo"
+               label="Zoom to"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -56,6 +70,34 @@
       <handler
             class="com.basf.xpview.pidviewer.handler.ShowAllHandler"
             commandId="com.basf.xpview.pidviewer.handler.ShowAllHandler">
+         <activeWhen>
+            <with
+                  variable="activeEditor">
+               <instanceof
+                     value="com.basf.xpview.pidviewer.editors.PIDEditor">
+               </instanceof>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="com.basf.xpview.pidviewer.handler.ZoomTo"
+            commandId="com.basf.xpview.pidviewer.ZoomTo">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="com.basf.xpview.model.PlantItem">
+                  </instanceof>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="com.basf.xpview.pidviewer.handler.ShowNormalHandler"
+            commandId="com.basf.xpview.pidviewer.ShowNormalHandler">
          <activeWhen>
             <with
                   variable="activeEditor">

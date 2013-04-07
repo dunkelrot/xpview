@@ -14,7 +14,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -42,6 +44,7 @@ import com.basf.xpview.model.PlantItem;
 import com.basf.xpview.model.PlantSection;
 import com.basf.xpview.model.PlantUtils;
 import com.basf.xpview.model.ProcessInstrument;
+import com.basf.xpview.model.PropertyItem;
 import com.basf.xpview.model.events.EventTypes;
 import com.basf.xpview.model.graphics.RepresentationManager;
 import com.basf.xpview.model.graphics.SoNode;
@@ -69,7 +72,7 @@ import com.basf.xpview.utils.ExceptionDialog;
 import com.basf.xpview.utils.WorkspaceContentProvider;
 import com.basf.xpview.utils.WorkspaceLabelProvider;
 
-public class PlantStructureView extends ViewPart implements EventListener {
+public class PlantStructureView extends ViewPart implements EventListener, ISelectionListener {
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -126,7 +129,7 @@ public class PlantStructureView extends ViewPart implements EventListener {
 		contributeToActionBars();
 		
 		getSite().setSelectionProvider(viewer);
-		// getSite().getPage().addSelectionListener(this);
+		getSite().getPage().addSelectionListener(this);
 		
 		EventManager.getInstance().registerForEvent(EventTypes.FileImported, this);
 	}
@@ -196,6 +199,22 @@ public class PlantStructureView extends ViewPart implements EventListener {
 	public void onEvent(Event event) {
 		if (event.getType().is(EventTypes.FileImported)) {
 			viewer.setInput(event.getData());
+		}
+	}
+
+	@Override
+	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+		if (part instanceof PlantStructureView) {
+			// ignored
+		} else {
+			if (selection instanceof IStructuredSelection) {
+				IStructuredSelection structSel = (IStructuredSelection) selection;
+				Object obj = structSel.getFirstElement();
+				if (obj instanceof PlantItem) {
+					viewer.reveal(obj);
+					viewer.setSelection(selection);
+				}
+			}
 		}
 	}
 }

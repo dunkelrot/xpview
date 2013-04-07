@@ -15,7 +15,6 @@ import com.basf.xpview.model.graphics.SoNode;
 import com.basf.xpview.model.graphics.SoText;
 import com.basf.xpview.model.graphics.SoTransformation;
 import com.basf.xpview.model.graphics.SoTrimmedCircle;
-import com.basf.xpview.model.graphics.TransformedStroke;
 
 
 public class Graphics {
@@ -40,8 +39,7 @@ public class Graphics {
 	
 	public void render(SoNode node, Graphics2D gc) {
 		AffineTransform saveTA = gc.getTransform();
-		gc.scale(camera.getZoom(), camera.getZoom());
-		gc.translate(- camera.getEye().x, - camera.getEye().y);
+		camera.transform(gc);
 		try {
 			renderNode(node, gc);
 		} catch (NoninvertibleTransformException ex) {
@@ -97,12 +95,14 @@ public class Graphics {
 			renderCircle((SoCircle)node, gc);
 			break;			
 		case Text:
-			renderText((SoText)node, gc);
+			// renderText((SoText)node, gc);
 			break;
 		case Transformation:
 			renderTransformation((SoTransformation)node, gc);
 			break;
 		case Node:
+			break;
+		case NodeT:
 			break;
 		}
 		
@@ -157,11 +157,15 @@ public class Graphics {
 	}
 	
 	public void renderTransformation(SoTransformation transform, Graphics2D gc) throws NoninvertibleTransformException {
+		
+	    // gc.draw(transform.getBoundingBox().getRectangle());
+		
 		AffineTransform at = gc.getTransform();
 		if (transform.position.enabled) {
 			gc.translate(transform.position.origin.x, transform.position.origin.y);
 			gc.rotate(transform.getPosition().rotationAngle);
 		}		
+		// gc.scale(transform.scale.x, transform.scale.y);
 		for (SoNode node : transform.getChildren()) {
 			renderNode(node, gc);
 		}

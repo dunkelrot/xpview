@@ -28,5 +28,10 @@ public class SoSelectionManager {
 		}
 		selectedNodes.clear();
 	}
+	
+	public int size() {
+		return selectedNodes.size();
+	}
+
 
 }

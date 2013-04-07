@@ -24,6 +24,7 @@ import com.basf.xpview.model.Nozzle;
 import com.basf.xpview.model.PipingNetwork;
 import com.basf.xpview.model.PipingSegment;
 import com.basf.xpview.model.PlantItem;
+import com.basf.xpview.model.ProcessInstrument;
 import com.basf.xpview.model.Workspace;
 import com.basf.xpview.model.events.EventTypes;
 
@@ -109,6 +110,7 @@ public class TypesControl extends Composite {
 		comboTypes.add(PlantItem.class.getSimpleName());
 		comboTypes.add(Equipment.class.getSimpleName());
 		comboTypes.add(Nozzle.class.getSimpleName());
+		comboTypes.add(ProcessInstrument.class.getSimpleName());
 		comboTypes.add(PipingNetwork.class.getSimpleName());
 		comboTypes.add(PipingSegment.class.getSimpleName());
 
@@ -195,6 +197,8 @@ public class TypesControl extends Composite {
 			classNames = ReportService.getAllComponentClasses(Workspace.getInstance().getPlant(), PipingNetwork.class);
 		} else if (typeName.equals(PipingSegment.class.getSimpleName())) {
 			classNames = ReportService.getAllComponentClasses(Workspace.getInstance().getPlant(), PipingSegment.class);
+		} else if (typeName.equals(ProcessInstrument.class.getSimpleName())) {
+			classNames = ReportService.getAllComponentClasses(Workspace.getInstance().getPlant(), ProcessInstrument.class);
 		} else if (typeName.equals(PlantItem.class.getSimpleName())) {
 			classNames = ReportService.getAllComponentClasses(Workspace.getInstance().getPlant(), PlantItem.class);
 		}
@@ -223,6 +227,12 @@ public class TypesControl extends Composite {
 			return Equipment.class;
 		} else if (typeName.equals(Nozzle.class.getSimpleName())) {
 			return Nozzle.class;
+		} else if (typeName.equals(PipingNetwork.class.getSimpleName())) {
+			return PipingNetwork.class;
+		} else if (typeName.equals(PipingSegment.class.getSimpleName())) {
+			return PipingSegment.class;
+		} else if (typeName.equals(ProcessInstrument.class.getSimpleName())) {
+			return ProcessInstrument.class;
 		}
 		return PlantItem.class;
 	}

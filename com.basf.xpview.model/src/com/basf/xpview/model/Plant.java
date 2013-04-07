@@ -37,6 +37,9 @@ public class Plant extends PlantSection {
 		}
 		for (PipingNetwork pipingNetwork : pipingNetworkList) {
 			plantItems.addAll(pipingNetwork.getSegments());
+			for (PipingSegment pipingSegment : pipingNetwork.getSegments()) {
+				plantItems.addAll(pipingSegment.getPlantItems());
+			}
 		}
 		return plantItems;
 	}

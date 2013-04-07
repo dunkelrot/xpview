@@ -11,14 +11,16 @@ public class LabelUtils {
 		buffer.append(initialLabel);
 		if (defaultProps != null) {
 			
-			buffer.append(" ");
-			buffer.append(defaultProps.getPropertyValue("TagName"));
-
-			buffer.append(" ");
-			buffer.append(defaultProps.getPropertyValue("ComponentClass"));
-			
-			buffer.append(" ");
-			buffer.append(defaultProps.getPropertyValue("ComponentName"));
+			if (defaultProps.getProperty("TagName") != null) {
+				buffer.append(" ");
+				buffer.append(defaultProps.getPropertyValue("TagName"));
+			} else {
+				buffer.append(" ");
+				buffer.append(defaultProps.getPropertyValue("ComponentClass"));
+				
+				buffer.append(" ");
+				buffer.append(defaultProps.getPropertyValue("ComponentName"));
+			}
 		}
 		return buffer.toString().trim(); 
 	}

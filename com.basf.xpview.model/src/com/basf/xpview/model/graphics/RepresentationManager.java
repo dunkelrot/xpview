@@ -6,24 +6,31 @@ import java.util.Map;
 public class RepresentationManager implements IDProvider {
 
 	protected int currentId;
-	protected HashMap<Object, SoNode> representations;
+	protected HashMap<Object, SoNode> object2Node;
+	protected HashMap<SoNode, Object> node2Object;
 	static private RepresentationManager instance;
 	
 	private RepresentationManager() {
-		this.representations = new HashMap<Object, SoNode>();
+		this.object2Node = new HashMap<Object, SoNode>();
+		this.node2Object = new HashMap<SoNode, Object>();
 		this.currentId = 0;
 	}
 	
 	public Map<Object, SoNode> getRepresentations() {
-		return representations;
+		return object2Node;
 	}
 	
 	public SoNode getNode(Object object) {
-		return representations.get(object);
+		return object2Node.get(object);
+	}
+	
+	public Object getObject(SoNode node) {
+		return node2Object.get(node);
 	}
 	
 	public void addNode(SoNode node, Object object) {
-		representations.put(object, node);
+		object2Node.put(object, node);
+		node2Object.put(node, object);
 	}
 	
 	public int getFreeId() {
@@ -36,6 +43,11 @@ public class RepresentationManager implements IDProvider {
 			instance = new RepresentationManager();
 		}
 		return instance;
+	}
+	
+	public void clear() {
+		object2Node.clear();
+		node2Object.clear();
 	}
 	
 }

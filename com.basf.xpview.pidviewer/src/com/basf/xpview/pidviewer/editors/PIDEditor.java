@@ -37,6 +37,7 @@ public class PIDEditor extends EditorPart {
 		setSite(site);
 		if (input instanceof PIDEditorInput) {
 			this.input = (PIDEditorInput) input;
+			
 			setInput(input);
 			firePropertyChange(PROP_TITLE);
 			setPartName(input.getName());
@@ -60,6 +61,7 @@ public class PIDEditor extends EditorPart {
 		viewer.setInput(((PIDEditorInput) input).getNode());
 		
 		getSite().getPage().addSelectionListener(viewer);
+		getSite().setSelectionProvider(viewer);
 	}
 
 	@Override
@@ -70,6 +72,7 @@ public class PIDEditor extends EditorPart {
 	@Override
 	public void dispose() {
 		super.dispose();
+		getSite().getPage().removeSelectionListener(viewer);
 		if (viewer != null) {
 			viewer.dispose();
 		}

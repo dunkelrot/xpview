@@ -49,7 +49,7 @@ public class SoCircle extends SoGeometry {
 		
 		boundingBox.clear();
 		boundingBox.add(pt1.x, pt1.y);
-		boundingBox.add(pt2.x, pt2.y);
+		boundingBox.add(pt1.x + pt2.x, pt1.y + pt2.y);
 	}
 	
 	@Override

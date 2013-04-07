@@ -1,6 +1,7 @@
 package com.basf.xpview.model.graphics;
 
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 
 import javax.vecmath.Matrix4d;
@@ -80,6 +81,16 @@ public class SoTrimmedCircle extends SoCurve implements SoPositionNode {
 		
 		position.origin.x = position.origin.x * x;
 		position.origin.y = position.origin.y * y;
+	}
+	
+	@Override
+	public BoundingBox getBoundingBox() {
+		AffineTransform transform = new AffineTransform();
+		if (position.enabled) {
+			transform.translate(position.origin.x, position.origin.y);
+			transform.rotate(position.rotationAngle);
+		}
+		return boundingBox.transformed(transform);
 	}
 	
 	@Override

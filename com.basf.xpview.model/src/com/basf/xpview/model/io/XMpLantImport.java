@@ -18,6 +18,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import com.basf.xpview.model.Activator;
 import com.basf.xpview.model.AnnotationContainer;
@@ -34,6 +35,7 @@ import com.basf.xpview.model.PropertyList;
 import com.basf.xpview.model.PropertyType;
 import com.basf.xpview.model.Thing;
 import com.basf.xpview.model.Workspace;
+import com.basf.xpview.model.graphics.NodeUtils;
 import com.basf.xpview.model.graphics.RepresentationManager;
 import com.basf.xpview.model.graphics.SoCircle;
 import com.basf.xpview.model.graphics.SoGroup;
@@ -231,18 +233,21 @@ public class XMpLantImport extends Import {
 	}
 	
 	@Override
-	public Plant read(File file, RepresentationManager repManager)
+	public Plant read(File file, RepresentationManager repManager, IProgressMonitor progressMonitor)
 			throws Exception {
 		this.repManager = repManager;
 		try {
 			Date time = new Date();
 			issueContext = new ArrayDeque<Object>();
 			IssueTracker.getInstance().clear();
+			progressMonitor.worked(1);
 			
 			JAXBContext context = JAXBContext.newInstance(PlantModel.class);
 			Unmarshaller um = context.createUnmarshaller();
 			PlantModel plantModel = (PlantModel) um.unmarshal(file);
 
+			progressMonitor.worked(1);
+			
 			plant = new Plant("<UNDEFINED>");
 			issueList = IssueTracker.getInstance().addIssueList(plant);
 			issueContext.addFirst(plantModel);
@@ -260,11 +265,17 @@ public class XMpLantImport extends Import {
 			tweak(plantModel.getPlantInformation().getOriginatingSystem());
 			
 			plantNode = new SoGroup(null, repManager.getFreeId(), "Plant");
+			plantNode.setSelectable(false);
+			
 			repManager.addNode(plantNode, plant);
 
 			handlePlantModel(plantModel);
 			
+			progressMonitor.worked(1);
+			
 			issueContext.removeFirst();
+			
+			NodeUtils.updateBoundingBoxShapes(plantNode);
 			
 			long timeDiff = new Date().getTime() - time.getTime();
 			log.info("Import finished after " + timeDiff + "ms");
@@ -298,6 +309,7 @@ public class XMpLantImport extends Import {
 		PipingNetwork pipingNetwork = new PipingNetwork(_pipingNetworkSystem.getTagName(), plant.getPipingNetworkList());
 		
 		SoGroup pipingNetworkNode = new SoGroup(plantNode, getNextId(), "PipingNetwork");
+		pipingNetworkNode.setSelectable(false);
 		plantNode.addNode(pipingNetworkNode);
 		RepresentationManager.getInstance().addNode(pipingNetworkNode, pipingNetwork);
 		
@@ -321,6 +333,7 @@ public class XMpLantImport extends Import {
 		pipingNetwork.getSegments().add(pipingSegment);
 
 		SoGroup pipingSegmentNode = new SoGroup(pipingNetworkNode, getNextId(), "PipingNetwork");
+		pipingSegmentNode.setSelectable(false);
 		pipingNetworkNode.addNode(pipingSegmentNode);
 
 		RepresentationManager.getInstance().addNode(pipingSegmentNode, pipingSegment);
@@ -541,7 +554,8 @@ public class XMpLantImport extends Import {
 		handleGenericAttributes(_drawing, propData);
 
 		SoTransformation drawingNode = new SoTransformation(plantNode, getNextId(), _drawing.getName());
-
+		drawingNode.setSelectable(false);
+		
 		plantNode.addNode(drawingNode);
 
 		repManager.addNode(drawingNode, drawing);
@@ -667,6 +681,7 @@ public class XMpLantImport extends Import {
 
 		// graphics
 		SoTransformation equipmentNode = new SoTransformation(plantNode, getNextId(), _equipment.getTagName());
+		equipmentNode.setSelectable(false);
 		plantNode.addNode(equipmentNode);
 		
 		SoTransformation group = createSoGroup(equipment, equipmentNode, fromCatalog);

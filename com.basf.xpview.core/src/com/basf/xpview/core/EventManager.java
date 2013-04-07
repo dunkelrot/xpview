@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Display;
+
 
 public class EventManager {
 
@@ -31,13 +33,18 @@ public class EventManager {
 		listeners.add(listener);
 	}
 	
-	public void sendEvent(Event event) {
-		List<EventListener> listeners = eventTypeListeners.get(event.type);
-		if (listeners != null) {
-			for (EventListener eventListener : listeners) {
-				eventListener.onEvent(event);
-			} 
-		}
+	public void sendEvent(final Event event) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				List<EventListener> listeners = eventTypeListeners.get(event.type);
+				if (listeners != null) {
+					for (EventListener eventListener : listeners) {
+						eventListener.onEvent(event);
+					} 
+				}
+			}
+		});
 	}
 	
 	public void unregisterForEvent(EventType type, EventListener listener) {

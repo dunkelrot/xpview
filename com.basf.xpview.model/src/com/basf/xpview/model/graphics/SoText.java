@@ -1,7 +1,5 @@
 package com.basf.xpview.model.graphics;
 
-import org.eclipse.swt.graphics.Font;
-
 import com.basf.xpview.model.io.xmplant.Text;
 
 public class SoText extends SoNodeT {

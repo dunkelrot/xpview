@@ -18,7 +18,6 @@ import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 import com.basf.xpview.core.Event;
 import com.basf.xpview.core.EventListener;
 import com.basf.xpview.core.EventManager;
-import com.basf.xpview.core.EventType;
 import com.basf.xpview.model.events.EventTypes;
 import com.basf.xpview.model.report.adapter.ReportPropertyAdapter;
 import com.basf.xpview.model.report.adapter.ReportPropertyDataAdapter;

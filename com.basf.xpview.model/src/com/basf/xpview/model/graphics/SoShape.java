@@ -56,6 +56,7 @@ public class SoShape extends SoGeometry {
 		path = new Path2D.Double(Path2D.WIND_EVEN_ODD, points.length);
 		boolean isFirst = true;
 		for (Point3d point : points) {
+			transform.transform(point);
 			boundingBox.add(point.x, point.y);
 			if (isFirst) {
 				path.moveTo(point.x, point.y);

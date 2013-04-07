@@ -1,6 +1,11 @@
 package com.basf.xpview.model.graphics;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 public class BoundingBox {
 
@@ -14,6 +19,8 @@ public class BoundingBox {
 	
 	protected boolean empty;
 	
+	protected Rectangle2D rectangle;
+	
 	public BoundingBox() {
 		this.empty = true;
 	}
@@ -24,13 +31,6 @@ public class BoundingBox {
 		minX = 0;
 		minY = 0;
 		this.empty = true;
-	}
-	
-	public void setNull() {
-		maxX = 0;
-		maxY = 0;
-		minX = 0;
-		minY = 0;
 	}
 	
 	public BoundingBox(BoundingBox other) {
@@ -123,7 +123,7 @@ public class BoundingBox {
 	}
 	
 	public Point3d getCenter() {
-		Point3d pt = new Point3d((maxX - minX) * 0.5, (maxY - minY) * 0.5, 0.0);
+		Point3d pt = new Point3d(minX + (maxX - minX) * 0.5, minY + (maxY - minY) * 0.5, 0.0);
 		return pt;
 	}
 	
@@ -137,5 +137,51 @@ public class BoundingBox {
 	
 	public boolean isEmpty() {
 		return empty;
+	}
+	
+	public void updateShape() {
+		rectangle = new Rectangle2D.Double(minX, minY, maxX - minX, maxY - minY);
+	}
+	
+	public void inflate(double value) {
+		Point3d center = getCenter();
+		Vector3d vec1 = new Vector3d(center.x - maxX, center.y - maxY, 0);
+		vec1.scale(value);
+		maxX = center.x + vec1.x;
+		maxY = center.y + vec1.y;
+		
+		Vector3d vec2 = new Vector3d(center.x - minX, center.y - minY, 0);
+		vec2.scale(value);
+		minX = center.x + vec2.x;
+		minY = center.y + vec2.y;		
+	}
+	
+	public BoundingBox transformed(AffineTransform transform) {
+		BoundingBox bBox = new BoundingBox();
+		Point2D pt1 = new Point2D.Double(maxX, maxY);
+		Point2D pt2 = new Point2D.Double(minX, minY);
+		
+		Point2D result = new Point2D.Double(0,0);
+		transform.transform(pt1, result);
+		bBox.add(result.getX(), result.getY());
+		
+		transform.transform(pt2, result);
+		bBox.add(result.getX(), result.getY());
+		bBox.updateShape();
+		return bBox;
+	}
+	
+	public Rectangle2D getRectangle() {
+		return rectangle;
+	}
+	
+	public double longLength() {
+		double width = maxX - minX;
+		double height = maxY - minY;
+		if (width > height) {
+			return width;
+		} else {
+			return height;
+		}
 	}
 }
