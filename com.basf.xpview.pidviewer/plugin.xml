@@ -42,14 +42,14 @@
                   name="com.basf.xpview.pidviewer.separator1">
             </separator>
             <command
-                  commandId="com.basf.xpview.pidviewer.handler.ShowAllHandler"
+                  commandId="com.basf.xpview.pidviewer.commands.ShowAllHandler"
                   icon="icons/zone-resize.png"
                   label="Show All"
                   style="push"
                   tooltip="Shows the full P&amp;ID">
             </command>
             <command
-                  commandId="com.basf.xpview.pidviewer.ShowNormalHandler"
+                  commandId="com.basf.xpview.pidviewer.commands.ShowNormalHandler"
                   icon="icons/zone-resize-actual.png"
                   label="Show Normal"
                   style="push">
@@ -59,7 +59,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any">
          <command
-               commandId="com.basf.xpview.pidviewer.ZoomTo"
+               commandId="com.basf.xpview.pidviewer.commands.ZoomTo"
                label="Zoom to"
                style="push">
          </command>
@@ -69,7 +69,7 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="com.basf.xpview.pidviewer.handler.ShowAllHandler"
-            commandId="com.basf.xpview.pidviewer.handler.ShowAllHandler">
+            commandId="com.basf.xpview.pidviewer.commands.ShowAllHandler">
          <activeWhen>
             <with
                   variable="activeEditor">
@@ -81,7 +81,7 @@
       </handler>
       <handler
             class="com.basf.xpview.pidviewer.handler.ZoomTo"
-            commandId="com.basf.xpview.pidviewer.ZoomTo">
+            commandId="com.basf.xpview.pidviewer.commands.ZoomTo">
          <enabledWhen>
             <with
                   variable="selection">
@@ -97,7 +97,7 @@
       </handler>
       <handler
             class="com.basf.xpview.pidviewer.handler.ShowNormalHandler"
-            commandId="com.basf.xpview.pidviewer.ShowNormalHandler">
+            commandId="com.basf.xpview.pidviewer.commands.ShowNormalHandler">
          <activeWhen>
             <with
                   variable="activeEditor">
@@ -110,6 +110,20 @@
    </extension>
    <extension
          point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="com.basf.xpview.pidviewer.handler.ShowAllHandler"
+            id="com.basf.xpview.pidviewer.commands.ShowAllHandler"
+            name="ShowAll">
+      </command>
+      <command
+            id="com.basf.xpview.pidviewer.commands.ZoomTo"
+            name="ZoomTo">
+      </command>
+      <command
+            defaultHandler="com.basf.xpview.pidviewer.handler.ShowNormalHandler"
+            id="com.basf.xpview.pidviewer.commands.ShowNormalHandler"
+            name="ShowNormal">
+      </command>
    </extension>
 
 </plugin>

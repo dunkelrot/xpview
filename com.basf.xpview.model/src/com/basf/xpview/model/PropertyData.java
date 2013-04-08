@@ -8,21 +8,21 @@ import java.util.List;
  * are stored in one or more {@link PropertyList} instances which are managed 
  * by this.
  * 
- * All objects which have properties should implement {@link PropertyItem}.
+ * All objects which have properties should implement {@link PropertyProvider}.
  * 
  * @author Arndt Teinert
  *
  */
 public class PropertyData {
 
-	protected PropertyItem propertyItem;
+	protected PropertyProvider propertyItem;
 	protected ArrayList<PropertyList> properyLists;
 	
 	/**
 	 * Constructor, nothing special about this.
-	 * @param propertyItem the owning {@link PropertyItem}
+	 * @param propertyItem the owning {@link PropertyProvider}
 	 */
-	public PropertyData(PropertyItem propertyItem) {
+	public PropertyData(PropertyProvider propertyItem) {
 		this.propertyItem = propertyItem;
 		this.properyLists = new ArrayList<PropertyList>();
 	}
@@ -62,10 +62,10 @@ public class PropertyData {
 	}
 	
 	/**
-	 * Returns the owning {@link PropertyItem} object.
-	 * @return the owning {@link PropertyItem} object
+	 * Returns the owning {@link PropertyProvider} object.
+	 * @return the owning {@link PropertyProvider} object
 	 */
-	public PropertyItem getPropertyItem() {
+	public PropertyProvider getPropertyItem() {
 		return propertyItem;
 	}
 	

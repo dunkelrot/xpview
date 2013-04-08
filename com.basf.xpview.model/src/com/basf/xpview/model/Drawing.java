@@ -6,7 +6,7 @@ package com.basf.xpview.model;
  * @author Arndt Teinert
  *
  */
-public class Drawing extends Thing implements PropertyItem {
+public class Drawing extends Thing implements PropertyProvider {
 	
 	protected PropertyData propertyData;
 	protected DrawingList drawingList;

@@ -49,7 +49,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
       </menuContribution>
    </extension>
    <extension
@@ -94,7 +94,7 @@
                id="com.basf.xpview.ui.MessageView"
                minimized="false"
                moveable="true"
-               ratio="0.7"
+               ratio="0.6"
                relationship="bottom"
                relative="org.eclipse.ui.editorss"
                showTitle="true"

@@ -6,7 +6,7 @@ package com.basf.xpview.model;
  * @author Arndt Teinert
  *
  */
-public interface PropertyItem {
+public interface PropertyProvider {
 
 	/**
 	 * Returns the {@link PropertyData} objects which actually manages the {@link Property}s

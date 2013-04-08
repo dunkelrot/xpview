@@ -1,6 +1,6 @@
 package com.basf.xpview.model;
 
-public class CenterLine extends Thing implements PropertyItem {
+public class CenterLine extends Thing implements PropertyProvider {
 
 	protected PropertyData propertyData;
 	protected PipingSegment parent;

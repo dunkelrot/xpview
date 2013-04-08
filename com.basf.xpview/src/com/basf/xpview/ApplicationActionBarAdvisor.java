@@ -1,6 +1,10 @@
 package com.basf.xpview;
 
 import org.eclipse.jface.action.ICoolBarManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.ToolBarContributionItem;
+import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
@@ -18,7 +22,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
 		super(configurer);
-		fillCoolBar(configurer.getCoolBarManager());
+		// fillCoolBar(configurer.getCoolBarManager());
 	}
 	
 	/**
@@ -26,8 +30,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	 */
 	protected void fillCoolBar(ICoolBarManager coolBar) {
 		// IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.LEFT);
+		// coolBar.
 		// coolBar.add(new ToolBarContributionItem(toolbar, "main"));
-		coolBar.setLockLayout(false);
+		// coolBar.setLockLayout(false);
 	}
 
 }

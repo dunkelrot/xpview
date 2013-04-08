@@ -26,7 +26,7 @@ import com.basf.xpview.core.EventListener;
 import com.basf.xpview.core.EventManager;
 import com.basf.xpview.model.Property;
 import com.basf.xpview.model.PropertyData;
-import com.basf.xpview.model.PropertyItem;
+import com.basf.xpview.model.PropertyProvider;
 import com.basf.xpview.model.PropertyList;
 import com.basf.xpview.model.events.EventTypes;
 import com.basf.xpview.plantviewer.adapter.PropertyAdapter;
@@ -99,7 +99,7 @@ public class PropertyView extends ViewPart implements EventListener, ISelectionC
 
 	@Override
 	public void setFocus() {
-		
+		viewer.getControl().setFocus();
 	}
 
 	@Override
@@ -113,8 +113,8 @@ public class PropertyView extends ViewPart implements EventListener, ISelectionC
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structSel = (IStructuredSelection) selection;
 			Object obj = structSel.getFirstElement();
-			if (obj instanceof PropertyItem) {
-				input = ((PropertyItem) obj).getPropertyData();
+			if (obj instanceof PropertyProvider) {
+				input = ((PropertyProvider) obj).getPropertyData();
 			}
 		}
 		viewer.setInput(input);

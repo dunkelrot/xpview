@@ -1,6 +1,6 @@
 package com.basf.xpview.model;
 
-public class AnnotationItem extends Thing implements PropertyItem {
+public class AnnotationItem extends Thing implements PropertyProvider {
 
 	protected PropertyData propertyData;
 	protected AnnotationContainer container;

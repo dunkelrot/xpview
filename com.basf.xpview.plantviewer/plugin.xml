@@ -47,7 +47,7 @@
                id="com.basf.xpview.plantviewer.views.PlantStructureView"
                minimized="false"
                moveable="true"
-               ratio="0.3"
+               ratio="0.4"
                relationship="left"
                relative="org.eclipse.ui.editorss"
                showTitle="true"

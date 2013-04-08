@@ -14,6 +14,7 @@ public class MessageFormatter extends Formatter {
 		this.buffer = new StringBuffer();
 	}
 	
+	
 	@Override
 	public String format(LogRecord record) {
 		buffer.setLength(0);

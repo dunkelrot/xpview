@@ -6,7 +6,7 @@ package com.basf.xpview.model;
  * @author Arndt Teinert
  *
  */
-public abstract class PlantItem extends Thing implements PropertyItem {
+public abstract class PlantItem extends Thing implements PropertyProvider {
 
 	protected PropertyData propertyData;
 	

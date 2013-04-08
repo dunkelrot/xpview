@@ -35,6 +35,7 @@ public class MessageView extends ViewPart {
 
 	@Override
 	public void setFocus() {
+		viewer.getControl().setFocus();
 	}
 
 }

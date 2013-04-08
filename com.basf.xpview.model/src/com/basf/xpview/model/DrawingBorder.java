@@ -1,6 +1,6 @@
 package com.basf.xpview.model;
 
-public class DrawingBorder extends Thing implements PropertyItem {
+public class DrawingBorder extends Thing implements PropertyProvider {
 
 	protected PropertyData propertyData;
 	protected Drawing drawing;

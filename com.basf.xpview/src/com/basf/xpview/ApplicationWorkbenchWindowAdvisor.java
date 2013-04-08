@@ -17,11 +17,15 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		return new ApplicationActionBarAdvisor(configurer);
 	}
 
+
 	public void preWindowOpen() {
 		IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-		configurer.setInitialSize(new Point(400, 300));
+
+		configurer.setInitialSize(new Point(800, 650));
 		configurer.setShowCoolBar(true);
-		configurer.setShowStatusLine(true);
+		configurer.setShowStatusLine(false);
 		configurer.setTitle("XPView");
 	}
+	
+	
 }

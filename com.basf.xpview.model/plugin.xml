@@ -4,33 +4,33 @@
 
    <extension
          point="org.eclipse.ui.commands">
-      <category
-            name="Sample Category"
-            id="com.basf.xpview.model.commands.category">
-      </category>
       <command
-            name="Sample Command"
-            categoryId="com.basf.xpview.model.commands.category"
-            id="com.basf.xpview.model.commands.sampleCommand">
+            id="com.basf.xpview.model.commands.ExcelReportHandler"
+            name="ExcelReportHandler">
+      </command>
+      <command
+            defaultHandler="com.basf.xpview.model.handlers.ImportFileHandler"
+            id="com.basf.xpview.model.commands.ImportFileHandler"
+            name="ImportFileHandler">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="com.basf.xpview.model.handlers.ImportFileHandler"
-            commandId="com.basf.xpview.model.handlers.ImportFileHandler">
+            commandId="com.basf.xpview.model.command.ImportFileHandler">
       </handler>
       <handler
             class="com.basf.xpview.model.handlers.ExcelReportHandler"
-            commandId="com.basf.xpview.model.handlers.ExcelReportHandler">
+            commandId="com.basf.xpview.model.commands.ExcelReportHandler">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="com.basf.xpview.model.commands.sampleCommand"
+            commandId="com.basf.xpview.model.commands.ImportFileHandler"
             contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+6"
+            sequence="CTRL+f"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
    </extension>
@@ -39,10 +39,9 @@
       <menuContribution
             locationURI="menu:com.basf.xpview.File?before=com.basf.xpview.Preferences">
          <command
-               commandId="com.basf.xpview.model.handlers.ImportFileHandler"
+               commandId="com.basf.xpview.model.commands.ImportFileHandler"
                icon="icons/document.png"
-               label="Open"
-               style="push">
+               label="Open">
          </command>
          <separator
                name="com.basf.xpview.model.separator1"
@@ -54,23 +53,22 @@
          <toolbar
                id="com.basf.xpview.model.MainToolbar">
             <command
-                  commandId="com.basf.xpview.model.handlers.ImportFileHandler"
+                  commandId="com.basf.xpview.model.commands.ImportFileHandler"
                   icon="icons/document.png"
                   id="com.basf.xpview.model.toolbars.ImportFileHandler"
                   label="Import file"
-                  style="push"
                   tooltip="Read a XMpLant file">
             </command>
             <command
-                  commandId="com.basf.xpview.model.handlers.ExcelReportHandler"
+                  commandId="com.basf.xpview.model.commands.ExcelReportHandler"
                   icon="icons/table-export.png"
                   id="com.basf.xpview.model.handlers.ExcelReportHandler"
                   label="Excel Export"
-                  style="push"
                   tooltip="Export attribute to Excel">
             </command>
             <separator
-                  name="com.basf.xpview.model.separator2">
+                  name="com.basf.xpview.model.separator2"
+                  visible="true">
             </separator>
          </toolbar>
       </menuContribution>

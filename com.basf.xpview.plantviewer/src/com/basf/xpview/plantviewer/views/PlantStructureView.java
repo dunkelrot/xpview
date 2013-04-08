@@ -44,7 +44,7 @@ import com.basf.xpview.model.PlantItem;
 import com.basf.xpview.model.PlantSection;
 import com.basf.xpview.model.PlantUtils;
 import com.basf.xpview.model.ProcessInstrument;
-import com.basf.xpview.model.PropertyItem;
+import com.basf.xpview.model.PropertyProvider;
 import com.basf.xpview.model.events.EventTypes;
 import com.basf.xpview.model.graphics.RepresentationManager;
 import com.basf.xpview.model.graphics.SoNode;
