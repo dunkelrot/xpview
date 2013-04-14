@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Libs
-Bundle-SymbolicName: com.basf.xpview.libs
+Bundle-SymbolicName: org.dexpi.xpview.libs
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: BASF
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
