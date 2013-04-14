@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xpview
+Bundle-SymbolicName: org.dexpi.xpview;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.dexpi.xpview.Activator
+Bundle-Vendor: BASF
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.dexpi.xpview.plantviewer;bundle-version="1.0.0",
+ org.eclipse.ui.console;bundle-version="3.5.100",
+ org.dexpi.xpview.libs;bundle-version="1.0.0",
+ org.eclipse.jface.text;bundle-version="3.7.2",
+ org.eclipse.help.ui;bundle-version="3.5.101",
+ org.eclipse.help.webapp;bundle-version="3.6.1"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
