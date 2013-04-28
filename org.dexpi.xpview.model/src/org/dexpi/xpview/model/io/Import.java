@@ -1,11 +1,11 @@
-package com.basf.xpview.model.io;
+package org.dexpi.xpview.model.io;
 
 import java.io.File;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.basf.xpview.model.Plant;
-import com.basf.xpview.model.graphics.RepresentationManager;
+import org.dexpi.xpview.model.Plant;
+import org.dexpi.xpview.model.graphics.RepresentationManager;
 
 public abstract class Import {
 

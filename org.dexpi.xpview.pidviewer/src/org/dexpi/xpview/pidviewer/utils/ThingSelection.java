@@ -1,4 +1,4 @@
-package com.basf.xpview.pidviewer.utils;
+package org.dexpi.xpview.pidviewer.utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 
-import com.basf.xpview.model.graphics.RepresentationManager;
-import com.basf.xpview.model.graphics.SoNode;
-import com.basf.xpview.model.graphics.SoSelectionManager;
+import org.dexpi.xpview.model.graphics.RepresentationManager;
+import org.dexpi.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.model.graphics.SoSelectionManager;
 
 public class ThingSelection implements IStructuredSelection {
 	

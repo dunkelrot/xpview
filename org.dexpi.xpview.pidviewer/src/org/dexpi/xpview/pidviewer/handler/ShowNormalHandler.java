@@ -1,4 +1,4 @@
-package com.basf.xpview.pidviewer.handler;
+package org.dexpi.xpview.pidviewer.handler;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -6,7 +6,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import com.basf.xpview.pidviewer.editors.PIDEditor;
+import org.dexpi.xpview.pidviewer.editors.PIDEditor;
 
 
 public class ShowNormalHandler extends AbstractHandler {

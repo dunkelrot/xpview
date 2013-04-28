@@ -1,11 +1,11 @@
-package com.basf.xpview.plantviewer.adapter;
+package org.dexpi.xpview.plantviewer.adapter;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.Nozzle;
-import com.basf.xpview.model.PropertyList;
-import com.basf.xpview.plantviewer.Activator;
+import org.dexpi.xpview.model.Nozzle;
+import org.dexpi.xpview.model.PropertyList;
+import org.dexpi.xpview.plantviewer.Activator;
 
 public class NozzleAdapter implements IWorkbenchAdapter {
 	

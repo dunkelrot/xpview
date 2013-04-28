@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics.j2d;
+package org.dexpi.xpview.model.graphics.j2d;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -6,15 +6,15 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import com.basf.xpview.model.graphics.Camera;
-import com.basf.xpview.model.graphics.SoCircle;
-import com.basf.xpview.model.graphics.SoGeometry;
-import com.basf.xpview.model.graphics.SoGroup;
-import com.basf.xpview.model.graphics.SoMaterial;
-import com.basf.xpview.model.graphics.SoNode;
-import com.basf.xpview.model.graphics.SoText;
-import com.basf.xpview.model.graphics.SoTransformation;
-import com.basf.xpview.model.graphics.SoTrimmedCircle;
+import org.dexpi.xpview.model.graphics.Camera;
+import org.dexpi.xpview.model.graphics.SoCircle;
+import org.dexpi.xpview.model.graphics.SoGeometry;
+import org.dexpi.xpview.model.graphics.SoGroup;
+import org.dexpi.xpview.model.graphics.SoMaterial;
+import org.dexpi.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.model.graphics.SoText;
+import org.dexpi.xpview.model.graphics.SoTransformation;
+import org.dexpi.xpview.model.graphics.SoTrimmedCircle;
 
 
 public class Graphics {

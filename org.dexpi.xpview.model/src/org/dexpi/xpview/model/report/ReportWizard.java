@@ -1,4 +1,4 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
 import org.eclipse.jface.dialogs.IPageChangeProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
@@ -6,7 +6,7 @@ import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
 
-import com.basf.xpview.model.Workspace;
+import org.dexpi.xpview.model.Workspace;
 
 public class ReportWizard extends Wizard {
 

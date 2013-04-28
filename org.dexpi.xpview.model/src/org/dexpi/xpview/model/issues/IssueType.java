@@ -1,4 +1,4 @@
-package com.basf.xpview.model.issues;
+package org.dexpi.xpview.model.issues;
 
 public enum IssueType {
 	ERROR,

@@ -1,4 +1,4 @@
-package com.basf.xpview.model.io;
+package org.dexpi.xpview.model.io;
 
 public enum ImportMode {
 	STRICT,

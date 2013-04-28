@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics.swt;
+package org.dexpi.xpview.model.graphics.swt;
 
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Path;

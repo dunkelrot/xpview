@@ -1,4 +1,4 @@
-package com.basf.xpview.ui;
+package org.dexpi.xpview.ui;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
@@ -12,7 +12,7 @@ import org.eclipse.ui.part.ViewPart;
 
 public class MessageView extends ViewPart {
 
-	public static final String ID = "com.basf.xpview.ui.MessageView"; //$NON-NLS-1$
+	public static final String ID = "org.dexpi.xpview.ui.MessageView"; //$NON-NLS-1$
 
 	private static Logger log = Logger.getLogger(MessageView.class);
 

@@ -1,4 +1,4 @@
-package com.basf.xpview.ui;
+package org.dexpi.xpview.ui;
 
 import java.text.SimpleDateFormat;
 import java.util.logging.Formatter;

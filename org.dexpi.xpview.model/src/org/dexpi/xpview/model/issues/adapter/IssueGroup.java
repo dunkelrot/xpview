@@ -1,10 +1,10 @@
-package com.basf.xpview.model.issues.adapter;
+package org.dexpi.xpview.model.issues.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.basf.xpview.model.issues.Issue;
-import com.basf.xpview.model.issues.IssueList;
+import org.dexpi.xpview.model.issues.Issue;
+import org.dexpi.xpview.model.issues.IssueList;
 
 public class IssueGroup {
 

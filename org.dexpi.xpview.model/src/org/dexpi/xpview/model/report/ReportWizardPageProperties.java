@@ -1,4 +1,4 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;

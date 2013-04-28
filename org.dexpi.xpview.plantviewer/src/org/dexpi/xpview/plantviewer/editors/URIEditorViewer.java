@@ -1,4 +1,4 @@
-package com.basf.xpview.plantviewer.editors;
+package org.dexpi.xpview.plantviewer.editors;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;

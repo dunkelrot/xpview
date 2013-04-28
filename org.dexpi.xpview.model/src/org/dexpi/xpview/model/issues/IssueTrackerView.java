@@ -1,4 +1,4 @@
-package com.basf.xpview.model.issues;
+package org.dexpi.xpview.model.issues;
 
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
@@ -14,26 +14,26 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventListener;
-import com.basf.xpview.core.EventManager;
-import com.basf.xpview.model.events.EventTypes;
-import com.basf.xpview.model.issues.adapter.IssueGroup;
-import com.basf.xpview.model.issues.adapter.IssueGroupAdapter;
-import com.basf.xpview.model.issues.adapter.IssueListAdapter;
-import com.basf.xpview.model.issues.adapter.IssueTrackerAdapter;
-import com.basf.xpview.model.issues.adapter.IssueWrapper;
-import com.basf.xpview.model.issues.adapter.IssueWrapperAdapter;
-import com.basf.xpview.utils.AdapterFactory;
-import com.basf.xpview.utils.WorkspaceContentProvider;
-import com.basf.xpview.utils.WorkspaceLabelProvider;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventListener;
+import org.dexpi.xpview.core.EventManager;
+import org.dexpi.xpview.model.events.EventTypes;
+import org.dexpi.xpview.model.issues.adapter.IssueGroup;
+import org.dexpi.xpview.model.issues.adapter.IssueGroupAdapter;
+import org.dexpi.xpview.model.issues.adapter.IssueListAdapter;
+import org.dexpi.xpview.model.issues.adapter.IssueTrackerAdapter;
+import org.dexpi.xpview.model.issues.adapter.IssueWrapper;
+import org.dexpi.xpview.model.issues.adapter.IssueWrapperAdapter;
+import org.dexpi.xpview.utils.AdapterFactory;
+import org.dexpi.xpview.utils.WorkspaceContentProvider;
+import org.dexpi.xpview.utils.WorkspaceLabelProvider;
 
 public class IssueTrackerView extends ViewPart implements EventListener, ISelectionChangedListener, ISelectionListener {
 
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "com.basf.xpview.model.issues.IssueTrackerView";
+	public static final String ID = "org.dexpi.xpview.model.issues.IssueTrackerView";
 
 	protected TreeViewer viewer;
 	protected AdapterFactory factory;

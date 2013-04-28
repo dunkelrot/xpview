@@ -1,4 +1,4 @@
-package com.basf.xpview.model.handlers;
+package org.dexpi.xpview.model.handlers;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -13,13 +13,13 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventManager;
-import com.basf.xpview.model.Plant;
-import com.basf.xpview.model.events.EventTypes;
-import com.basf.xpview.model.graphics.RepresentationManager;
-import com.basf.xpview.model.io.XMpLantImport;
-import com.basf.xpview.utils.ExceptionDialog;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventManager;
+import org.dexpi.xpview.model.Plant;
+import org.dexpi.xpview.model.events.EventTypes;
+import org.dexpi.xpview.model.graphics.RepresentationManager;
+import org.dexpi.xpview.model.io.XMpLantImport;
+import org.dexpi.xpview.utils.ExceptionDialog;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.

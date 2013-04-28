@@ -1,4 +1,4 @@
-package com.basf.xpview;
+package org.dexpi.xpview;
 
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;

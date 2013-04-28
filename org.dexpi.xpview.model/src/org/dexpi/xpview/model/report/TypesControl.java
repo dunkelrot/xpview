@@ -1,4 +1,4 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
 import java.util.Set;
 
@@ -17,16 +17,16 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventManager;
-import com.basf.xpview.model.Equipment;
-import com.basf.xpview.model.Nozzle;
-import com.basf.xpview.model.PipingNetwork;
-import com.basf.xpview.model.PipingSegment;
-import com.basf.xpview.model.PlantItem;
-import com.basf.xpview.model.ProcessInstrument;
-import com.basf.xpview.model.Workspace;
-import com.basf.xpview.model.events.EventTypes;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventManager;
+import org.dexpi.xpview.model.Equipment;
+import org.dexpi.xpview.model.Nozzle;
+import org.dexpi.xpview.model.PipingNetwork;
+import org.dexpi.xpview.model.PipingSegment;
+import org.dexpi.xpview.model.PlantItem;
+import org.dexpi.xpview.model.ProcessInstrument;
+import org.dexpi.xpview.model.Workspace;
+import org.dexpi.xpview.model.events.EventTypes;
 
 public class TypesControl extends Composite {
 

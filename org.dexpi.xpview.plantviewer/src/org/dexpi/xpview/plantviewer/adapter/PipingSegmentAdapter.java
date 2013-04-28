@@ -1,12 +1,12 @@
-package com.basf.xpview.plantviewer.adapter;
+package org.dexpi.xpview.plantviewer.adapter;
 
 import java.util.ArrayList;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.PipingSegment;
-import com.basf.xpview.plantviewer.Activator;
+import org.dexpi.xpview.model.PipingSegment;
+import org.dexpi.xpview.plantviewer.Activator;
 
 public class PipingSegmentAdapter implements IWorkbenchAdapter {
 	

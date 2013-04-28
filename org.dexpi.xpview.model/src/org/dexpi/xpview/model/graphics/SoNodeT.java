@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics;
+package org.dexpi.xpview.model.graphics;
 
 public abstract class SoNodeT extends SoNode {
 

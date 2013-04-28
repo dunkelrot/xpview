@@ -1,4 +1,4 @@
-package com.basf.xpview.plantviewer.editors;
+package org.dexpi.xpview.plantviewer.editors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Composite;
@@ -15,7 +15,7 @@ import org.eclipse.ui.part.EditorPart;
  */
 public class URIEditor extends EditorPart {
 
-	public static final String ID = "com.basf.xpview.plantviewer.editors.URIEditor";
+	public static final String ID = "org.dexpi.xpview.plantviewer.editors.URIEditor";
 	
 	protected URIEditorViewer viewer;
 	protected URIEditorInput input;

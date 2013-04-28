@@ -1,4 +1,4 @@
-package com.basf.xpview.core;
+package org.dexpi.xpview.core;
 
 public class Event {
 

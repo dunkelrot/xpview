@@ -1,10 +1,10 @@
-package com.basf.xpview.plantviewer.adapter;
+package org.dexpi.xpview.plantviewer.adapter;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.Component;
-import com.basf.xpview.plantviewer.Activator;
+import org.dexpi.xpview.model.Component;
+import org.dexpi.xpview.plantviewer.Activator;
 
 public class ComponentAdapter implements IWorkbenchAdapter {
 

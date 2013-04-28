@@ -6,7 +6,7 @@
 //
 
 
-package com.basf.xpview.model.io.xmplant;
+package org.dexpi.xpview.model.io.xmplant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,8 +128,8 @@ public class PNode {
      * {@link PPosition }
      * {@link GenericAttributes }
      * {@link JAXBElement }{@code <}{@link DistanceDouble }{@code >}
-     * {@link JAXBElement }{@code <}{@link com.basf.xpview.model.io.xmplant.String }{@code >}
-     * {@link JAXBElement }{@code <}{@link com.basf.xpview.model.io.xmplant.String }{@code >}
+     * {@link JAXBElement }{@code <}{@link org.dexpi.xpview.model.io.xmplant.String }{@code >}
+     * {@link JAXBElement }{@code <}{@link org.dexpi.xpview.model.io.xmplant.String }{@code >}
      * {@link JAXBElement }{@code <}{@link DistanceString }{@code >}
      * 
      * 

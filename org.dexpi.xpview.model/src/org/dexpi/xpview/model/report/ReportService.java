@@ -1,12 +1,12 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.basf.xpview.model.Plant;
-import com.basf.xpview.model.PlantItem;
-import com.basf.xpview.model.Property;
-import com.basf.xpview.model.PropertyList;
+import org.dexpi.xpview.model.Plant;
+import org.dexpi.xpview.model.PlantItem;
+import org.dexpi.xpview.model.Property;
+import org.dexpi.xpview.model.PropertyList;
 
 public class ReportService {
 

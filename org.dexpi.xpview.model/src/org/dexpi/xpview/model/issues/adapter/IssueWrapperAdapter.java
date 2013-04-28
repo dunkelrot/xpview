@@ -1,4 +1,4 @@
-package com.basf.xpview.model.issues.adapter;
+package org.dexpi.xpview.model.issues.adapter;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -6,8 +6,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.Activator;
-import com.basf.xpview.model.issues.Issue;
+import org.dexpi.xpview.model.Activator;
+import org.dexpi.xpview.model.issues.Issue;
 
 public class IssueWrapperAdapter extends LabelProvider implements
 		IWorkbenchAdapter, ITableLabelProvider {

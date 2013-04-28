@@ -1,4 +1,4 @@
-package com.basf.xpview.pidviewer.editors;
+package org.dexpi.xpview.pidviewer.editors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Composite;
@@ -15,7 +15,7 @@ import org.eclipse.ui.part.EditorPart;
  */
 public class PIDEditor extends EditorPart {
 
-	public static final String ID = "com.basf.xpview.pidviewer.editors.PIDEditor";
+	public static final String ID = "org.dexpi.xpview.pidviewer.editors.PIDEditor";
 	
 	protected PIDEditorViewer viewer;
 	protected PIDEditorInput input;

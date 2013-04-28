@@ -1,6 +1,6 @@
-package com.basf.xpview.model.issues.adapter;
+package org.dexpi.xpview.model.issues.adapter;
 
-import com.basf.xpview.model.issues.Issue;
+import org.dexpi.xpview.model.issues.Issue;
 
 public class IssueWrapper {
 

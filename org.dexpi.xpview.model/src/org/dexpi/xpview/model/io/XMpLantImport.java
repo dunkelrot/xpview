@@ -1,4 +1,4 @@
-package com.basf.xpview.model.io;
+package org.dexpi.xpview.model.io;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -20,64 +20,64 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.basf.xpview.model.Activator;
-import com.basf.xpview.model.AnnotationContainer;
-import com.basf.xpview.model.Catalog;
-import com.basf.xpview.model.DrawingSizeType;
-import com.basf.xpview.model.PipeConnector;
-import com.basf.xpview.model.PipingNetwork;
-import com.basf.xpview.model.PipingSegment;
-import com.basf.xpview.model.Plant;
-import com.basf.xpview.model.PlantItemContainer;
-import com.basf.xpview.model.PlantSection;
-import com.basf.xpview.model.PropertyData;
-import com.basf.xpview.model.PropertyList;
-import com.basf.xpview.model.PropertyType;
-import com.basf.xpview.model.Thing;
-import com.basf.xpview.model.Workspace;
-import com.basf.xpview.model.graphics.NodeUtils;
-import com.basf.xpview.model.graphics.RepresentationManager;
-import com.basf.xpview.model.graphics.SoCircle;
-import com.basf.xpview.model.graphics.SoGroup;
-import com.basf.xpview.model.graphics.SoPolyLine;
-import com.basf.xpview.model.graphics.SoPositionNode;
-import com.basf.xpview.model.graphics.SoShape;
-import com.basf.xpview.model.graphics.SoTransformation;
-import com.basf.xpview.model.graphics.SoTrimmedCircle;
-import com.basf.xpview.model.io.xmplant.AnnotationItem;
-import com.basf.xpview.model.io.xmplant.CenterLine;
-import com.basf.xpview.model.io.xmplant.Circle;
-import com.basf.xpview.model.io.xmplant.Component;
-import com.basf.xpview.model.io.xmplant.Coordinate;
-import com.basf.xpview.model.io.xmplant.Curve;
-import com.basf.xpview.model.io.xmplant.Drawing;
-import com.basf.xpview.model.io.xmplant.DrawingBorder;
-import com.basf.xpview.model.io.xmplant.Equipment;
-import com.basf.xpview.model.io.xmplant.GenericAttribute;
-import com.basf.xpview.model.io.xmplant.GenericAttributes;
-import com.basf.xpview.model.io.xmplant.Label;
-import com.basf.xpview.model.io.xmplant.Line;
-import com.basf.xpview.model.io.xmplant.Nozzle;
-import com.basf.xpview.model.io.xmplant.PipeConnectorSymbol;
-import com.basf.xpview.model.io.xmplant.PipingComponent;
-import com.basf.xpview.model.io.xmplant.PipingNetworkSegment;
-import com.basf.xpview.model.io.xmplant.PipingNetworkSystem;
-import com.basf.xpview.model.io.xmplant.PlantInformation;
-import com.basf.xpview.model.io.xmplant.PlantItem;
-import com.basf.xpview.model.io.xmplant.PlantModel;
-import com.basf.xpview.model.io.xmplant.PolyLine;
-import com.basf.xpview.model.io.xmplant.Position;
-import com.basf.xpview.model.io.xmplant.ProcessInstrument;
-import com.basf.xpview.model.io.xmplant.Scale;
-import com.basf.xpview.model.io.xmplant.ScopeBubble;
-import com.basf.xpview.model.io.xmplant.Shape;
-import com.basf.xpview.model.io.xmplant.ShapeCatalogue;
-import com.basf.xpview.model.io.xmplant.Text;
-import com.basf.xpview.model.io.xmplant.TrimmedCurve;
-import com.basf.xpview.model.io.xmplant.UnitsOfMeasure;
-import com.basf.xpview.model.issues.IssueList;
-import com.basf.xpview.model.issues.IssueTracker;
-import com.basf.xpview.model.issues.IssueType;
+import org.dexpi.xpview.model.Activator;
+import org.dexpi.xpview.model.AnnotationContainer;
+import org.dexpi.xpview.model.Catalog;
+import org.dexpi.xpview.model.DrawingSizeType;
+import org.dexpi.xpview.model.PipeConnector;
+import org.dexpi.xpview.model.PipingNetwork;
+import org.dexpi.xpview.model.PipingSegment;
+import org.dexpi.xpview.model.Plant;
+import org.dexpi.xpview.model.PlantItemContainer;
+import org.dexpi.xpview.model.PlantSection;
+import org.dexpi.xpview.model.PropertyData;
+import org.dexpi.xpview.model.PropertyList;
+import org.dexpi.xpview.model.PropertyType;
+import org.dexpi.xpview.model.Thing;
+import org.dexpi.xpview.model.Workspace;
+import org.dexpi.xpview.model.graphics.NodeUtils;
+import org.dexpi.xpview.model.graphics.RepresentationManager;
+import org.dexpi.xpview.model.graphics.SoCircle;
+import org.dexpi.xpview.model.graphics.SoGroup;
+import org.dexpi.xpview.model.graphics.SoPolyLine;
+import org.dexpi.xpview.model.graphics.SoPositionNode;
+import org.dexpi.xpview.model.graphics.SoShape;
+import org.dexpi.xpview.model.graphics.SoTransformation;
+import org.dexpi.xpview.model.graphics.SoTrimmedCircle;
+import org.dexpi.xpview.model.io.xmplant.AnnotationItem;
+import org.dexpi.xpview.model.io.xmplant.CenterLine;
+import org.dexpi.xpview.model.io.xmplant.Circle;
+import org.dexpi.xpview.model.io.xmplant.Component;
+import org.dexpi.xpview.model.io.xmplant.Coordinate;
+import org.dexpi.xpview.model.io.xmplant.Curve;
+import org.dexpi.xpview.model.io.xmplant.Drawing;
+import org.dexpi.xpview.model.io.xmplant.DrawingBorder;
+import org.dexpi.xpview.model.io.xmplant.Equipment;
+import org.dexpi.xpview.model.io.xmplant.GenericAttribute;
+import org.dexpi.xpview.model.io.xmplant.GenericAttributes;
+import org.dexpi.xpview.model.io.xmplant.Label;
+import org.dexpi.xpview.model.io.xmplant.Line;
+import org.dexpi.xpview.model.io.xmplant.Nozzle;
+import org.dexpi.xpview.model.io.xmplant.PipeConnectorSymbol;
+import org.dexpi.xpview.model.io.xmplant.PipingComponent;
+import org.dexpi.xpview.model.io.xmplant.PipingNetworkSegment;
+import org.dexpi.xpview.model.io.xmplant.PipingNetworkSystem;
+import org.dexpi.xpview.model.io.xmplant.PlantInformation;
+import org.dexpi.xpview.model.io.xmplant.PlantItem;
+import org.dexpi.xpview.model.io.xmplant.PlantModel;
+import org.dexpi.xpview.model.io.xmplant.PolyLine;
+import org.dexpi.xpview.model.io.xmplant.Position;
+import org.dexpi.xpview.model.io.xmplant.ProcessInstrument;
+import org.dexpi.xpview.model.io.xmplant.Scale;
+import org.dexpi.xpview.model.io.xmplant.ScopeBubble;
+import org.dexpi.xpview.model.io.xmplant.Shape;
+import org.dexpi.xpview.model.io.xmplant.ShapeCatalogue;
+import org.dexpi.xpview.model.io.xmplant.Text;
+import org.dexpi.xpview.model.io.xmplant.TrimmedCurve;
+import org.dexpi.xpview.model.io.xmplant.UnitsOfMeasure;
+import org.dexpi.xpview.model.issues.IssueList;
+import org.dexpi.xpview.model.issues.IssueTracker;
+import org.dexpi.xpview.model.issues.IssueType;
 
 public class XMpLantImport extends Import {
 
@@ -381,7 +381,7 @@ public class XMpLantImport extends Import {
 	protected void handleProcessInstrument(ProcessInstrument _processInstrument, PlantItemContainer processInstrumentContainer, SoGroup parentNode) {
 		issueContext.addFirst(_processInstrument);
 		
-		com.basf.xpview.model.ProcessInstrument processInstrument = new com.basf.xpview.model.ProcessInstrument(_processInstrument.getTagName(), processInstrumentContainer);
+		org.dexpi.xpview.model.ProcessInstrument processInstrument = new org.dexpi.xpview.model.ProcessInstrument(_processInstrument.getTagName(), processInstrumentContainer);
 		processInstrumentContainer.addPlantItem(processInstrument);
 
 		SoGroup processInstrumentNode = new SoGroup(parentNode, getNextId(), "ProcessInstrument");
@@ -414,7 +414,7 @@ public class XMpLantImport extends Import {
 	protected void handlePipingComponent(PipingComponent _pipingComponent, PlantItemContainer pipingComponentContainer, SoGroup parentNode) {
 		issueContext.addFirst(_pipingComponent);
 		
-		com.basf.xpview.model.PipingComponent pipingComponent = new com.basf.xpview.model.PipingComponent(_pipingComponent.getTagName(), pipingComponentContainer);
+		org.dexpi.xpview.model.PipingComponent pipingComponent = new org.dexpi.xpview.model.PipingComponent(_pipingComponent.getTagName(), pipingComponentContainer);
 		pipingComponentContainer.addPlantItem(pipingComponent);
 
 		SoGroup pipingComponentNode = new SoGroup(parentNode, getNextId(), "PipingComponent");
@@ -446,7 +446,7 @@ public class XMpLantImport extends Import {
 	protected void handleComponent(Component _component, PlantItemContainer container, SoGroup parentNode) {
 		issueContext.addFirst(_component);
 		
-		com.basf.xpview.model.Component component = new com.basf.xpview.model.Component(_component.getTagName(), container);
+		org.dexpi.xpview.model.Component component = new org.dexpi.xpview.model.Component(_component.getTagName(), container);
 		container.addPlantItem(component);
 
 		SoGroup componentNode = new SoGroup(parentNode, getNextId(), "Component");
@@ -543,7 +543,7 @@ public class XMpLantImport extends Import {
 
 		issueContext.addFirst(_drawing);
 		
-		com.basf.xpview.model.Drawing drawing = plantSection.getDrawings()
+		org.dexpi.xpview.model.Drawing drawing = plantSection.getDrawings()
 				.addDrawing(_drawing.getName());
 		
 		String size = getStringValue(_drawing, "Drawing size", _drawing.getSize());
@@ -585,7 +585,7 @@ public class XMpLantImport extends Import {
 		issueContext.removeFirst();
 	}
 	
-	protected void handleDrawingBorder(DrawingBorder _border, com.basf.xpview.model.DrawingBorder border, SoGroup parentNode) {
+	protected void handleDrawingBorder(DrawingBorder _border, org.dexpi.xpview.model.DrawingBorder border, SoGroup parentNode) {
 		SoTransformation group = new SoTransformation(parentNode, getNextId(), "Border");
 		group.getPosition().setEnabled(equipmentPositionEnabled);
 		parentNode.addNode(group);
@@ -610,7 +610,7 @@ public class XMpLantImport extends Import {
 		SoTransformation plantItemNode = null;
 		if (createCatalogElement == false) {
 			if (useCatalog) {
-				com.basf.xpview.model.PlantItem plantItemCatalog = plant.getCatalogList().findPlantItem(thing.getName());
+				org.dexpi.xpview.model.PlantItem plantItemCatalog = plant.getCatalogList().findPlantItem(thing.getName());
 				if (plantItemCatalog != null) {
 					plantItemNode = (SoTransformation) repManager.getNode(plantItemCatalog).clone(parentNode, repManager);
 				}
@@ -631,7 +631,7 @@ public class XMpLantImport extends Import {
 		issueContext.addFirst(_nozzle);
 		
 		// engineering data
-		com.basf.xpview.model.Nozzle nozzle = new com.basf.xpview.model.Nozzle(
+		org.dexpi.xpview.model.Nozzle nozzle = new org.dexpi.xpview.model.Nozzle(
 				_nozzle.getComponentName(), _nozzle.getTagName(), parent);
 		handlePlantItem(_nozzle, nozzle, fromCatalog);
 		parent.addPlantItem(nozzle);
@@ -653,7 +653,7 @@ public class XMpLantImport extends Import {
 		issueContext.addFirst(_component);
 		
 		// engineering data
-		com.basf.xpview.model.Component component = new com.basf.xpview.model.Component(
+		org.dexpi.xpview.model.Component component = new org.dexpi.xpview.model.Component(
 				_component.getComponentName(), parent);
 		handlePlantItem(_component, component, fromCatalog);
 		parent.addPlantItem(component);
@@ -674,7 +674,7 @@ public class XMpLantImport extends Import {
 		issueContext.addFirst(_equipment);
 		
 		// engineering data
-		com.basf.xpview.model.Equipment equipment = new com.basf.xpview.model.Equipment(
+		org.dexpi.xpview.model.Equipment equipment = new org.dexpi.xpview.model.Equipment(
 				_equipment.getComponentName(), _equipment.getTagName(), parent);
 		handlePlantItem(_equipment, equipment, fromCatalog);
 		parent.addPlantItem(equipment);
@@ -722,7 +722,7 @@ public class XMpLantImport extends Import {
 	}
 	
 	protected void handlePlantItem(PlantItem _plantItem,
-			com.basf.xpview.model.PlantItem plantItem, boolean fromCatalog) {
+			org.dexpi.xpview.model.PlantItem plantItem, boolean fromCatalog) {
 
 		PropertyData propData = plantItem.getPropertyData();
 		
@@ -746,7 +746,7 @@ public class XMpLantImport extends Import {
 	}
 	
 	protected void handlePlantItemGraphics(PlantItem _plantItem,
-			com.basf.xpview.model.PlantItem plantItem, SoTransformation group) {
+			org.dexpi.xpview.model.PlantItem plantItem, SoTransformation group) {
 		handleCurves(_plantItem.getPresentationOrExtentOrPersistentID(), group);
 	}
 	

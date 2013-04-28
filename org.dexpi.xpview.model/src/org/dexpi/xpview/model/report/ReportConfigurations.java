@@ -1,4 +1,4 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,10 +8,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.basf.xpview.model.report.config.ConfigEntry;
-import com.basf.xpview.model.report.config.Configuration;
-import com.basf.xpview.model.report.config.ConfigurationList;
-import com.basf.xpview.model.report.config.ObjectFactory;
+import org.dexpi.xpview.model.report.config.ConfigEntry;
+import org.dexpi.xpview.model.report.config.Configuration;
+import org.dexpi.xpview.model.report.config.ConfigurationList;
+import org.dexpi.xpview.model.report.config.ObjectFactory;
 
 public class ReportConfigurations {
 

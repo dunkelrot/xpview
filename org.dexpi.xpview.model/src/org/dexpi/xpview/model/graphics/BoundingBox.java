@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics;
+package org.dexpi.xpview.model.graphics;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;

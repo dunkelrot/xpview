@@ -1,4 +1,4 @@
-package com.basf.xpview.model;
+package org.dexpi.xpview.model;
 
 /**
  * An object like a {@link Thing} or {@link PlantItem} which has a TAGID (a unique identifier)

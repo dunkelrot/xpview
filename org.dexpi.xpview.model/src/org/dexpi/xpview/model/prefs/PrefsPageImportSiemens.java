@@ -1,11 +1,11 @@
-package com.basf.xpview.model.prefs;
+package org.dexpi.xpview.model.prefs;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import com.basf.xpview.model.Activator;
+import org.dexpi.xpview.model.Activator;
 
 public class PrefsPageImportSiemens extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 

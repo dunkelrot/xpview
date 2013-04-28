@@ -1,4 +1,4 @@
-package com.basf.xpview.pidviewer;
+package org.dexpi.xpview.pidviewer;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -10,7 +10,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "com.basf.xpview.view2d"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.dexpi.xpview.view2d"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

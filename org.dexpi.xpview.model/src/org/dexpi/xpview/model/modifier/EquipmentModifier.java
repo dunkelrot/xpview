@@ -1,19 +1,19 @@
-package com.basf.xpview.model.modifier;
+package org.dexpi.xpview.model.modifier;
 
 
 import org.eclipse.jface.util.PropertyChangeEvent;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventManager;
-import com.basf.xpview.model.Activator;
-import com.basf.xpview.model.Equipment;
-import com.basf.xpview.model.Nozzle;
-import com.basf.xpview.model.Plant;
-import com.basf.xpview.model.Workspace;
-import com.basf.xpview.model.events.EventTypes;
-import com.basf.xpview.model.graphics.RepresentationManager;
-import com.basf.xpview.model.graphics.SoNode;
-import com.basf.xpview.model.graphics.SoTransformation;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventManager;
+import org.dexpi.xpview.model.Activator;
+import org.dexpi.xpview.model.Equipment;
+import org.dexpi.xpview.model.Nozzle;
+import org.dexpi.xpview.model.Plant;
+import org.dexpi.xpview.model.Workspace;
+import org.dexpi.xpview.model.events.EventTypes;
+import org.dexpi.xpview.model.graphics.RepresentationManager;
+import org.dexpi.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.model.graphics.SoTransformation;
 
 public class EquipmentModifier implements org.eclipse.jface.util.IPropertyChangeListener {
 

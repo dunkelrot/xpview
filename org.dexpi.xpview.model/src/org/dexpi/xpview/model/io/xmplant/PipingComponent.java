@@ -6,7 +6,7 @@
 //
 
 
-package com.basf.xpview.model.io.xmplant;
+package org.dexpi.xpview.model.io.xmplant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,15 +100,15 @@ public class PipingComponent
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link com.basf.xpview.model.io.xmplant.String }{@code >}
+     * {@link JAXBElement }{@code <}{@link org.dexpi.xpview.model.io.xmplant.String }{@code >}
      * {@link JAXBElement }{@code <}{@link DistanceDouble }{@code >}
      * {@link JAXBElement }{@code <}{@link DistanceString }{@code >}
      * {@link JAXBElement }{@code <}{@link DistanceDouble }{@code >}
      * {@link JAXBElement }{@code <}{@link DistanceDouble }{@code >}
-     * {@link JAXBElement }{@code <}{@link com.basf.xpview.model.io.xmplant.String }{@code >}
+     * {@link JAXBElement }{@code <}{@link org.dexpi.xpview.model.io.xmplant.String }{@code >}
      * {@link JAXBElement }{@code <}{@link PipingComponent }{@code >}
      * {@link Component }
-     * {@link JAXBElement }{@code <}{@link com.basf.xpview.model.io.xmplant.String }{@code >}
+     * {@link JAXBElement }{@code <}{@link org.dexpi.xpview.model.io.xmplant.String }{@code >}
      * 
      * 
      */

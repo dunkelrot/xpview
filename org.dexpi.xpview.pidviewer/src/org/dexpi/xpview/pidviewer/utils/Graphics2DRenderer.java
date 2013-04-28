@@ -1,4 +1,4 @@
-package com.basf.xpview.pidviewer.utils;
+package org.dexpi.xpview.pidviewer.utils;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

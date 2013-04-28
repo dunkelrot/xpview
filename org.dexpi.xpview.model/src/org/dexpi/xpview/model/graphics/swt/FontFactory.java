@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics.swt;
+package org.dexpi.xpview.model.graphics.swt;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.swt.graphics.Font;
 
-import com.basf.xpview.model.graphics.SoText;
+import org.dexpi.xpview.model.graphics.SoText;
 
 
 public class FontFactory {

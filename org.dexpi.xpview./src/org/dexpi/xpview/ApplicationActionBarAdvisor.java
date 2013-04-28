@@ -1,4 +1,4 @@
-package com.basf.xpview;
+package org.dexpi.xpview;
 
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IToolBarManager;

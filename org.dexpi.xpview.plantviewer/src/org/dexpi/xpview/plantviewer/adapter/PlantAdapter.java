@@ -1,12 +1,12 @@
-package com.basf.xpview.plantviewer.adapter;
+package org.dexpi.xpview.plantviewer.adapter;
 
 import java.util.ArrayList;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.Plant;
-import com.basf.xpview.model.PlantSection;
+import org.dexpi.xpview.model.Plant;
+import org.dexpi.xpview.model.PlantSection;
 
 public class PlantAdapter implements IWorkbenchAdapter {
 

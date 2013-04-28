@@ -6,7 +6,7 @@
 //
 
 
-package com.basf.xpview.model.report.config;
+package org.dexpi.xpview.model.report.config;
 
 import java.util.ArrayList;
 import java.util.List;

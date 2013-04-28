@@ -1,4 +1,4 @@
-package com.basf.xpview.pidviewer.editors;
+package org.dexpi.xpview.pidviewer.editors;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -31,19 +31,19 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventListener;
-import com.basf.xpview.model.Thing;
-import com.basf.xpview.model.events.EventTypes;
-import com.basf.xpview.model.graphics.BoundingBox;
-import com.basf.xpview.model.graphics.NodeUtils;
-import com.basf.xpview.model.graphics.RepresentationManager;
-import com.basf.xpview.model.graphics.SoGroup;
-import com.basf.xpview.model.graphics.SoNode;
-import com.basf.xpview.model.graphics.SoSelectionManager;
-import com.basf.xpview.model.graphics.j2d.Graphics;
-import com.basf.xpview.pidviewer.utils.Graphics2DRenderer;
-import com.basf.xpview.pidviewer.utils.ThingSelection;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventListener;
+import org.dexpi.xpview.model.Thing;
+import org.dexpi.xpview.model.events.EventTypes;
+import org.dexpi.xpview.model.graphics.BoundingBox;
+import org.dexpi.xpview.model.graphics.NodeUtils;
+import org.dexpi.xpview.model.graphics.RepresentationManager;
+import org.dexpi.xpview.model.graphics.SoGroup;
+import org.dexpi.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.model.graphics.SoSelectionManager;
+import org.dexpi.xpview.model.graphics.j2d.Graphics;
+import org.dexpi.xpview.pidviewer.utils.Graphics2DRenderer;
+import org.dexpi.xpview.pidviewer.utils.ThingSelection;
 
 /**
  * A thin wrapper around the browser control.
@@ -208,7 +208,7 @@ public class PIDEditorViewer implements EventListener, ISelectionChangedListener
 			}
 		});
 
-		com.basf.xpview.core.EventManager.getInstance().registerForEvent(EventTypes.SceneGraphModified, this);
+		org.dexpi.xpview.core.EventManager.getInstance().registerForEvent(EventTypes.SceneGraphModified, this);
 	}
 
 	public void setFocus() {
@@ -232,7 +232,7 @@ public class PIDEditorViewer implements EventListener, ISelectionChangedListener
 
 	public void dispose() {
 		selectionManager.clear();
-		com.basf.xpview.core.EventManager.getInstance().unregisterForEvent(EventTypes.SceneGraphModified, this);
+		org.dexpi.xpview.core.EventManager.getInstance().unregisterForEvent(EventTypes.SceneGraphModified, this);
 	}
 
 	public void setZoom(double zoom) {

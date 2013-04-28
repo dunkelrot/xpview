@@ -1,4 +1,4 @@
-package com.basf.xpview.model;
+package org.dexpi.xpview.model;
 
 /**
  * All objects which have properties (or lists of properties) should implement this interface.

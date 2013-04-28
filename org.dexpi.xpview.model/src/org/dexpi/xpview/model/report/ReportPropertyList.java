@@ -1,10 +1,10 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.basf.xpview.model.Property;
+import org.dexpi.xpview.model.Property;
 
 public class ReportPropertyList implements Iterable<ReportProperty> {
 	

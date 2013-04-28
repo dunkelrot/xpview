@@ -1,4 +1,4 @@
-package com.basf.xpview.model;
+package org.dexpi.xpview.model;
 
 /**
  * A Drawing represents one piece of digital paper. 

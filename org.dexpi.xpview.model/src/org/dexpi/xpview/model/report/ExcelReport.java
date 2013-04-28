@@ -1,4 +1,4 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,10 +16,16 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.basf.xpview.model.PlantItem;
-import com.basf.xpview.model.Property;
-import com.basf.xpview.model.Workspace;
+import org.dexpi.xpview.model.PlantItem;
+import org.dexpi.xpview.model.Property;
+import org.dexpi.xpview.model.Workspace;
 
+/**
+ * Very simple excel reporting.
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class ExcelReport {
 
 	private static Logger log = Logger.getLogger(ExcelReport.class);

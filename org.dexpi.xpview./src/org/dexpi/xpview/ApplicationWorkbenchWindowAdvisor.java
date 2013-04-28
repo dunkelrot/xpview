@@ -1,4 +1,4 @@
-package com.basf.xpview;
+package org.dexpi.xpview;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.application.ActionBarAdvisor;

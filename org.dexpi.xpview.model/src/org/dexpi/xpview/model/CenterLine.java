@@ -1,4 +1,4 @@
-package com.basf.xpview.model;
+package org.dexpi.xpview.model;
 
 public class CenterLine extends Thing implements PropertyProvider {
 

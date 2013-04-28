@@ -1,4 +1,4 @@
-package com.basf.xpview.plantviewer.adapter;
+package org.dexpi.xpview.plantviewer.adapter;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -6,8 +6,8 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.Property;
-import com.basf.xpview.plantviewer.Activator;
+import org.dexpi.xpview.model.Property;
+import org.dexpi.xpview.plantviewer.Activator;
 
 public class PropertyAdapter extends LabelProvider implements IWorkbenchAdapter, ITableLabelProvider {
 

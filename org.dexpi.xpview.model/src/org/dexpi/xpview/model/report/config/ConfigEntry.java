@@ -6,7 +6,7 @@
 //
 
 
-package com.basf.xpview.model.report.config;
+package org.dexpi.xpview.model.report.config;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

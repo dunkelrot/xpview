@@ -1,4 +1,4 @@
-package com.basf.xpview.plantviewer.views;
+package org.dexpi.xpview.plantviewer.views;
 
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -21,63 +21,63 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventListener;
-import com.basf.xpview.core.EventManager;
-import com.basf.xpview.model.AnnotationItem;
-import com.basf.xpview.model.Catalog;
-import com.basf.xpview.model.CatalogList;
-import com.basf.xpview.model.Component;
-import com.basf.xpview.model.Drawing;
-import com.basf.xpview.model.DrawingBorder;
-import com.basf.xpview.model.DrawingList;
-import com.basf.xpview.model.Equipment;
-import com.basf.xpview.model.EquipmentList;
-import com.basf.xpview.model.Nozzle;
-import com.basf.xpview.model.PipeConnector;
-import com.basf.xpview.model.PipingComponent;
-import com.basf.xpview.model.PipingNetwork;
-import com.basf.xpview.model.PipingNetworkList;
-import com.basf.xpview.model.PipingSegment;
-import com.basf.xpview.model.Plant;
-import com.basf.xpview.model.PlantItem;
-import com.basf.xpview.model.PlantSection;
-import com.basf.xpview.model.PlantUtils;
-import com.basf.xpview.model.ProcessInstrument;
-import com.basf.xpview.model.PropertyProvider;
-import com.basf.xpview.model.events.EventTypes;
-import com.basf.xpview.model.graphics.RepresentationManager;
-import com.basf.xpview.model.graphics.SoNode;
-import com.basf.xpview.pidviewer.editors.PIDEditor;
-import com.basf.xpview.pidviewer.editors.PIDEditorInput;
-import com.basf.xpview.plantviewer.adapter.AnnotationItemAdapter;
-import com.basf.xpview.plantviewer.adapter.CatalogAdapter;
-import com.basf.xpview.plantviewer.adapter.CatalogListAdapter;
-import com.basf.xpview.plantviewer.adapter.ComponentAdapter;
-import com.basf.xpview.plantviewer.adapter.DrawingAdapter;
-import com.basf.xpview.plantviewer.adapter.DrawingBorderAdapter;
-import com.basf.xpview.plantviewer.adapter.DrawingListAdapter;
-import com.basf.xpview.plantviewer.adapter.EquipmentAdapter;
-import com.basf.xpview.plantviewer.adapter.EquipmentListAdapter;
-import com.basf.xpview.plantviewer.adapter.NozzleAdapter;
-import com.basf.xpview.plantviewer.adapter.PipingComponentAdapter;
-import com.basf.xpview.plantviewer.adapter.PipingNetworkAdapter;
-import com.basf.xpview.plantviewer.adapter.PipingNetworkListAdapter;
-import com.basf.xpview.plantviewer.adapter.PipingSegmentAdapter;
-import com.basf.xpview.plantviewer.adapter.PlantAdapter;
-import com.basf.xpview.plantviewer.adapter.PlantItemAdapter;
-import com.basf.xpview.plantviewer.adapter.PlantSectionAdapter;
-import com.basf.xpview.utils.AdapterFactory;
-import com.basf.xpview.utils.ExceptionDialog;
-import com.basf.xpview.utils.WorkspaceContentProvider;
-import com.basf.xpview.utils.WorkspaceLabelProvider;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventListener;
+import org.dexpi.xpview.core.EventManager;
+import org.dexpi.xpview.model.AnnotationItem;
+import org.dexpi.xpview.model.Catalog;
+import org.dexpi.xpview.model.CatalogList;
+import org.dexpi.xpview.model.Component;
+import org.dexpi.xpview.model.Drawing;
+import org.dexpi.xpview.model.DrawingBorder;
+import org.dexpi.xpview.model.DrawingList;
+import org.dexpi.xpview.model.Equipment;
+import org.dexpi.xpview.model.EquipmentList;
+import org.dexpi.xpview.model.Nozzle;
+import org.dexpi.xpview.model.PipeConnector;
+import org.dexpi.xpview.model.PipingComponent;
+import org.dexpi.xpview.model.PipingNetwork;
+import org.dexpi.xpview.model.PipingNetworkList;
+import org.dexpi.xpview.model.PipingSegment;
+import org.dexpi.xpview.model.Plant;
+import org.dexpi.xpview.model.PlantItem;
+import org.dexpi.xpview.model.PlantSection;
+import org.dexpi.xpview.model.PlantUtils;
+import org.dexpi.xpview.model.ProcessInstrument;
+import org.dexpi.xpview.model.PropertyProvider;
+import org.dexpi.xpview.model.events.EventTypes;
+import org.dexpi.xpview.model.graphics.RepresentationManager;
+import org.dexpi.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.pidviewer.editors.PIDEditor;
+import org.dexpi.xpview.pidviewer.editors.PIDEditorInput;
+import org.dexpi.xpview.plantviewer.adapter.AnnotationItemAdapter;
+import org.dexpi.xpview.plantviewer.adapter.CatalogAdapter;
+import org.dexpi.xpview.plantviewer.adapter.CatalogListAdapter;
+import org.dexpi.xpview.plantviewer.adapter.ComponentAdapter;
+import org.dexpi.xpview.plantviewer.adapter.DrawingAdapter;
+import org.dexpi.xpview.plantviewer.adapter.DrawingBorderAdapter;
+import org.dexpi.xpview.plantviewer.adapter.DrawingListAdapter;
+import org.dexpi.xpview.plantviewer.adapter.EquipmentAdapter;
+import org.dexpi.xpview.plantviewer.adapter.EquipmentListAdapter;
+import org.dexpi.xpview.plantviewer.adapter.NozzleAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PipingComponentAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PipingNetworkAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PipingNetworkListAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PipingSegmentAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PlantAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PlantItemAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PlantSectionAdapter;
+import org.dexpi.xpview.utils.AdapterFactory;
+import org.dexpi.xpview.utils.ExceptionDialog;
+import org.dexpi.xpview.utils.WorkspaceContentProvider;
+import org.dexpi.xpview.utils.WorkspaceLabelProvider;
 
 public class PlantStructureView extends ViewPart implements EventListener, ISelectionListener {
 
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "com.basf.xpview.plantviewer.views.PlantStructureView";
+	public static final String ID = "org.dexpi.xpview.plantviewer.views.PlantStructureView";
 
 	protected AdapterFactory factory;
 	
@@ -121,7 +121,7 @@ public class PlantStructureView extends ViewPart implements EventListener, ISele
 		// viewer.setInput(getViewSite());
 
 		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "com.basf.xpview.plantviewer.viewer");
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.dexpi.xpview.plantviewer.viewer");
 		makeActions();
 		
 		hookContextMenu();

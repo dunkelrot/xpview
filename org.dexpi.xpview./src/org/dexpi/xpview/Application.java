@@ -1,4 +1,4 @@
-package com.basf.xpview;
+package org.dexpi.xpview;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;

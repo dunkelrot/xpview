@@ -1,7 +1,13 @@
-package com.basf.xpview.model;
+package org.dexpi.xpview.model;
 
-import com.basf.xpview.model.modifier.EquipmentModifier;
+import org.dexpi.xpview.model.modifier.EquipmentModifier;
 
+/**
+ * Root of the application data model.
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class Workspace {
 
 	private static Workspace instance;

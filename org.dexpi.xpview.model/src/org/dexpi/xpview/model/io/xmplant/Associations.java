@@ -6,7 +6,7 @@
 //
 
 
-package com.basf.xpview.model.io.xmplant;
+package org.dexpi.xpview.model.io.xmplant;
 
 import java.util.ArrayList;
 import java.util.List;

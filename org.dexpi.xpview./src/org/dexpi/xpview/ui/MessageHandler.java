@@ -1,4 +1,4 @@
-package com.basf.xpview.ui;
+package org.dexpi.xpview.ui;
 
 import java.io.OutputStream;
 import java.util.logging.LogRecord;

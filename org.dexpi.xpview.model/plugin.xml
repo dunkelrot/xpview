@@ -5,30 +5,30 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="com.basf.xpview.model.commands.ExcelReportHandler"
+            id="org.dexpi.xpview.model.commands.ExcelReportHandler"
             name="ExcelReportHandler">
       </command>
       <command
-            defaultHandler="com.basf.xpview.model.handlers.ImportFileHandler"
-            id="com.basf.xpview.model.commands.ImportFileHandler"
+            defaultHandler="org.dexpi.xpview.model.handlers.ImportFileHandler"
+            id="org.dexpi.xpview.model.commands.ImportFileHandler"
             name="ImportFileHandler">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="com.basf.xpview.model.handlers.ImportFileHandler"
-            commandId="com.basf.xpview.model.command.ImportFileHandler">
+            class="org.dexpi.xpview.model.handlers.ImportFileHandler"
+            commandId="org.dexpi.xpview.model.command.ImportFileHandler">
       </handler>
       <handler
-            class="com.basf.xpview.model.handlers.ExcelReportHandler"
-            commandId="com.basf.xpview.model.commands.ExcelReportHandler">
+            class="org.dexpi.xpview.model.handlers.ExcelReportHandler"
+            commandId="org.dexpi.xpview.model.commands.ExcelReportHandler">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="com.basf.xpview.model.commands.ImportFileHandler"
+            commandId="org.dexpi.xpview.model.commands.ImportFileHandler"
             contextId="org.eclipse.ui.contexts.window"
             sequence="CTRL+f"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
@@ -37,37 +37,37 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:com.basf.xpview.File?before=com.basf.xpview.Preferences">
+            locationURI="menu:org.dexpi.xpview.File?before=org.dexpi.xpview.Preferences">
          <command
-               commandId="com.basf.xpview.model.commands.ImportFileHandler"
+               commandId="org.dexpi.xpview.model.commands.ImportFileHandler"
                icon="icons/document.png"
                label="Open">
          </command>
          <separator
-               name="com.basf.xpview.model.separator1"
+               name="org.dexpi.xpview.model.separator1"
                visible="true">
          </separator>
       </menuContribution>
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="com.basf.xpview.model.MainToolbar">
+               id="org.dexpi.xpview.model.MainToolbar">
             <command
-                  commandId="com.basf.xpview.model.commands.ImportFileHandler"
+                  commandId="org.dexpi.xpview.model.commands.ImportFileHandler"
                   icon="icons/document.png"
-                  id="com.basf.xpview.model.toolbars.ImportFileHandler"
+                  id="org.dexpi.xpview.model.toolbars.ImportFileHandler"
                   label="Import file"
                   tooltip="Read a XMpLant file">
             </command>
             <command
-                  commandId="com.basf.xpview.model.commands.ExcelReportHandler"
+                  commandId="org.dexpi.xpview.model.commands.ExcelReportHandler"
                   icon="icons/table-export.png"
-                  id="com.basf.xpview.model.handlers.ExcelReportHandler"
+                  id="org.dexpi.xpview.model.handlers.ExcelReportHandler"
                   label="Excel Export"
                   tooltip="Export attribute to Excel">
             </command>
             <separator
-                  name="com.basf.xpview.model.separator2"
+                  name="org.dexpi.xpview.model.separator2"
                   visible="true">
             </separator>
          </toolbar>
@@ -76,31 +76,31 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="com.basf.xpview.model.prefs.PrefsDefaults">
+            class="org.dexpi.xpview.model.prefs.PrefsDefaults">
       </initializer>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="com.basf.xpview.model.prefs.PrefsPageImport"
+            class="org.dexpi.xpview.model.prefs.PrefsPageImport"
             id="PrefsPageImport"
             name="Import">
       </page>
       <page
             category="PrefsPageImport"
-            class="com.basf.xpview.model.prefs.PrefsPageImportAVEVA"
+            class="org.dexpi.xpview.model.prefs.PrefsPageImportAVEVA"
             id="PrefsPageImportAVEVA"
             name="AVEVA import">
       </page>
       <page
             category="PrefsPageImport"
-            class="com.basf.xpview.model.prefs.PrefsPageImportAutoDesk"
+            class="org.dexpi.xpview.model.prefs.PrefsPageImportAutoDesk"
             id="PrefsPageImportAutoDesk"
             name="AutoDesk import">
       </page>
       <page
             category="PrefsPageImport"
-            class="com.basf.xpview.model.prefs.PrefsPageImportSiemens"
+            class="org.dexpi.xpview.model.prefs.PrefsPageImportSiemens"
             id="PrefsPageImportSiemens"
             name="Siemens import">
       </page>
@@ -108,14 +108,14 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="com.basf.xpview.perspective">
+            targetID="org.dexpi.xpview.perspective">
          <view
                closeable="false"
-               id="com.basf.xpview.model.issues.IssueTrackerView"
+               id="org.dexpi.xpview.model.issues.IssueTrackerView"
                minimized="false"
                moveable="true"
                relationship="stack"
-               relative="com.basf.xpview.ui.MessageView"
+               relative="org.dexpi.xpview.ui.MessageView"
                showTitle="true"
                visible="true">
          </view>
@@ -125,9 +125,9 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            class="com.basf.xpview.model.issues.IssueTrackerView"
+            class="org.dexpi.xpview.model.issues.IssueTrackerView"
             icon="icons/error.png"
-            id="com.basf.xpview.model.issues.IssueTrackerView"
+            id="org.dexpi.xpview.model.issues.IssueTrackerView"
             name="IssueTracker"
             restorable="true">
       </view>

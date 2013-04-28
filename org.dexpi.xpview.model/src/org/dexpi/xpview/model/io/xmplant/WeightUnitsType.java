@@ -6,7 +6,7 @@
 //
 
 
-package com.basf.xpview.model.io.xmplant;
+package org.dexpi.xpview.model.io.xmplant;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;

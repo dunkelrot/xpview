@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Xpview
 Bundle-SymbolicName: org.dexpi.xpview;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: com.basf.xpview.Activator
+Bundle-Activator: org.dexpi.xpview.Activator
 Bundle-Vendor: BASF
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

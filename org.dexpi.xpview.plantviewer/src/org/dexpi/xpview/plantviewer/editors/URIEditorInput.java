@@ -1,10 +1,10 @@
-package com.basf.xpview.plantviewer.editors;
+package org.dexpi.xpview.plantviewer.editors;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
-import com.basf.xpview.model.Property;
+import org.dexpi.xpview.model.Property;
 
 /**
  * Input for the URIEditor. A thin wrapper around a Property which

@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics;
+package org.dexpi.xpview.model.graphics;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;

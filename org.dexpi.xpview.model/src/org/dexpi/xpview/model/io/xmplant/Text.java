@@ -6,7 +6,7 @@
 //
 
 
-package com.basf.xpview.model.io.xmplant;
+package org.dexpi.xpview.model.io.xmplant;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class Text {
         @XmlElement(name = "Presentation", type = Presentation.class),
         @XmlElement(name = "Extent", type = Extent.class),
         @XmlElement(name = "Position", type = Position.class),
-        @XmlElement(name = "String", type = com.basf.xpview.model.io.xmplant.String.class),
+        @XmlElement(name = "String", type = org.dexpi.xpview.model.io.xmplant.String.class),
         @XmlElement(name = "GenericAttributes", type = GenericAttributes.class)
     })
     protected List<Object> presentationOrExtentOrPosition;
@@ -134,7 +134,7 @@ public class Text {
      * {@link Presentation }
      * {@link Extent }
      * {@link Position }
-     * {@link com.basf.xpview.model.io.xmplant.String }
+     * {@link org.dexpi.xpview.model.io.xmplant.String }
      * {@link GenericAttributes }
      * 
      * 

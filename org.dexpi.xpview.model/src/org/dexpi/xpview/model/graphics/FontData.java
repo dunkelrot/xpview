@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics;
+package org.dexpi.xpview.model.graphics;
 
 public interface FontData {
 

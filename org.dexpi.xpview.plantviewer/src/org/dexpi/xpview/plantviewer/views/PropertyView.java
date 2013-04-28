@@ -1,4 +1,4 @@
-package com.basf.xpview.plantviewer.views;
+package org.dexpi.xpview.plantviewer.views;
 
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -21,30 +21,30 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventListener;
-import com.basf.xpview.core.EventManager;
-import com.basf.xpview.model.Property;
-import com.basf.xpview.model.PropertyData;
-import com.basf.xpview.model.PropertyProvider;
-import com.basf.xpview.model.PropertyList;
-import com.basf.xpview.model.events.EventTypes;
-import com.basf.xpview.plantviewer.adapter.PropertyAdapter;
-import com.basf.xpview.plantviewer.adapter.PropertyDataAdapter;
-import com.basf.xpview.plantviewer.adapter.PropertyListAdapter;
-import com.basf.xpview.plantviewer.editors.URIEditor;
-import com.basf.xpview.plantviewer.editors.URIEditorInput;
-import com.basf.xpview.utils.AdapterFactory;
-import com.basf.xpview.utils.ExceptionDialog;
-import com.basf.xpview.utils.WorkspaceContentProvider;
-import com.basf.xpview.utils.WorkspaceLabelProvider;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventListener;
+import org.dexpi.xpview.core.EventManager;
+import org.dexpi.xpview.model.Property;
+import org.dexpi.xpview.model.PropertyData;
+import org.dexpi.xpview.model.PropertyProvider;
+import org.dexpi.xpview.model.PropertyList;
+import org.dexpi.xpview.model.events.EventTypes;
+import org.dexpi.xpview.plantviewer.adapter.PropertyAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PropertyDataAdapter;
+import org.dexpi.xpview.plantviewer.adapter.PropertyListAdapter;
+import org.dexpi.xpview.plantviewer.editors.URIEditor;
+import org.dexpi.xpview.plantviewer.editors.URIEditorInput;
+import org.dexpi.xpview.utils.AdapterFactory;
+import org.dexpi.xpview.utils.ExceptionDialog;
+import org.dexpi.xpview.utils.WorkspaceContentProvider;
+import org.dexpi.xpview.utils.WorkspaceLabelProvider;
 
 public class PropertyView extends ViewPart implements EventListener, ISelectionChangedListener, ISelectionListener {
 
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "com.basf.xpview.plantviewer.views.PropertyView";
+	public static final String ID = "org.dexpi.xpview.plantviewer.views.PropertyView";
 
 	protected TreeViewer viewer;
 	protected AdapterFactory factory;

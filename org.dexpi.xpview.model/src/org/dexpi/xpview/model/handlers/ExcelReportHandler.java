@@ -1,4 +1,4 @@
-package com.basf.xpview.model.handlers;
+package org.dexpi.xpview.model.handlers;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -13,9 +13,9 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
 
-import com.basf.xpview.model.report.ExcelReport;
-import com.basf.xpview.model.report.ReportPropertyData;
-import com.basf.xpview.model.report.ReportWizard;
+import org.dexpi.xpview.model.report.ExcelReport;
+import org.dexpi.xpview.model.report.ReportPropertyData;
+import org.dexpi.xpview.model.report.ReportWizard;
 
 public class ExcelReportHandler extends AbstractHandler {
 

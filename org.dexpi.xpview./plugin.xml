@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="com.basf.xpview.Application">
+               class="org.dexpi.xpview.Application">
          </run>
       </application>
    </extension>
@@ -15,8 +15,8 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="Perspective"
-            class="com.basf.xpview.Perspective"
-            id="com.basf.xpview.perspective">
+            class="org.dexpi.xpview.Perspective"
+            id="org.dexpi.xpview.perspective">
       </perspective>
    </extension>
    <extension
@@ -24,11 +24,11 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu">
          <menu
-               id="com.basf.xpview.File"
+               id="org.dexpi.xpview.File"
                label="File">
             <command
                   commandId="org.eclipse.ui.window.preferences"
-                  id="com.basf.xpview.Preferences"
+                  id="org.dexpi.xpview.Preferences"
                   label="Preferences"
                   style="push">
             </command>
@@ -56,7 +56,7 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            application="com.basf.xpview.application"
+            application="org.dexpi.xpview.application"
             name="XPView">
          <property
                name="appName"
@@ -79,8 +79,8 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            class="com.basf.xpview.ui.MessageView"
-            id="com.basf.xpview.ui.MessageView"
+            class="org.dexpi.xpview.ui.MessageView"
+            id="org.dexpi.xpview.ui.MessageView"
             name="Messages"
             restorable="true">
       </view>
@@ -88,10 +88,10 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="com.basf.xpview.perspective">
+            targetID="org.dexpi.xpview.perspective">
          <view
                closeable="false"
-               id="com.basf.xpview.ui.MessageView"
+               id="org.dexpi.xpview.ui.MessageView"
                minimized="false"
                moveable="true"
                ratio="0.6"

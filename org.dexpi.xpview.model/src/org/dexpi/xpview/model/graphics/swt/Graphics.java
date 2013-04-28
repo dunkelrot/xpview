@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics.swt;
+package org.dexpi.xpview.model.graphics.swt;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -11,16 +11,16 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Transform;
 
-import com.basf.xpview.model.graphics.Camera;
-import com.basf.xpview.model.graphics.SoCircle;
-import com.basf.xpview.model.graphics.SoGeometry;
-import com.basf.xpview.model.graphics.SoGroup;
-import com.basf.xpview.model.graphics.SoMaterial;
-import com.basf.xpview.model.graphics.SoNode;
-import com.basf.xpview.model.graphics.SoText;
-import com.basf.xpview.model.graphics.SoTransformation;
-import com.basf.xpview.model.graphics.SoTrimmedCircle;
-import com.basf.xpview.model.graphics.TransformedStroke;
+import org.dexpi.xpview.model.graphics.Camera;
+import org.dexpi.xpview.model.graphics.SoCircle;
+import org.dexpi.xpview.model.graphics.SoGeometry;
+import org.dexpi.xpview.model.graphics.SoGroup;
+import org.dexpi.xpview.model.graphics.SoMaterial;
+import org.dexpi.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.model.graphics.SoText;
+import org.dexpi.xpview.model.graphics.SoTransformation;
+import org.dexpi.xpview.model.graphics.SoTrimmedCircle;
+import org.dexpi.xpview.model.graphics.TransformedStroke;
 
 
 public class Graphics {

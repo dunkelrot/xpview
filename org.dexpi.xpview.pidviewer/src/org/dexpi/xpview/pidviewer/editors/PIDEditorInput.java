@@ -1,10 +1,10 @@
-package com.basf.xpview.pidviewer.editors;
+package org.dexpi.xpview.pidviewer.editors;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
 
-import com.basf.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.model.graphics.SoNode;
 
 /**
  * Input for the PIDEditorInput.

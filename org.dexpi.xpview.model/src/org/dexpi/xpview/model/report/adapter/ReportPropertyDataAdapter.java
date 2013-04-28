@@ -1,9 +1,9 @@
-package com.basf.xpview.model.report.adapter;
+package org.dexpi.xpview.model.report.adapter;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.report.ReportPropertyData;
+import org.dexpi.xpview.model.report.ReportPropertyData;
 
 public class ReportPropertyDataAdapter implements IWorkbenchAdapter {
 

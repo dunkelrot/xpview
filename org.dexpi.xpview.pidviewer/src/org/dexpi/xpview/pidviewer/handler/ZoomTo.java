@@ -1,4 +1,4 @@
-package com.basf.xpview.pidviewer.handler;
+package org.dexpi.xpview.pidviewer.handler;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -8,10 +8,10 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import com.basf.xpview.model.Thing;
-import com.basf.xpview.model.graphics.RepresentationManager;
-import com.basf.xpview.model.graphics.SoNode;
-import com.basf.xpview.pidviewer.editors.PIDEditor;
+import org.dexpi.xpview.model.Thing;
+import org.dexpi.xpview.model.graphics.RepresentationManager;
+import org.dexpi.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.pidviewer.editors.PIDEditor;
 
 public class ZoomTo extends AbstractHandler {
 

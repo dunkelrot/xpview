@@ -1,4 +1,4 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -15,17 +15,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventListener;
-import com.basf.xpview.core.EventManager;
-import com.basf.xpview.model.events.EventTypes;
-import com.basf.xpview.model.report.adapter.ReportPropertyAdapter;
-import com.basf.xpview.model.report.adapter.ReportPropertyDataAdapter;
-import com.basf.xpview.model.report.adapter.ReportPropertyListAdapter;
-import com.basf.xpview.model.report.config.Configuration;
-import com.basf.xpview.utils.AdapterFactory;
-import com.basf.xpview.utils.WorkspaceContentProvider;
-import com.basf.xpview.utils.WorkspaceLabelProvider;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventListener;
+import org.dexpi.xpview.core.EventManager;
+import org.dexpi.xpview.model.events.EventTypes;
+import org.dexpi.xpview.model.report.adapter.ReportPropertyAdapter;
+import org.dexpi.xpview.model.report.adapter.ReportPropertyDataAdapter;
+import org.dexpi.xpview.model.report.adapter.ReportPropertyListAdapter;
+import org.dexpi.xpview.model.report.config.Configuration;
+import org.dexpi.xpview.utils.AdapterFactory;
+import org.dexpi.xpview.utils.WorkspaceContentProvider;
+import org.dexpi.xpview.utils.WorkspaceLabelProvider;
 
 public class PropertiesControl extends Composite implements ICheckStateListener, EventListener {
 

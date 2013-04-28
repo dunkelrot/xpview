@@ -1,7 +1,7 @@
-package com.basf.xpview.plantviewer.adapter;
+package org.dexpi.xpview.plantviewer.adapter;
 
-import com.basf.xpview.model.PlantItem;
-import com.basf.xpview.model.PropertyList;
+import org.dexpi.xpview.model.PlantItem;
+import org.dexpi.xpview.model.PropertyList;
 
 public class LabelUtils {
 

@@ -1,4 +1,4 @@
-package com.basf.xpview.model.graphics;
+package org.dexpi.xpview.model.graphics;
 
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;

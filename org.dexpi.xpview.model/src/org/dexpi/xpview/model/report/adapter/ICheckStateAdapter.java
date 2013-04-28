@@ -1,4 +1,4 @@
-package com.basf.xpview.model.report.adapter;
+package org.dexpi.xpview.model.report.adapter;
 
 import org.eclipse.jface.viewers.ICheckStateProvider;
 

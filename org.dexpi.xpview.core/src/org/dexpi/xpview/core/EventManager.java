@@ -1,4 +1,4 @@
-package com.basf.xpview.core;
+package org.dexpi.xpview.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;

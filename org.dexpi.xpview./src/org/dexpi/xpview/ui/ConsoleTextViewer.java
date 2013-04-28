@@ -1,4 +1,4 @@
-package com.basf.xpview.ui;
+package org.dexpi.xpview.ui;
 
 import org.eclipse.jface.text.ITextListener;
 import org.eclipse.swt.widgets.Composite;

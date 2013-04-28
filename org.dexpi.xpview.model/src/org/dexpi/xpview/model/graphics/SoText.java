@@ -1,6 +1,6 @@
-package com.basf.xpview.model.graphics;
+package org.dexpi.xpview.model.graphics;
 
-import com.basf.xpview.model.io.xmplant.Text;
+import org.dexpi.xpview.model.io.xmplant.Text;
 
 public class SoText extends SoNodeT {
 

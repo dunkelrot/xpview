@@ -1,6 +1,6 @@
-package com.basf.xpview.model.report;
+package org.dexpi.xpview.model.report;
 
-import com.basf.xpview.model.Property;
+import org.dexpi.xpview.model.Property;
 
 public class ReportProperty {
 

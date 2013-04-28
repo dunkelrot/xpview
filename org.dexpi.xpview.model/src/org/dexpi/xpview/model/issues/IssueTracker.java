@@ -1,12 +1,12 @@
-package com.basf.xpview.model.issues;
+package org.dexpi.xpview.model.issues;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.basf.xpview.core.Event;
-import com.basf.xpview.core.EventManager;
-import com.basf.xpview.model.Plant;
-import com.basf.xpview.model.events.EventTypes;
+import org.dexpi.xpview.core.Event;
+import org.dexpi.xpview.core.EventManager;
+import org.dexpi.xpview.model.Plant;
+import org.dexpi.xpview.model.events.EventTypes;
 
 public class IssueTracker {
 

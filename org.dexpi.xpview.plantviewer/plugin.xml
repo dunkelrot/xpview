@@ -6,16 +6,16 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="com.basf.xpview.plantviewer"
-            class="com.basf.xpview.plantviewer.views.PlantStructureView"
+            category="org.dexpi.xpview.plantviewer"
+            class="org.dexpi.xpview.plantviewer.views.PlantStructureView"
             icon="icons/package.png"
-            id="com.basf.xpview.plantviewer.views.PlantStructureView"
+            id="org.dexpi.xpview.plantviewer.views.PlantStructureView"
             name="Plant Structure">
       </view>
       <view
             allowMultiple="false"
-            class="com.basf.xpview.plantviewer.views.PropertyView"
-            id="com.basf.xpview.plantviewer.views.PropertyView"
+            class="org.dexpi.xpview.plantviewer.views.PropertyView"
+            id="org.dexpi.xpview.plantviewer.views.PropertyView"
             name="PropertyView"
             restorable="true">
       </view>
@@ -32,19 +32,19 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="com.basf.xpview.plantviewer.editors.URIEditor"
+            class="org.dexpi.xpview.plantviewer.editors.URIEditor"
             default="false"
-            id="com.basf.xpview.plantviewer.editors.URIEditor"
+            id="org.dexpi.xpview.plantviewer.editors.URIEditor"
             name="URIEditor">
       </editor>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="com.basf.xpview.perspective">
+            targetID="org.dexpi.xpview.perspective">
          <view
                closeable="false"
-               id="com.basf.xpview.plantviewer.views.PlantStructureView"
+               id="org.dexpi.xpview.plantviewer.views.PlantStructureView"
                minimized="false"
                moveable="true"
                ratio="0.4"
@@ -55,11 +55,11 @@
          </view>
          <view
                closeable="false"
-               id="com.basf.xpview.plantviewer.views.PropertyView"
+               id="org.dexpi.xpview.plantviewer.views.PropertyView"
                minimized="false"
                moveable="true"
                relationship="stack"
-               relative="com.basf.xpview.ui.MessageView"
+               relative="org.dexpi.xpview.ui.MessageView"
                showTitle="true"
                visible="true">
          </view>

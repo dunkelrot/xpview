@@ -1,10 +1,10 @@
-package com.basf.xpview.model.prefs;
+package org.dexpi.xpview.model.prefs;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import com.basf.xpview.model.Activator;
-import com.basf.xpview.model.io.ImportMode;
+import org.dexpi.xpview.model.Activator;
+import org.dexpi.xpview.model.io.ImportMode;
 
 public class PrefsDefaults extends AbstractPreferenceInitializer {
 

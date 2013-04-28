@@ -1,4 +1,4 @@
-package com.basf.xpview.model.issues.adapter;
+package org.dexpi.xpview.model.issues.adapter;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;

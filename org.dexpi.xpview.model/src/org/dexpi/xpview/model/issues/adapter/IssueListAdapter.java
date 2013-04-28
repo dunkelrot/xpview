@@ -1,13 +1,13 @@
-package com.basf.xpview.model.issues.adapter;
+package org.dexpi.xpview.model.issues.adapter;
 
 import java.util.ArrayList;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
-import com.basf.xpview.model.issues.Issue;
-import com.basf.xpview.model.issues.IssueList;
-import com.basf.xpview.model.issues.IssueTracker;
+import org.dexpi.xpview.model.issues.Issue;
+import org.dexpi.xpview.model.issues.IssueList;
+import org.dexpi.xpview.model.issues.IssueTracker;
 
 public class IssueListAdapter implements IWorkbenchAdapter {
 

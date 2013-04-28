@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Model
 Bundle-SymbolicName: org.dexpi.xpview.model;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: com.basf.xpview.model.Activator
+Bundle-Activator: org.dexpi.xpview.model.Activator
 Bundle-Vendor: BASF
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -11,8 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.dexpi.xpview.libs;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: com.basf.xpview.model,
- com.basf.xpview.model.events,
- com.basf.xpview.model.graphics,
- com.basf.xpview.model.graphics.j2d,
- com.basf.xpview.model.handlers
+Export-Package: org.dexpi.xpview.model,
+ org.dexpi.xpview.model.events,
+ org.dexpi.xpview.model.graphics,
+ org.dexpi.xpview.model.graphics.j2d,
+ org.dexpi.xpview.model.handlers
