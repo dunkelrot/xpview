@@ -1,11 +1,13 @@
 package org.dexpi.xpview.plantviewer.adapter;
 
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.model.IWorkbenchAdapter;
+import java.util.ArrayList;
 
 import org.dexpi.xpview.model.PlantItem;
 import org.dexpi.xpview.model.PlantItemContainer;
+import org.dexpi.xpview.model.TextBag;
 import org.dexpi.xpview.plantviewer.Activator;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.model.IWorkbenchAdapter;
 
 public class PlantItemAdapter implements IWorkbenchAdapter {
 
@@ -18,11 +20,14 @@ public class PlantItemAdapter implements IWorkbenchAdapter {
 	@Override
 	public Object[] getChildren(Object o) {
 		PlantItem plantItem = (PlantItem) o;
-		if (plantItem instanceof PlantItemContainer) {
-			return ((PlantItemContainer)plantItem).getPlantItems().toArray();
-		} else {
-			return new Object[0];
+		ArrayList<Object> children = new ArrayList<Object>(); 
+		if (plantItem instanceof TextBag) {
+			children.add(((TextBag)plantItem).getTextList());
 		}
+		if (plantItem instanceof PlantItemContainer) {
+			children.addAll(((PlantItemContainer)plantItem).getPlantItems());
+		}
+		return children.toArray();
 	}
 
 	@Override

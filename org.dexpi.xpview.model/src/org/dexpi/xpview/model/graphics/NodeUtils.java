@@ -10,8 +10,10 @@ public class NodeUtils {
 
 	public AffineTransform getOverallTransform(SoNode node) {
 		ArrayDeque<AffineTransform> transformList = new ArrayDeque<AffineTransform>();
-		getTransform(node, transformList);
-
+		if (node.getParent() != null) {
+			getTransform(node.getParent(), transformList);
+		}
+		
 		AffineTransform transform = new AffineTransform();
 		Iterator<AffineTransform> itor = transformList.descendingIterator();
 		while (itor.hasNext()) {

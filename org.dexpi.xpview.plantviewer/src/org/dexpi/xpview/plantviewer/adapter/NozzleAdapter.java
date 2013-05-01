@@ -1,5 +1,7 @@
 package org.dexpi.xpview.plantviewer.adapter;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
@@ -17,7 +19,10 @@ public class NozzleAdapter implements IWorkbenchAdapter {
 	
 	@Override
 	public Object[] getChildren(Object o) {
-		return new Object[0];
+		Nozzle nozzle = (Nozzle) o;
+		ArrayList<Object> children = new ArrayList<Object>(); 
+		children.add(nozzle.getTextList());
+		return children.toArray();
 	}
 
 	@Override

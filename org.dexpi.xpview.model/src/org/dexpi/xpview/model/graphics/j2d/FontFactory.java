@@ -1,12 +1,10 @@
 package org.dexpi.xpview.model.graphics.j2d;
 
+import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.swt.graphics.Font;
-
-import org.dexpi.xpview.model.graphics.SoText;
 
 
 public class FontFactory {
@@ -19,7 +17,7 @@ public class FontFactory {
 	
 	public FontFactory() {
 		this.fontMap = new HashMap<String, Font>();
-		// defaultFont = new Font("Dialog", Font.PLAIN, 12);
+		this.defaultFont = new Font("Dialog", Font.PLAIN, 12);
 		fontMap.put(DEFAULT_FONT, defaultFont);
 	}
 	
@@ -33,8 +31,8 @@ public class FontFactory {
 		if (font == null) {
 			font = fontMap.get(DEFAULT_FONT);
 			try {
-				// font = Font.createFont(Font.TRUETYPE_FONT, new File(fontName + ".ttf"));
-				// font = font.deriveFont((float) height);
+				font = new Font(fontName, Font.PLAIN, (int) height);
+				fontMap.put(getFontDesc(fontName, height, slantAngle, textAngle), font);
 			} catch (Exception ex) {
 				log.warn("Cannot create font: " + fontName);
 			}
@@ -47,7 +45,5 @@ public class FontFactory {
 		fontMap.put(DEFAULT_FONT, defaultFont);
 	}
 	
-	public void createFont(SoText node) {
-		
-	}
+	
 }

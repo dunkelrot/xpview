@@ -1,5 +1,6 @@
 package org.dexpi.xpview.model.graphics.j2d;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
@@ -22,6 +23,7 @@ public class Graphics {
 	protected Camera camera;
 	protected Deque<SoMaterial> colorStack;
 	protected boolean selectionColorActive;
+	protected FontFactory fontFactory;
 	
 	public Graphics() {
 		this.camera = new Camera();
@@ -29,12 +31,17 @@ public class Graphics {
 		SoMaterial defaultMaterial = new SoMaterial(null, 0, "Default");
 		defaultMaterial.init(0, 0, 0, 255);
 		this.colorStack.push(defaultMaterial);
-		
+		this.fontFactory = new FontFactory();
 		this.selectionColorActive = false;
 	}
 	
 	public Camera getCamera() {
 		return camera;
+	}
+	
+	public void prepare(SoNode node) {
+		FontGenerator fontGenerator = new FontGenerator(fontFactory);
+		fontGenerator.createFonts(node);
 	}
 	
 	public void render(SoNode node, Graphics2D gc) {
@@ -78,7 +85,7 @@ public class Graphics {
 
 		pushSelectionColor(node);
 		gc.setColor(colorStack.peek().getColor());
-		
+
 		switch (node.getType()) {
 		case PolyLine:
 		case Shape:
@@ -95,7 +102,7 @@ public class Graphics {
 			renderCircle((SoCircle)node, gc);
 			break;			
 		case Text:
-			// renderText((SoText)node, gc);
+			renderText((SoText)node, gc);
 			break;
 		case Transformation:
 			renderTransformation((SoTransformation)node, gc);
@@ -111,12 +118,11 @@ public class Graphics {
 	
 	public void renderText(SoText text, Graphics2D gc) throws NoninvertibleTransformException {
 		AffineTransform at = gc.getTransform();
-		if (text.position.enabled) {
-			gc.translate(text.position.origin.x, text.position.origin.y);
-			gc.rotate(text.getPosition().rotationAngle);
-		}		
-		gc.scale(text.scale.x, text.scale.y);
-		// gc.setFont(text.getFont());
+
+		// due to the nature of the TEXT rendering we have to flip the coordinate system again
+		gc.scale(1.0, -1.0);
+		
+		gc.setFont((Font) text.getFontData().getFont());
 		gc.drawString(text.getValue(), 0, 0);
 		gc.setTransform(at);
 	}
@@ -135,7 +141,7 @@ public class Graphics {
 				gc.translate(circle.position.origin.x, circle.position.origin.y);
 				gc.rotate(circle.getPosition().rotationAngle);
 			}
-			// due to the nature of the ARC rendering we have to flip the coord system again
+			// due to the nature of the ARC rendering we have to flip the coordinate system again
 			gc.scale(1.0, -1.0);
 			gc.setStroke(circle.getStroke());
 			gc.draw(circle.getShape());
@@ -151,21 +157,22 @@ public class Graphics {
 	}
 	
 	public void renderGroup(SoGroup group, Graphics2D gc) throws NoninvertibleTransformException {
+		
 		for (SoNode node : group.getChildren()) {
 			renderNode(node, gc);
 		}
 	}
 	
 	public void renderTransformation(SoTransformation transform, Graphics2D gc) throws NoninvertibleTransformException {
-		
-	    // gc.draw(transform.getBoundingBox().getRectangle());
+
+		// gc.draw(transform.getBoundingBox().getRectangle());
 		
 		AffineTransform at = gc.getTransform();
 		if (transform.position.enabled) {
 			gc.translate(transform.position.origin.x, transform.position.origin.y);
 			gc.rotate(transform.getPosition().rotationAngle);
 		}		
-		// gc.scale(transform.scale.x, transform.scale.y);
+		
 		for (SoNode node : transform.getChildren()) {
 			renderNode(node, gc);
 		}

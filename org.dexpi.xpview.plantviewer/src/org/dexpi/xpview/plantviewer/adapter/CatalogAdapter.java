@@ -1,5 +1,7 @@
 package org.dexpi.xpview.plantviewer.adapter;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.model.IWorkbenchAdapter;
 
@@ -17,7 +19,10 @@ public class CatalogAdapter implements IWorkbenchAdapter {
 	@Override
 	public Object[] getChildren(Object o) {
 		Catalog catalog = (Catalog) o;
-		return catalog.getPlantItems().toArray();
+		ArrayList<Object> children = new ArrayList<Object>(); 
+		children.addAll(catalog.getAnnotations());
+		children.addAll(catalog.getPlantItems());
+		return children.toArray();
 	}
 
 	@Override

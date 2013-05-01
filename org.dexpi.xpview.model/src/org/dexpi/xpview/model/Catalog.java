@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Catalog is used to collect PlantItems which are defined in a symbol catalog.
+ * The Catalog is used to collect {@link PlantItem}s and {@link AnnotationItem}s which are defined in a symbol catalog.
  * The actual representation (the graphics) is stored via the RepresentationManager.
  * 
  * @author Arndt Teinert
  *
  */
-public class Catalog extends Thing implements PlantItemContainer {
+public class Catalog extends Thing implements PlantItemContainer, AnnotationContainer {
 
 	protected ArrayList<PlantItem> plantItems;
+	protected ArrayList<AnnotationItem> annotations;
 	
 	protected CatalogList catalogList;
 	
@@ -25,6 +26,7 @@ public class Catalog extends Thing implements PlantItemContainer {
 		super(name);
 		this.catalogList = catalogList;
 		this.plantItems = new ArrayList<PlantItem>();
+		this.annotations = new ArrayList<AnnotationItem>();
 	}
 
 	@Override
@@ -68,7 +70,15 @@ public class Catalog extends Thing implements PlantItemContainer {
 		return result;
 	}
 	
+	@Override
+	public void addAnnotation(AnnotationItem annotationItem) {
+		annotations.add(annotationItem);
+	}
 	
+	@Override
+	public List<? extends AnnotationItem> getAnnotations() {
+		return annotations;
+	}
 	
 }
 

@@ -126,10 +126,6 @@ public class Graphics {
 	
 	public void renderText(SoText text, GC gc) throws NoninvertibleTransformException {
 		// AffineTransform at = gc.getTransform();
-		if (text.position.enabled) {
-			// gc.translate(text.position.origin.x, text.position.origin.y);
-			// gc.rotate(text.getPosition().rotationAngle);
-		}		
 		// gc.scale(text.scale.x, text.scale.y);
 		// gc.setFont(text.getFont());
 		gc.drawString(text.getValue(), 0, 0);

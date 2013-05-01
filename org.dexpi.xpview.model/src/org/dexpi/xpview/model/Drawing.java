@@ -1,18 +1,23 @@
 package org.dexpi.xpview.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A Drawing represents one piece of digital paper. 
  * 
  * @author Arndt Teinert
  *
  */
-public class Drawing extends Thing implements PropertyProvider {
+public class Drawing extends Thing implements PropertyProvider, AnnotationContainer, TextBag {
 	
 	protected PropertyData propertyData;
 	protected DrawingList drawingList;
 	protected DrawingSizeType size;
 	protected DrawingBorder border;
-
+	protected TextList textList;
+	protected ArrayList<AnnotationItem> annotations;
+	
 	/**
 	 * Constructor, nothing special about this.
 	 * The paper size is set to A1 by default.
@@ -26,6 +31,8 @@ public class Drawing extends Thing implements PropertyProvider {
 		this.propertyData = new PropertyData(this);
 		this.size = DrawingSizeType.A1;
 		this.border = new DrawingBorder(this);
+		this.textList = new TextList(this);
+		this.annotations = new ArrayList<AnnotationItem>();
 	}
 	
 	@Override
@@ -59,5 +66,20 @@ public class Drawing extends Thing implements PropertyProvider {
 	
 	public DrawingBorder getBorder() {
 		return border;
+	}
+	
+	@Override
+	public TextList getTextList() {
+		return textList;
+	}
+
+	@Override
+	public List<? extends AnnotationItem> getAnnotations() {
+		return annotations;
+	}
+
+	@Override
+	public void addAnnotation(AnnotationItem annotationItem) {
+		annotations.add(annotationItem);
 	}
 }

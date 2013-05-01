@@ -16,7 +16,10 @@ public class PrefsPageImportAVEVA extends FieldEditorPreferencePage implements I
 	@Override
 	protected void createFieldEditors() {
 		addField(new BooleanFieldEditor(Activator.AVEVA_APPLY_EQUIPMENT_POSITION, "Apply equipment position", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(Activator.AVEVA_APPLY_LABEL_POSITION, "Apply label position", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(Activator.AVEVA_APPLY_TEXT_POSITION, "Apply text position", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(Activator.AVEVA_USE_CATALOG, "Reference catalog elements", getFieldEditorParent()));
+		
 	}
 
 	@Override

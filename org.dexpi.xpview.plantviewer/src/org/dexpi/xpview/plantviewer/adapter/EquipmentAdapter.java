@@ -2,13 +2,11 @@ package org.dexpi.xpview.plantviewer.adapter;
 
 import java.util.ArrayList;
 
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.model.IWorkbenchAdapter;
-
 import org.dexpi.xpview.model.Equipment;
-import org.dexpi.xpview.model.PlantItem;
 import org.dexpi.xpview.model.PropertyList;
 import org.dexpi.xpview.plantviewer.Activator;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.model.IWorkbenchAdapter;
 
 public class EquipmentAdapter implements IWorkbenchAdapter {
 
@@ -21,7 +19,8 @@ public class EquipmentAdapter implements IWorkbenchAdapter {
 	@Override
 	public Object[] getChildren(Object o) {
 		Equipment equipment = (Equipment) o;
-		ArrayList<PlantItem> children = new ArrayList<PlantItem>();
+		ArrayList<Object> children = new ArrayList<Object>();
+		children.add(equipment.getTextList());
 		children.addAll(equipment.getSubEquipments());
 		children.addAll(equipment.getNozzles());
 		return children.toArray();

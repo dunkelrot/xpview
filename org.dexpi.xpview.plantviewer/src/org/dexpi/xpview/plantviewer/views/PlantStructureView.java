@@ -1,30 +1,9 @@
 package org.dexpi.xpview.plantviewer.views;
 
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
 
 import org.dexpi.xpview.core.Event;
 import org.dexpi.xpview.core.EventListener;
 import org.dexpi.xpview.core.EventManager;
-import org.dexpi.xpview.model.AnnotationItem;
 import org.dexpi.xpview.model.Catalog;
 import org.dexpi.xpview.model.CatalogList;
 import org.dexpi.xpview.model.Component;
@@ -33,6 +12,7 @@ import org.dexpi.xpview.model.DrawingBorder;
 import org.dexpi.xpview.model.DrawingList;
 import org.dexpi.xpview.model.Equipment;
 import org.dexpi.xpview.model.EquipmentList;
+import org.dexpi.xpview.model.Label;
 import org.dexpi.xpview.model.Nozzle;
 import org.dexpi.xpview.model.PipeConnector;
 import org.dexpi.xpview.model.PipingComponent;
@@ -44,7 +24,8 @@ import org.dexpi.xpview.model.PlantItem;
 import org.dexpi.xpview.model.PlantSection;
 import org.dexpi.xpview.model.PlantUtils;
 import org.dexpi.xpview.model.ProcessInstrument;
-import org.dexpi.xpview.model.PropertyProvider;
+import org.dexpi.xpview.model.Text;
+import org.dexpi.xpview.model.TextList;
 import org.dexpi.xpview.model.events.EventTypes;
 import org.dexpi.xpview.model.graphics.RepresentationManager;
 import org.dexpi.xpview.model.graphics.SoNode;
@@ -67,10 +48,32 @@ import org.dexpi.xpview.plantviewer.adapter.PipingSegmentAdapter;
 import org.dexpi.xpview.plantviewer.adapter.PlantAdapter;
 import org.dexpi.xpview.plantviewer.adapter.PlantItemAdapter;
 import org.dexpi.xpview.plantviewer.adapter.PlantSectionAdapter;
+import org.dexpi.xpview.plantviewer.adapter.TextAdapter;
+import org.dexpi.xpview.plantviewer.adapter.TextListAdapter;
 import org.dexpi.xpview.utils.AdapterFactory;
 import org.dexpi.xpview.utils.ExceptionDialog;
 import org.dexpi.xpview.utils.WorkspaceContentProvider;
 import org.dexpi.xpview.utils.WorkspaceLabelProvider;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
 
 public class PlantStructureView extends ViewPart implements EventListener, ISelectionListener {
 
@@ -113,6 +116,9 @@ public class PlantStructureView extends ViewPart implements EventListener, ISele
 		factory.registerAdapter(new PipingComponentAdapter(), PipingComponent.class);
 		factory.registerAdapter(new PlantItemAdapter(), ProcessInstrument.class);
 		factory.registerAdapter(new AnnotationItemAdapter(), PipeConnector.class);
+		factory.registerAdapter(new AnnotationItemAdapter(), Label.class);
+		factory.registerAdapter(new TextListAdapter(), TextList.class);
+		factory.registerAdapter(new TextAdapter(), Text.class);
 		
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		// drillDownAdapter = new DrillDownAdapter(viewer);
@@ -209,10 +215,12 @@ public class PlantStructureView extends ViewPart implements EventListener, ISele
 		} else {
 			if (selection instanceof IStructuredSelection) {
 				IStructuredSelection structSel = (IStructuredSelection) selection;
-				Object obj = structSel.getFirstElement();
-				if (obj instanceof PlantItem) {
-					viewer.reveal(obj);
-					viewer.setSelection(selection);
+				if (structSel.isEmpty() == false) {
+					Object obj = structSel.getFirstElement();
+					if (obj instanceof PlantItem) {
+						viewer.reveal(obj);
+						viewer.setSelection(selection);
+					}
 				}
 			}
 		}

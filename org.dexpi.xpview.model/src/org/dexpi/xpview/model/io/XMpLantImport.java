@@ -18,8 +18,6 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.runtime.IProgressMonitor;
-
 import org.dexpi.xpview.model.Activator;
 import org.dexpi.xpview.model.AnnotationContainer;
 import org.dexpi.xpview.model.Catalog;
@@ -33,6 +31,7 @@ import org.dexpi.xpview.model.PlantSection;
 import org.dexpi.xpview.model.PropertyData;
 import org.dexpi.xpview.model.PropertyList;
 import org.dexpi.xpview.model.PropertyType;
+import org.dexpi.xpview.model.TextBag;
 import org.dexpi.xpview.model.Thing;
 import org.dexpi.xpview.model.Workspace;
 import org.dexpi.xpview.model.graphics.NodeUtils;
@@ -42,6 +41,7 @@ import org.dexpi.xpview.model.graphics.SoGroup;
 import org.dexpi.xpview.model.graphics.SoPolyLine;
 import org.dexpi.xpview.model.graphics.SoPositionNode;
 import org.dexpi.xpview.model.graphics.SoShape;
+import org.dexpi.xpview.model.graphics.SoText;
 import org.dexpi.xpview.model.graphics.SoTransformation;
 import org.dexpi.xpview.model.graphics.SoTrimmedCircle;
 import org.dexpi.xpview.model.io.xmplant.AnnotationItem;
@@ -78,7 +78,16 @@ import org.dexpi.xpview.model.io.xmplant.UnitsOfMeasure;
 import org.dexpi.xpview.model.issues.IssueList;
 import org.dexpi.xpview.model.issues.IssueTracker;
 import org.dexpi.xpview.model.issues.IssueType;
+import org.eclipse.core.runtime.IProgressMonitor;
 
+/**
+ * XMpLant importer.
+ * Note that the importer creates the internal data model AND creates the graphics scene graph.
+ * Might be worth to separate the data and graphics processing in the future.
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class XMpLantImport extends Import {
 
 	private static Logger log = Logger.getLogger(XMpLantImport.class);
@@ -91,6 +100,18 @@ public class XMpLantImport extends Import {
 	
 	private Deque<Object> issueContext; 
 	
+	/**
+	 * Tries to call a given method by name for the given object and appends the
+	 * returned value (which must be a String) to the given StringBuffer.
+	 * Note that all {@link Exception}s are ignored, check the return value.
+	 * 
+	 * @param methodName the method to call
+	 * @param prefix string to append before the retrieved value
+	 * @param obj the object 
+	 * @param buffer the {@link StringBuffer} to fill
+	 * 
+	 * @return true in case the method returned a String value
+	 */
 	protected boolean callMethod(java.lang.String methodName, java.lang.String prefix, Object obj, StringBuffer buffer) {
 		boolean result = false;
 		Class<?>[] parameterTypes = new Class[0]; 
@@ -108,6 +129,18 @@ public class XMpLantImport extends Import {
 		return result;
 	}
 	
+	/**
+	 * Utility method to get the name for a given XMpLant object
+	 * This method tries to get the name in the following order:
+	 * 1. ID (XMpLant)
+	 * 2. ComponentName (XMpLant)
+	 * 3. Name (XMpLant)
+	 * 
+	 * The class name (Java JAXB) is always added!
+	 * 
+	 * @param obj
+	 * @return at least the JAXB class name
+	 */
 	protected java.lang.String getObjectName(Object obj) {
 		StringBuffer buffer = new StringBuffer();
 		
@@ -143,18 +176,26 @@ public class XMpLantImport extends Import {
 		log.info("Adjusting import configuration for " + systemId);
 		if (systemId.equals("AVEVAPID")) {
 			setEquipmentPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AVEVA_APPLY_EQUIPMENT_POSITION));
+			setLabelPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AVEVA_APPLY_LABEL_POSITION));
+			setTextPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AVEVA_APPLY_TEXT_POSITION));
 			setUseCatalog(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AVEVA_USE_CATALOG));
 		}
 		if (systemId.equals("Autodesk AutoCAD P&ID")) {
 			setEquipmentPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AUTODESK_APPLY_EQUIPMENT_POSITION));
+			setLabelPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AUTODESK_APPLY_LABEL_POSITION));
+			setTextPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AUTODESK_APPLY_TEXT_POSITION));
 			setUseCatalog(Activator.getDefault().getPreferenceStore().getBoolean(Activator.AUTODESK_USE_CATALOG));
 		}
 		if (systemId.equals("Comos")) {
 			setEquipmentPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.SIEMENS_APPLY_EQUIPMENT_POSITION));
+			setLabelPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.SIEMENS_APPLY_LABEL_POSITION));
+			setTextPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.SIEMENS_APPLY_TEXT_POSITION));
 			setUseCatalog(Activator.getDefault().getPreferenceStore().getBoolean(Activator.SIEMENS_USE_CATALOG));
 		}
 		if (systemId.equals("SPPID")) {
 			setEquipmentPositionEnabled(false);
+			setLabelPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.IG_APPLY_LABEL_POSITION));
+			setTextPositionEnabled(Activator.getDefault().getPreferenceStore().getBoolean(Activator.IG_APPLY_TEXT_POSITION));
 			setUseCatalog(false);
 		}
 	}
@@ -186,6 +227,12 @@ public class XMpLantImport extends Import {
 		return result;
 	}
 	
+	/**
+	 * Sets the internal scaling factor.
+	 * Internally the import works with MILLIMETRE values.
+	 * 
+	 * @param plantInfo
+	 */
 	protected void setScaleFactor(PlantInformation plantInfo) {
 		UnitsOfMeasure uom = plantInfo.getUnitsOfMeasure();
 		if (uom != null) {
@@ -266,7 +313,6 @@ public class XMpLantImport extends Import {
 			
 			plantNode = new SoGroup(null, repManager.getFreeId(), "Plant");
 			plantNode.setSelectable(false);
-			
 			repManager.addNode(plantNode, plant);
 
 			handlePlantModel(plantModel);
@@ -507,6 +553,9 @@ public class XMpLantImport extends Import {
 			if (object instanceof Nozzle) {
 				handleNozzle((Nozzle) object, catalog, null, true, true);
 			}
+			if (object instanceof Label) {
+				handleLabel((Label) object, catalog, null, true, true);
+			}
 		}
 		
 		issueContext.removeFirst();
@@ -566,13 +615,13 @@ public class XMpLantImport extends Import {
 				handleCurves(obj, drawingNode);
 			}
 			if (object instanceof Text) {
-				// TODO
+				handleText((Text) object, drawingNode, drawing);
 			}
 			if (object instanceof DrawingBorder) {
 				handleDrawingBorder((DrawingBorder) object, drawing.getBorder(), drawingNode);
 			}
 			if (object instanceof Label) {
-				// TODO
+				handleLabel((Label) object, drawing, drawingNode, true, false);
 			}
 			if (object instanceof ScopeBubble) {
 				// TODO
@@ -581,6 +630,67 @@ public class XMpLantImport extends Import {
 				// TODO
 			}
 		}
+		
+		issueContext.removeFirst();
+	}
+	
+	protected void handleLabel(Label _label, AnnotationContainer parent, SoGroup parentNode, boolean readGraphics, boolean fromCatalog) {
+		issueContext.addFirst(_label);
+		
+		org.dexpi.xpview.model.Label label = new org.dexpi.xpview.model.Label(_label.getComponentName(), parent); 
+		parent.addAnnotation(label);
+		
+		PropertyData propData = label.getPropertyData();
+		handleAttributes(_label, propData.addPropertyList("Default"));
+		handleGenericAttributes(_label, propData);
+		
+		// graphics
+		SoTransformation group = createSoGroup(label, parentNode, fromCatalog);
+		if (readGraphics) {
+			handleLabelGraphics(_label, label, group);
+			handleLabelText(_label, label, group);
+		}
+		handleLabelPosition(_label, group);
+		group.getPosition().setEnabled(labelPositionEnabled);
+		
+		issueContext.removeFirst();
+	}
+	
+	protected void handleText(Text _text, SoGroup parentNode, TextBag textBag) {
+		issueContext.addFirst(_text);
+		
+		org.dexpi.xpview.model.Text text = new org.dexpi.xpview.model.Text(textBag.getTextList()); 
+		textBag.getTextList().addText(text);
+		
+		PropertyData propData = text.getPropertyData();
+		handleAttributes(_text, propData.addPropertyList("Default"));
+		handleGenericAttributes(_text, propData);
+		
+		// graphics
+		SoTransformation group = new SoTransformation(parentNode, getNextId(), "Text");
+		parentNode.addNode(group);
+		
+		for (Object object : _text.getPresentationOrExtentOrPosition()) {
+			if (object instanceof Position) {
+				handlePosition((Position) object, group);
+			}
+			if (useCatalog) {
+				if (object instanceof Scale) {
+					handleScale((Scale) object, group);
+				}
+			}
+		}
+		
+		SoText textNode = new SoText(group, getNextId());
+		textNode.setHeight(_text.getHeight() * scaleFactor);
+		textNode.setFontName(_text.getFont());
+		textNode.setValue(_text.getString());
+		
+		text.setValue(_text.getString());
+		text.setDependanteAttribute(_text.getDependantAttribute());
+		
+		group.getPosition().setEnabled(textPositionEnabled);
+		group.addNode(textNode);
 		
 		issueContext.removeFirst();
 	}
@@ -640,6 +750,7 @@ public class XMpLantImport extends Import {
 		SoTransformation group = createSoGroup(nozzle, parentNode, fromCatalog);
 		if (readGraphics) {
 			handlePlantItemGraphics(_nozzle, nozzle, group);
+			handlePlantItemText(_nozzle, nozzle, group);
 		}
 		handlePlantItemPosition(_nozzle, group);
 		
@@ -687,6 +798,7 @@ public class XMpLantImport extends Import {
 		SoTransformation group = createSoGroup(equipment, equipmentNode, fromCatalog);
 		if (readGraphics) {
 			handlePlantItemGraphics(_equipment, equipment, group);
+			handlePlantItemText(_equipment, equipment, group);
 		}
 		handlePlantItemPosition(_equipment, group);
 		group.getPosition().setEnabled(equipmentPositionEnabled);
@@ -708,8 +820,8 @@ public class XMpLantImport extends Import {
 		issueContext.removeFirst();
 	}
 
-	protected void handlePlantItemPosition(PlantItem _plantItem, SoTransformation group) {
-		for (Object object : _plantItem.getPresentationOrExtentOrPersistentID()) {
+	protected void handlePosition(List<Object> elements, SoTransformation group) {
+		for (Object object : elements) {
 			if (object instanceof Position) {
 				handlePosition((Position) object, group);
 			}
@@ -719,6 +831,14 @@ public class XMpLantImport extends Import {
 				}
 			}
 		}
+	}
+
+	protected void handlePlantItemPosition(PlantItem _plantItem, SoTransformation group) {
+		handlePosition(_plantItem.getPresentationOrExtentOrPersistentID(), group);
+	}
+	
+	protected void handleLabelPosition(Label _label, SoTransformation group) {
+		handlePosition(_label.getPresentationOrExtentOrPersistentID(), group);
 	}
 	
 	protected void handlePlantItem(PlantItem _plantItem,
@@ -735,6 +855,24 @@ public class XMpLantImport extends Import {
 		handleGenericAttributes(_plantItem, propData);
 	}
 	
+	protected void handleText(List<Object> elements, TextBag textBag, SoTransformation group) {
+		for (Object object : elements) {
+			if (object instanceof Text) {
+				handleText((Text) object, group, textBag);
+			}
+		}
+	}
+	
+	protected void handleLabelText(Label _label,
+			org.dexpi.xpview.model.Label label, SoTransformation group) {
+		handleText(_label.getPresentationOrExtentOrPersistentID(), label, group);
+	}
+	
+	protected void handlePlantItemText(PlantItem _plantItem,
+			org.dexpi.xpview.model.PlantItem plantItem, SoTransformation group) {
+		handleText(_plantItem.getPresentationOrExtentOrPersistentID(), plantItem, group);
+	}
+	
 	protected void handleCurves(List<Object> curves, SoTransformation group) {
 		for (Object object : curves) {
 			if (object instanceof JAXBElement) {
@@ -743,6 +881,11 @@ public class XMpLantImport extends Import {
 				handleCurves(obj, group);
 			}
 		}
+	}
+	
+	protected void handleLabelGraphics(Label _label,
+			org.dexpi.xpview.model.Label label, SoTransformation group) {
+		handleCurves(_label.getPresentationOrExtentOrPersistentID(), group);
 	}
 	
 	protected void handlePlantItemGraphics(PlantItem _plantItem,
@@ -808,6 +951,16 @@ public class XMpLantImport extends Import {
 	protected void handleGenericAttributes(Drawing _drawing,
 			PropertyData propertyData) {
 		for (Object object : _drawing.getComponentOrCurveOrText()) {
+			if (object instanceof GenericAttributes) {
+				handleGenericAttributes((GenericAttributes) object,
+						propertyData);
+			}
+		}
+	}
+	
+	protected void handleGenericAttributes(Text _text,
+			PropertyData propertyData) {
+		for (Object object : _text.getPresentationOrExtentOrPosition()) {
 			if (object instanceof GenericAttributes) {
 				handleGenericAttributes((GenericAttributes) object,
 						propertyData);

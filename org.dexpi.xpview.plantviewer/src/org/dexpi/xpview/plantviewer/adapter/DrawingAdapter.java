@@ -1,11 +1,11 @@
 package org.dexpi.xpview.plantviewer.adapter;
 
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.ui.model.IWorkbenchAdapter;
+import java.util.ArrayList;
 
 import org.dexpi.xpview.model.Drawing;
-import org.dexpi.xpview.model.DrawingBorder;
 import org.dexpi.xpview.plantviewer.Activator;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.model.IWorkbenchAdapter;
 
 public class DrawingAdapter implements IWorkbenchAdapter {
 
@@ -18,14 +18,14 @@ public class DrawingAdapter implements IWorkbenchAdapter {
 	@Override
 	public Object[] getChildren(Object o) {
 		Drawing drawing = (Drawing) o;
-		DrawingBorder[] border = null;
+		
+		ArrayList<Object> children = new ArrayList<Object>(); 
+		children.add(drawing.getTextList());
+		children.addAll(drawing.getAnnotations());
 		if (drawing.getBorder() != null) {
-			border = new DrawingBorder[1];
-			border[0] = drawing.getBorder();
-		} else {
-			border = new DrawingBorder[0];
+			children.add(drawing.getBorder());
 		}
-		return border;
+		return children.toArray();
 	}
 
 	@Override

@@ -220,6 +220,7 @@ public class PIDEditorViewer implements EventListener, ISelectionChangedListener
 		BoundingBox bBox = node.getBoundingBox();
 		log.debug("Overall BoundingBox: " + bBox);
 		renderer.getCamera().lookAt(bBox.getCenter());
+		renderer.prepare(node);
 		canvas.redraw();
 	}
 
@@ -320,12 +321,14 @@ public class PIDEditorViewer implements EventListener, ISelectionChangedListener
 
 		if (selection instanceof IStructuredSelection) {
 			IStructuredSelection structSel = (IStructuredSelection) selection;
-			Object obj = structSel.getFirstElement();
-			if (obj instanceof Thing) {
-				Thing input = ((Thing) obj);
-				SoNode node = RepresentationManager.getInstance().getNode(input);
-				if (node != null) {
-					selectionManager.addNode(node);
+			if (structSel.isEmpty() == false) {
+				Object obj = structSel.getFirstElement();
+				if (obj instanceof Thing) {
+					Thing input = ((Thing) obj);
+					SoNode node = RepresentationManager.getInstance().getNode(input);
+					if (node != null) {
+						selectionManager.addNode(node);
+					}
 				}
 			}
 		}

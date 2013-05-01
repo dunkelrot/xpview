@@ -10,6 +10,9 @@ import org.dexpi.xpview.model.graphics.RepresentationManager;
 public abstract class Import {
 
 	protected boolean equipmentPositionEnabled = false;
+	protected boolean textPositionEnabled = true;
+	protected boolean labelPositionEnabled = false;
+	
 	protected boolean flatSoEquipment = false;
 	protected boolean useCatalog = true;
 	
@@ -23,6 +26,22 @@ public abstract class Import {
 	
 	public boolean isEquipmentPositionEnabled() {
 		return equipmentPositionEnabled;
+	}
+	
+	public void setLabelPositionEnabled(boolean labelPositionEnabled) {
+		this.labelPositionEnabled = labelPositionEnabled;
+	}
+	
+	public void setTextPositionEnabled(boolean textPositionEnabled) {
+		this.textPositionEnabled = textPositionEnabled;
+	}
+	
+	public boolean isLabelPositionEnabled() {
+		return labelPositionEnabled;
+	}
+	
+	public boolean isTextPositionEnabled() {
+		return textPositionEnabled;
 	}
 	
 	public void setFlatSoEquipment(boolean flatSoEquipment) {

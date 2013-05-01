@@ -1,14 +1,20 @@
 package org.dexpi.xpview.model;
 
-public class Text extends Thing {
+public class Text extends Thing implements PropertyProvider {
 
+	protected PropertyData propertyData;
+	
 	protected String value;
 	protected String set;
+	protected String dependanteAttribute;
+	protected TextList textList;
 	
 	protected String itemReferenceID;
 	
-	public Text() {
+	public Text(TextList textList) {
 		super(Text.class.getSimpleName());
+		this.propertyData = new PropertyData(this);
+		this.textList = textList;
 	}
 
 	public String getValue() {
@@ -35,4 +41,20 @@ public class Text extends Thing {
 		this.itemReferenceID = itemReferenceID;
 	}
 
+	public String getDependanteAttribute() {
+		return dependanteAttribute;
+	}
+
+	public void setDependanteAttribute(String dependanteAttribute) {
+		this.dependanteAttribute = dependanteAttribute;
+	}
+	
+	@Override
+	public PropertyData getPropertyData() {
+		return propertyData;
+	}
+	
+	public TextList getTextList() {
+		return textList;
+	}
 }

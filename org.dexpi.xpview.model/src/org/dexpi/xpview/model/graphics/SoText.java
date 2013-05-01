@@ -2,7 +2,7 @@ package org.dexpi.xpview.model.graphics;
 
 import org.dexpi.xpview.model.io.xmplant.Text;
 
-public class SoText extends SoNodeT {
+public class SoText extends SoNode {
 
 	protected String fontName;
 	
@@ -17,10 +17,12 @@ public class SoText extends SoNodeT {
 	
 	public SoText(SoNode parent, int id) {
 		super(parent, id, Text.class.getSimpleName());
+		this.type = NodeType.Text;
 	}
 	
 	public SoText(SoText other, SoNode parent, IDProvider idProvider) {
 		super(other, parent, idProvider);
+		this.type = NodeType.Text;
 		this.fontName = other.fontName;
 		this.height = other.height;
 		this.width = other.width;
