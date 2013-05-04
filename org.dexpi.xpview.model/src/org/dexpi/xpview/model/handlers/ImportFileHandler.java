@@ -22,11 +22,11 @@ import org.dexpi.xpview.model.io.XMpLantImport;
 import org.dexpi.xpview.utils.ExceptionDialog;
 
 /**
- * Our sample handler extends AbstractHandler, an IHandler base class.
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
 public class ImportFileHandler extends AbstractHandler {
+	
 	/**
 	 * The constructor.
 	 */

@@ -113,9 +113,6 @@ public class PIDEditorViewer implements EventListener, ISelectionChangedListener
 					g2d.setPaint(new Color(255, 255, 255));
 					g2d.setColor(new Color(0, 0, 0));
 
-					// g2d.translate(controlSize.x * 0.5, controlSize.y * 0.5);
-					// g2d.scale(1.0, -1.0);
-
 					renderer.render(node, g2d);
 					rendererG2D.render(e.gc);
 				}

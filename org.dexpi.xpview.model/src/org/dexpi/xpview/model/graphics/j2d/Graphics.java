@@ -157,7 +157,6 @@ public class Graphics {
 	}
 	
 	public void renderGroup(SoGroup group, Graphics2D gc) throws NoninvertibleTransformException {
-		
 		for (SoNode node : group.getChildren()) {
 			renderNode(node, gc);
 		}

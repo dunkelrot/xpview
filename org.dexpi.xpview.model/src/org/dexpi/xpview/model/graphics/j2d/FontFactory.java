@@ -6,7 +6,17 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-
+/**
+ * Creates Font objects and stores them in a Map.
+ * In case the same Font is created a second time the already existing Font objects 
+ * is returned by the createFont method.
+ * 
+ * This class creates a default font (Dialog, 12) which is returned in case
+ * something fails during font creation.
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class FontFactory {
 
 	private static Logger log = Logger.getLogger(FontFactory.class);
@@ -21,10 +31,28 @@ public class FontFactory {
 		fontMap.put(DEFAULT_FONT, defaultFont);
 	}
 	
+	/**
+	 * Returns a {@link String} which identifies a Font.
+	 * 
+	 * @param fontName
+	 * @param height
+	 * @param slantAngle
+	 * @param textAngle
+	 * @return a string composed from the given values
+	 */
 	protected String getFontDesc(String fontName, double height, double slantAngle, double textAngle) {
 		return fontName + ":" + (int) height + ":" + (int) slantAngle + ":" + (int) textAngle;
 	}
 	
+	/**
+	 *  In case the same Font is created a second time the already existing Font objects 
+     * is returned by the createFont method.
+	 * @param fontName
+	 * @param height
+	 * @param slantAngle
+	 * @param textAngle
+	 * @return a valid {@link Font}, in case the creation fails the default font is returned
+	 */
 	public Font createFont(String fontName, double height, double slantAngle, double textAngle) {
 		
 		Font font = fontMap.get(getFontDesc(fontName, height, slantAngle, textAngle));

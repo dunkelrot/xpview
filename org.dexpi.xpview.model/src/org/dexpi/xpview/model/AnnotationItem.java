@@ -1,5 +1,13 @@
 package org.dexpi.xpview.model;
 
+/**
+ * Base class for objects which annotate something. 
+ * This class holds a {@link TextList} instance which collects all
+ * annotation texts. 
+ * 
+ * @author Arndt Teinert
+ *
+ */
 public class AnnotationItem extends Thing implements PropertyProvider, TextBag {
 
 	protected PropertyData propertyData;
