@@ -104,6 +104,12 @@
             id="PrefsPageImportSiemens"
             name="Siemens import">
       </page>
+      <page
+            category="PrefsPageImport"
+            class="org.dexpi.xpview.model.prefs.PrefsPageImportIntergraph"
+            id="PrefsPageImportIntergraph"
+            name="Intergraph import">
+      </page>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
