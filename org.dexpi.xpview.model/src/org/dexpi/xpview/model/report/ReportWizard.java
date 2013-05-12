@@ -6,8 +6,6 @@ import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
 
-import org.dexpi.xpview.model.Workspace;
-
 public class ReportWizard extends Wizard {
 
 	protected ReportPropertyData reportPropertyData;

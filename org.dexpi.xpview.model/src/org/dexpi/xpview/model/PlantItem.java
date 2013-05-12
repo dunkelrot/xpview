@@ -6,7 +6,7 @@ package org.dexpi.xpview.model;
  * @author Arndt Teinert
  *
  */
-public abstract class PlantItem extends Thing implements PropertyProvider, TextBag {
+public abstract class PlantItem extends Thing implements PropertyProvider, TextBag, Connectable {
 
 	protected PropertyData propertyData;
 	
@@ -15,12 +15,14 @@ public abstract class PlantItem extends Thing implements PropertyProvider, TextB
 	protected String type;
 	protected PlantItemContainer container;
 	protected TextList textList;
+	protected ConnectionPoints connections;
 	
 	public PlantItem(String name, PlantItemContainer container) {
 		super(name);
 		this.container = container;
 		this.propertyData = new PropertyData(this);
 		this.textList = new TextList(this);
+		this.connections = new ConnectionPoints(this);
 	}
 	
 	@Override
@@ -59,5 +61,10 @@ public abstract class PlantItem extends Thing implements PropertyProvider, TextB
 	@Override
 	public TextList getTextList() {
 		return textList;
+	}
+	
+	@Override
+	public ConnectionPoints getConnectionPoints() {
+		return connections;
 	}
 }

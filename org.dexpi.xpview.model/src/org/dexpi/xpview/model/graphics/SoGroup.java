@@ -7,6 +7,7 @@ import java.util.List;
 public class SoGroup extends SoNode {
 
 	protected ArrayList<SoNode> children;
+	protected SoMaterial material;
 	
 	public SoGroup(SoNode parent, int id, String name) {
 		super(parent, id, name);
@@ -52,6 +53,14 @@ public class SoGroup extends SoNode {
 			boundingBox.add(child.getBoundingBox().transformed(transform));
 		}
 		return boundingBox;
+	}
+	
+	public SoMaterial getMaterial() {
+		return material;
+	}
+	
+	public void setMaterial(SoMaterial material) {
+		this.material = material;
 	}
 	
 	@Override

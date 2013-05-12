@@ -9,6 +9,7 @@ public class SoMaterial extends SoNode {
 	public SoMaterial(SoNode parent, int id, String name) {
 		super(parent, id, name);
 		this.color = Color.BLACK;
+		this.type = NodeType.Material;
 	}
 	
 	public SoMaterial(SoMaterial other, SoNode parent, IDProvider idProvider) {

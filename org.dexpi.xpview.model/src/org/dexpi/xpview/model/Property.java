@@ -18,6 +18,16 @@ public class Property {
 		this.URI = URI;
 	}
 	
+	public Property(PropertyList propertyList, PropertyType type, String name) {
+		this.propertyList = propertyList;
+		this.name = name;
+		this.type = type;
+	}
+	
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
 	public String getName() {
 		return name;
 	}

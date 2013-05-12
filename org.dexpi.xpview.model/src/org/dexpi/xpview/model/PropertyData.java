@@ -28,6 +28,22 @@ public class PropertyData {
 	}
 
 	/**
+	 * In case there is already such a {@link PropertyList} the exiting object
+	 * is returned otherwise a new {@link PropertyList} is created and added to 
+	 * this instance.
+	 * @param name the name of the {@link PropertyList} to create
+	 * @return the existing or newly created {@link PropertyList}
+	 */
+	public PropertyList createPropertyList(String name) {
+		PropertyList result = getProperyList(name);
+		if (result == null) {
+			result = new PropertyList(this, name);
+			properyLists.add(result);
+		}
+		return result;
+	}
+	
+	/**
 	 * Creates a new {@link PropertyList} and adds it to this instance.
 	 * @param name the name of the new {@link PropertyList}
 	 * @return the newly created {@link PropertyList}

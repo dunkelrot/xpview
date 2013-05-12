@@ -1,10 +1,14 @@
 package org.dexpi.xpview.model.graphics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dexpi.xpview.model.io.xmplant.Text;
 
 public class SoText extends SoNode {
 
 	protected String fontName;
+	protected ArrayList<String> lines;
 	
 	protected double height;
 	protected double width;
@@ -18,6 +22,7 @@ public class SoText extends SoNode {
 	public SoText(SoNode parent, int id) {
 		super(parent, id, Text.class.getSimpleName());
 		this.type = NodeType.Text;
+		this.lines = new ArrayList<String>();
 	}
 	
 	public SoText(SoText other, SoNode parent, IDProvider idProvider) {
@@ -86,6 +91,7 @@ public class SoText extends SoNode {
 	
 	public void setValue(String value) {
 		this.value = value;
+		splitLines(value);
 	}
 	
 	public FontData getFontData() {
@@ -99,5 +105,16 @@ public class SoText extends SoNode {
 	@Override
 	public void scale(double x, double y) {
 		// ignored
+	}
+	
+	public List<String> getLines() {
+		return lines;
+	}
+	
+	protected void splitLines(String value) {
+		String result[] = value.split("\\r");
+		for (int ii = 0; ii < result.length; ii++) {
+			lines.add(result[ii]);
+		}
 	}
 }

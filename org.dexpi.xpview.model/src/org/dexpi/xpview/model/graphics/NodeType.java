@@ -11,5 +11,7 @@ public enum NodeType {
 	Node,
 	NodeT,
 	Text,
-	TrimmedCircle
+	TrimmedCircle,
+	Point,
+	Material
 }

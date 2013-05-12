@@ -13,6 +13,7 @@ import org.dexpi.xpview.model.graphics.SoGeometry;
 import org.dexpi.xpview.model.graphics.SoGroup;
 import org.dexpi.xpview.model.graphics.SoMaterial;
 import org.dexpi.xpview.model.graphics.SoNode;
+import org.dexpi.xpview.model.graphics.SoPoint;
 import org.dexpi.xpview.model.graphics.SoText;
 import org.dexpi.xpview.model.graphics.SoTransformation;
 import org.dexpi.xpview.model.graphics.SoTrimmedCircle;
@@ -69,13 +70,13 @@ public class Graphics {
 		}
 	}	
 	
-	protected void pushColor(SoNode node) {
+	protected void pushColor(SoMaterial material) {
 		if (selectionColorActive == false) {
-			colorStack.push(node.getSelectionColor());
+			colorStack.push(material);
 		}
 	}
 
-	protected void popColor(SoNode node) {
+	protected void popColor() {
 		if (selectionColorActive == false) {
 			colorStack.pop();
 		}
@@ -107,6 +108,9 @@ public class Graphics {
 		case Transformation:
 			renderTransformation((SoTransformation)node, gc);
 			break;
+		case Point:
+			renderPoint((SoPoint)node, gc);
+			break;
 		case Node:
 			break;
 		case NodeT:
@@ -123,7 +127,11 @@ public class Graphics {
 		gc.scale(1.0, -1.0);
 		
 		gc.setFont((Font) text.getFontData().getFont());
-		gc.drawString(text.getValue(), 0, 0);
+		int index = 0;
+		for (String line : text.getLines()) {
+			gc.drawString(line, 0, (int)(index * text.getHeight()));
+			index = index + 1;
+		}
 		gc.setTransform(at);
 	}
 	
@@ -131,6 +139,13 @@ public class Graphics {
 		if (camera.canSee(circle)) {
 			gc.setStroke(circle.getStroke());
 			gc.draw(circle.getShape());
+		}
+	}
+	
+	public void renderPoint(SoPoint point, Graphics2D gc) throws NoninvertibleTransformException {
+		if (camera.canSee(point)) {
+			gc.setStroke(point.getStroke());
+			gc.draw(point.getShape());
 		}
 	}
 	
@@ -157,14 +172,24 @@ public class Graphics {
 	}
 	
 	public void renderGroup(SoGroup group, Graphics2D gc) throws NoninvertibleTransformException {
+		if (group.getMaterial() != null) {
+			pushColor(group.getMaterial());
+		}
 		for (SoNode node : group.getChildren()) {
 			renderNode(node, gc);
+		}
+		if (group.getMaterial() != null) {
+			popColor();
 		}
 	}
 	
 	public void renderTransformation(SoTransformation transform, Graphics2D gc) throws NoninvertibleTransformException {
 
 		// gc.draw(transform.getBoundingBox().getRectangle());
+		
+		if (transform.getMaterial() != null) {
+			pushColor(transform.getMaterial());
+		}
 		
 		AffineTransform at = gc.getTransform();
 		if (transform.position.enabled) {
@@ -176,6 +201,10 @@ public class Graphics {
 			renderNode(node, gc);
 		}
 		gc.setTransform(at);
+		
+		if (transform.getMaterial() != null) {
+			popColor();
+		}
 	}
 	
 }

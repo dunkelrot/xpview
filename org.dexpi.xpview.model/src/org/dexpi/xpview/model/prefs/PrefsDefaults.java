@@ -28,6 +28,11 @@ public class PrefsDefaults extends AbstractPreferenceInitializer {
 		prefs.setDefault(Activator.SIEMENS_APPLY_LABEL_POSITION, true);
 		prefs.setDefault(Activator.SIEMENS_APPLY_TEXT_POSITION, false);
 		prefs.setDefault(Activator.SIEMENS_USE_CATALOG, false);
+		
+		prefs.setDefault(Activator.INTERGRAPH_APPLY_EQUIPMENT_POSITION, false);
+		prefs.setDefault(Activator.INTERGRAPH_APPLY_LABEL_POSITION, false);
+		prefs.setDefault(Activator.INTERGRAPH_APPLY_TEXT_POSITION, true);
+		prefs.setDefault(Activator.INTERGRAPH_USE_CATALOG, false);
 	}
 
 }
