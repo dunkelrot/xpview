@@ -23,6 +23,7 @@ public class PlantAdapter implements IWorkbenchAdapter {
 		children.add(plant.getCatalogList());
 		children.add(plant.getDrawings());
 		children.add(plant.getEquipmentList());
+		children.add(plant.getInstrumentList());
 		children.add(plant.getPipingNetworkList());
 		for (PlantSection plantSection : plant.getSections()) {
 			children.add(plantSection);

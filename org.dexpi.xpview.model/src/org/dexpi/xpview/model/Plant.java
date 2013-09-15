@@ -13,6 +13,7 @@ public class Plant extends PlantSection {
 
 	protected String name;
 	protected EquipmentList equipmentList;
+	protected InstrumentList instrumentList;
 	protected CatalogList catalogList;
 	protected PipingNetworkList pipingNetworkList;
 	
@@ -21,10 +22,15 @@ public class Plant extends PlantSection {
 		this.equipmentList = new EquipmentList(this);
 		this.catalogList = new CatalogList(this);
 		this.pipingNetworkList = new PipingNetworkList(this);
+		this.instrumentList = new InstrumentList(this); 
 	}
 	
 	public EquipmentList getEquipmentList() {
 		return equipmentList;
+	}
+	
+	public InstrumentList getInstrumentList() {
+		return instrumentList;
 	}
 	
 	public List<PlantItem> getAllPlantItems() {

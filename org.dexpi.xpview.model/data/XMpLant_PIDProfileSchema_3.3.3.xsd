@@ -1106,9 +1106,9 @@
 	<!--"PlantModel" element  -->
 	<xsd:element name="PlantModel">
 		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element ref="PlantInformation" />
-				<xsd:element ref="Extent" />
+			<xsd:sequence>
+                <xsd:element ref="PlantInformation" />
+                <xsd:element ref="Extent" />
 				<xsd:choice minOccurs="0" maxOccurs="unbounded">
 					<xsd:element ref="Presentation" />
 					<xsd:element ref="ShapeCatalogue" />

@@ -62,6 +62,7 @@ import org.dexpi.xpview.model.io.xmplant.DrawingBorder;
 import org.dexpi.xpview.model.io.xmplant.Equipment;
 import org.dexpi.xpview.model.io.xmplant.GenericAttribute;
 import org.dexpi.xpview.model.io.xmplant.GenericAttributes;
+import org.dexpi.xpview.model.io.xmplant.InstrumentComponent;
 import org.dexpi.xpview.model.io.xmplant.Label;
 import org.dexpi.xpview.model.io.xmplant.Line;
 import org.dexpi.xpview.model.io.xmplant.Node;
@@ -355,11 +356,15 @@ public class XMpLantImport extends Import {
 	protected void handlePlantModel(PlantModel plantModel) {
 		for (Object object : plantModel.getPresentationOrShapeCatalogueOrDrawing()) {
 			if (object instanceof Equipment) {
-				handleEquipment((Equipment) object, plant.getEquipmentList(), plantNode, useCatalog ? false : true,
-						false);
+				handleEquipment((Equipment) object, plant.getEquipmentList(), plantNode, 
+						useCatalog ? false : true, false);
 			}
 			if (object instanceof Drawing) {
 				handleDrawing((Drawing) object, plant);
+			}
+			if (object instanceof InstrumentComponent) {
+				handleInstrumentComponent((InstrumentComponent) object, plant.getInstrumentList(), plantNode, 
+						useCatalog ? false : true, false);
 			}
 			if (object instanceof ShapeCatalogue) {
 				handleShapeCatalog((ShapeCatalogue) object, plant);
@@ -836,6 +841,38 @@ public class XMpLantImport extends Import {
 		}
 
 		plant.getItems().add(equipment);
+
+		issueContext.removeFirst();
+	}
+	
+	protected void handleInstrumentComponent(InstrumentComponent _instrumentComponent, PlantItemContainer parent, SoGroup parentNode,
+			boolean readGraphics, boolean fromCatalog) {
+
+		issueContext.addFirst(_instrumentComponent);
+
+		// graphics
+		SoTransformation instrumentNode = new SoTransformation(plantNode, getNextId(), _instrumentComponent.getTagName());
+		instrumentNode.setSelectable(false);
+		plantNode.addNode(instrumentNode);
+		
+		// engineering data
+		org.dexpi.xpview.model.Instrument instrument = new org.dexpi.xpview.model.Instrument(
+				_instrumentComponent.getComponentName(), _instrumentComponent.getTagName(), parent);
+		
+		SoTransformation group = createSoGroup(instrument, instrumentNode, fromCatalog);
+
+		handlePlantItem(_instrumentComponent, instrument, fromCatalog, readGraphics, group);
+		parent.addPlantItem(instrument);
+		group.getPosition().setEnabled(equipmentPositionEnabled);
+
+		// get sub instruments
+		for (Object object : _instrumentComponent.getInstrumentComponentOrComponentOrNominalDiameter()) {
+			if (object instanceof Equipment) {
+				handleInstrumentComponent((InstrumentComponent) object, instrument, instrumentNode, readGraphics, fromCatalog);
+			}
+		}
+
+		plant.getItems().add(instrument);
 
 		issueContext.removeFirst();
 	}
